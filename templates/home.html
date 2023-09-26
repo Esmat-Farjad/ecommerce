@@ -1,0 +1,24 @@
+{% extends 'main/base.html' %}
+{% load static %}
+{% block content %}
+<div class="relative">
+    <img src="{% static 'image/background.jpg' %}" class="block w-full h-1/2" style="filter:blur(2px);" 
+        alt="...">
+        <div class="absolute top-1/4 right-1/4">
+            <strong class="text-8xl font-light text-white">E-commerce</strong>
+            <p class="text-white mt-5">start to grow you business and evaluate your daily work</p>
+            <p class="text-white mb-10">let's get start your business right here</p>
+            <a href="{% url 'store:signin' %}" 
+            class="transition ease-in-out duration-500 border rounded border-white py-2 px-5 text-2xl hover: font-semibold shadow-lg text-white hover:bg-white hover:text-black">
+            <i class="fa-solid fa-arrow-right-to-bracket"></i>&nbsp;Sign In</a>
+            <a href="{% url 'store:signup' %}" 
+            class="transition ease-in-out duration-500 border rounded border-white py-2 px-5 text-2xl hover:font-semibold shadow-lg text-white hover:bg-white hover:text-black">
+            <i class="fa-solid fa-plus"></i>&nbsp;Get Start</a>
+            <br><span class="">
+                <p class=" my-5 text-white py-4 px-3 rounded-full border border-white inline-block shadow-lg">Hello</p>
+                <p class=" my-5 text-white py-4 px-3 rounded-full border border-white inline-block shadow-lg">Hello</p>
+                <p class=" my-5 text-white py-4 px-3 rounded-full border border-white inline-block shadow-lg">Hello</p>
+            </span>
+        </div>
+</div>
+{% endblock content %}

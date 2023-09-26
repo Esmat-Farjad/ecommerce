@@ -1,0 +1,11 @@
+* {
+    font-family: 'Montserrat', sans-serif;
+    font-family: 'Open Sans', sans-serif;
+    font-family: 'Roboto', sans-serif;
+}
+.position-absolute{
+    position:absolute;
+    translate: middle;
+    left: 50%;
+    top: 50%;
+}
