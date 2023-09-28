@@ -1,0 +1,124 @@
+{% extends 'main/base.html' %}
+{% load static %}
+{% block content %}
+<div class="grid rows-2">
+
+    <div class="list-tab">
+        <div class="flex justify-center py-2 my-5">
+            {% if flag == 'list' %}
+                <span
+                    class="mx-2 shadow-lg py-2 px-4 border bg-teal-500 transition duration-500 ease-in-out rounded text-white cursor-pointer ">
+                    <a href="{% url 'store:routeProduct' 'list' %}">
+                        <i class="fa-solid fa-list-ul"></i>&nbsp;Product List
+                    </a>
+                </span>
+            {% else %}
+            <span
+                class="mx-2 shadow-lg py-2 px-4 border hover:bg-teal-500 transition duration-500 ease-in-out rounded hover:text-white cursor-pointer ">
+                <a href="{% url 'store:routeProduct' 'list' %}">
+                    <i class="fa-solid fa-list-ul"></i>&nbsp;Product List
+                </a>
+            </span>
+            {% endif %}
+            {% if flag == 'add' %}
+                <span
+                    class="mx-2 shadow-lg py-2 px-4 border bg-teal-500 transition duration-500 ease-in-out rounded text-white cursor-pointer ">
+                    <a href="{% url 'store:routeProduct' 'add' %}">
+                        <i class="fa-solid fa-plus"></i>&nbsp;Add New Product
+                    </a>
+                </span>
+            {% else %}
+                <span
+                    class="mx-2 shadow-lg py-2 px-4 border hover:bg-teal-500 transition duration-500 ease-in-out rounded hover:text-white cursor-pointer ">
+                    <a href="{% url 'store:routeProduct' 'add' %}">
+                        <i class="fa-solid fa-plus"></i>&nbsp;Add New Product
+                    </a>
+                </span>
+            {% endif %}
+            {% if flag == 'update' %}
+                <span
+                    class="mx-2 shadow-lg py-2 px-4 border bg-teal-500 transition duration-500 ease-in-out rounded text-white cursor-pointer ">
+                    <a href="{% url 'store:routeProduct' 'update' %}">
+                        <i class="fa-solid fa-pen"></i>&nbsp;Update Product
+                    </a>
+                </span>
+            {% else %}
+            <span
+                class="mx-2 shadow-lg py-2 px-4 border hover:bg-teal-500 transition duration-500 ease-in-out rounded hover:text-white cursor-pointer ">
+                <a href="{% url 'store:routeProduct' 'update' %}">
+                    <i class="fa-solid fa-pen"></i>&nbsp;Update Product
+                </a>
+            </span>
+            {% endif %}
+            {% if flag == 'delete' %}
+                <span
+                    class="mx-2 shadow-lg py-2 px-4 border bg-red-500 transition duration-500 ease-in-out rounded text-white cursor-pointer ">
+                    <a href="{% url 'store:routeProduct' 'delete' %}">
+                        <i class="fa-solid fa-trash"></i>&nbsp;Delete Product
+                    </a>
+                </span>
+            {% else %}
+                <span
+                    class="mx-2 shadow-lg py-2 px-4 border hover:bg-red-500 transition duration-500 ease-in-out rounded hover:text-white cursor-pointer ">
+                    <a href="{% url 'store:routeProduct' 'delete' %}">
+                        <i class="fa-solid fa-trash"></i>&nbsp;Delete Product
+                    </a>
+                </span>
+            {% endif %}
+        </div>
+    </div>
+    <hr>
+    <div class="main-content mx-10">
+        {% if flag == 'list' %}
+            
+            <div class="grid lg:grid-row-2 m-5">
+                <div class="">
+                    <h1 class="text-center text-4xl m-5">
+                        Product Details
+                    </h1>
+                    <div class="flex justify-center">
+                        <form action="" method="POST" class="my-5">
+                            {% csrf_token %}
+                            <input type="text" class="py-2 rounded border border-teal-400 w-96">
+                            <button class="rounded-full border bg-teal-500 hover:bg-teal-700 hover:text-white px-3 py-2"><i
+                                    class="fa-solid fa-magnifying-glass"></i></button>
+                            <!-- <button class="bg-teal-500 text-white px-4 py-2 hover:font-bold hover:bg-teal-700 shadow my-3">Save</button> -->
+                        </form>
+                    </div>
+                </div>
+                <div>
+                <table class="table-auto w-full text-center">
+                    <thead class="bg-teal-500 text-white">
+                        <th class="py-2">#</th>
+                        <th class="py-2">Name</th>
+                        <th class="py-2">Description</th>
+                        <th class="py-2">Category</th>
+                        <th class="py-2">price</th>
+                        <th class="py-2">MFD</th>
+                        <th class="py-2">EXPD</th>
+                        <th class="py-2">Stock</th>
+                    </thead>
+                    <tbody>
+                        <td class="py-2">item</td>
+                        <td class="py-2">item</td>
+                        <td class="py-2">item</td>
+                        <td class="py-2">item</td>
+                        <td class="py-2">item</td>
+                        <td class="py-2">item</td>
+                        <td class="py-2">item</td>
+                        <td class="py-2">item</td>
+                    </tbody>
+                </table>
+            </div>
+        {% elif flag == 'add' %}
+            {% include 'add_product.html' %}
+        {% elif flag == 'update' %}
+            {% include 'update_product.html' %}
+        {% elif flag == 'delete' %}
+            <h1>DELETE PRODUCT</h1>
+        {% endif %}
+        
+
+    </div>
+</div>
+{% endblock content %}

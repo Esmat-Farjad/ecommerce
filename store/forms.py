@@ -4,6 +4,7 @@ from .models import CustomUser, Store
 
 
 class UserCreationForm(UserCreationForm):
+    
     class Meta:
         model = CustomUser
         fields = (
@@ -11,8 +12,15 @@ class UserCreationForm(UserCreationForm):
         )
     def __init__(self, *args, **kwargs):
         super(UserCreationForm, self).__init__(*args, **kwargs)
-        for visible in self.visible_fields():
-            visible.field.widget.attrs['class'] = 'border py-2 border-teal-500 w-full'
+        self.fields['username'].widget.attrs.update({'autofocus':False})
+        self.fields['first_name'].widget.attrs['class'] ='border py-2 border-teal-500 w-full'
+        self.fields['last_name'].widget.attrs['class'] ='border py-2 border-teal-500 w-full'
+        self.fields['email'].widget.attrs['class'] ='border py-2 border-teal-500 w-full'
+        self.fields['username'].widget.attrs['class'] ='border py-2 border-teal-500 w-full'
+        self.fields['password1'].widget.attrs['class'] ='border py-2 border-teal-500 w-full'
+        self.fields['password2'].widget.attrs['class'] ='border py-2 border-teal-500 w-full'
+        self.fields['store'].widget.attrs['class'] ='border py-2 border-teal-500 w-full'
+            
 
 class StoreCreationForm(forms.ModelForm):
     class Meta:
@@ -22,4 +30,6 @@ class StoreCreationForm(forms.ModelForm):
         super(StoreCreationForm, self).__init__(*args, **kwargs)
         for visible in self.visible_fields():
             visible.field.widget.attrs['class'] = 'border py-2 border-teal-500 w-full'
+            
+
 

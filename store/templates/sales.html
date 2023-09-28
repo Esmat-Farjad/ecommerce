@@ -2,13 +2,43 @@
 {% load static %}
 {% block content %}
 <div class="sales">
-    <div class="container m-5">
+    <div class="grid lg:grid-row-2 m-5">
+        <div class="">
         <h1 class="text-3xl text-center">Sales Portal</h1>
+        <div class="flex justify-center">
         <form action="" method="POST" class="my-5">
             {% csrf_token %}
-            {{form.as_div}}
-           <button class="bg-teal-500 text-white px-4 py-2 hover:font-bold hover:bg-teal-700 shadow my-3">Save</button>
+            <input type="text" class="py-2 rounded border border-teal-400 w-96">
+            <button class="rounded-full border bg-teal-500 hover:bg-teal-700 hover:text-white px-3 py-2"><i class="fa-solid fa-magnifying-glass"></i></button>
+            <!-- <button class="bg-teal-500 text-white px-4 py-2 hover:font-bold hover:bg-teal-700 shadow my-3">Save</button> -->
         </form>
+        </div>
+        </div>
+        <hr>
+        <div class="mx-10 my-5">
+            
+            <table class="table-auto text-center p-2 w-full">
+                <thead class="bg-teal-500 text-white">
+                    <th class="py-2 px-3">avatar</th>
+                    <th class="py-2 px-3">Name</th>
+                    <th class="py-2 px-3">quantity</th>
+                    <th class="py-2 px-3">price</th>
+                    <th class="py-2 px-3">total price</th>
+                    <th class="py-2 px-3">Stock</th>
+                    <th class="py-2 px-3">exp date</th>
+                </thead>
+                <tbody class="">
+                    <td>1</td>
+                    <td>food </td>
+                    <td><input type="number" class="w-1/2 border border-teal-500" placeholder="Quantity"></td>
+                    <td>40</td>
+                    <td>80</td>
+                    <td>56</td>
+                    <td>23/06/2031</td>
+                </tbody>
+            </table>
+        </div>
+        
     </div>
 </div>
 {% endblock content %}
