@@ -4,7 +4,7 @@
         <div class="inline-block">
             <ul class="inline mx-10 text-xl">
                 {% if user.is_authenticated %}
-                    <li class="inline mx-5 hover:font-bold cursor-pointer"><a href="">Purchase&nbsp;<i class="fa-solid fa-cart-plus"></i></a></li>
+                    <li class="inline mx-5 hover:font-bold cursor-pointer"><a href="{% url 'store:purchase' %}">Purchase&nbsp;<i class="fa-solid fa-cart-plus"></i></a></li>
                     <li class="inline mx-5 hover:font-bold cursor-pointer"><a href="{% url 'store:sales' %}">Sales&nbsp;<i class="fa-solid fa-cart-shopping"></i></a></li>
                     <li class="inline mx-5 hover:font-bold cursor-pointer"><a href="{% url 'store:product' %}">Products&nbsp;<i
                                 class="fa-solid fa-box-open"></i></a></li>

@@ -69,3 +69,7 @@ def routeProduct(request, flag):
         sign = flag
         context = {'flag':sign}
     return render(request, 'product.html', context)
+
+def purchase(request):
+    context = {}
+    return render(request, 'purchase.html', context)
