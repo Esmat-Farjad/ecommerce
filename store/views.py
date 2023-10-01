@@ -52,6 +52,7 @@ def signout(request):
     return render(request, 'signin.html')
 
 def product(request):
+    
     context = {'flag':'list'}
     return render(request, 'product.html', context)
 
@@ -71,5 +72,6 @@ def routeProduct(request, flag):
     return render(request, 'product.html', context)
 
 def purchase(request):
+   
     context = {}
     return render(request, 'purchase.html', context)

@@ -1,21 +1,33 @@
 <div class="nav">
-    <div class="p-7 border shadow-lg z-20">
-        <a href="{% url 'home' %}" class="text-3xl">Brand</a>
-        <div class="inline-block">
-            <ul class="inline mx-10 text-xl">
-                {% if user.is_authenticated %}
-                    <li class="inline mx-5 hover:font-bold cursor-pointer"><a href="{% url 'store:purchase' %}">Purchase&nbsp;<i class="fa-solid fa-cart-plus"></i></a></li>
-                    <li class="inline mx-5 hover:font-bold cursor-pointer"><a href="{% url 'store:sales' %}">Sales&nbsp;<i class="fa-solid fa-cart-shopping"></i></a></li>
+    <div class="p-5 border shadow-lg z-20">
+        
+            
+        
+        <div class="flex">
+            <span class="border">
+                <a href="{% url 'home' %}" class="text-3xl">Brand</a>
+            </span>
+            <div class="justify-end">
+                <ul class="inline mx-10 text-md">
+                    {% if user.is_authenticated %}
+                    <li class="inline mx-5 hover:font-bold cursor-pointer"><a href="{% url 'store:purchase' %}">Purchase&nbsp;<i
+                                class="fa-solid fa-cart-plus"></i></a></li>
+                    <li class="inline mx-5 hover:font-bold cursor-pointer"><a href="{% url 'store:sales' %}">Sales&nbsp;<i
+                                class="fa-solid fa-cart-shopping"></i></a></li>
                     <li class="inline mx-5 hover:font-bold cursor-pointer"><a href="{% url 'store:product' %}">Products&nbsp;<i
                                 class="fa-solid fa-box-open"></i></a></li>
-                    <li class="inline mx-5 hover:font-bold cursor-pointer"><a href="{% url 'store:signout' %}">logout&nbsp;<i class="fa-solid fa-user-minus"></i></a></li>
-                    
-                {% else %} 
-                    <li class="inline mx-5 hover:font-bold cursor-pointer"><a href="{% url 'store:signin' %}">Sign In&nbsp;<i class="fa-solid fa-arrow-right-to-bracket"></i></a></li>
-                    <li class="inline mx-5 hover:font-bold cursor-pointer"><a href="{% url 'store:signup' %}">Sign Up&nbsp;<i class="fa-solid fa-user-plus"></i></a></li>
-                {% endif %}
+                    <li class="inline mx-5 hover:font-bold cursor-pointer"><a href="{% url 'store:signout' %}">logout&nbsp;<i
+                                class="fa-solid fa-user-minus"></i></a></li>
                 
-            </ul>
+                    {% else %}
+                    <li class="inline mx-5 hover:font-bold cursor-pointer"><a href="{% url 'store:signin' %}">Sign In&nbsp;<i
+                                class="fa-solid fa-arrow-right-to-bracket"></i></a></li>
+                    <li class="inline mx-5 hover:font-bold cursor-pointer"><a href="{% url 'store:signup' %}">Sign Up&nbsp;<i
+                                class="fa-solid fa-user-plus"></i></a></li>
+                    {% endif %}
+                
+                </ul>
+            </div>
         </div>
     </div>
 </div>

@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
-from .models import CustomUser, Store
+from .models import CustomUser, Store, Product
 
 
 class UserCreationForm(UserCreationForm):
@@ -31,5 +31,4 @@ class StoreCreationForm(forms.ModelForm):
         for visible in self.visible_fields():
             visible.field.widget.attrs['class'] = 'border py-2 border-teal-500 w-full'
             
-
-
+    

@@ -1,9 +1,54 @@
 {% extends 'main/base.html' %}
 {% load static %}
 {% block content %}
-<div class="content">
+
+<div class="content m-10">
     <div class="text-center text-4xl">
         <p class="my-5">Purchase Products</p>
     </div>
+    <form action="" class="p-10 inline">
+        <p class="text-md">Please fill the products details correctly</p>
+        {% csrf_token %}
+        <div class="grid lg:grid-cols-4 sm:grid-cols-1 gap-4">
+            <div class="">
+                <label for="name" class="block">Product Name</label>
+                <input type="text" name="name" id="name" class="border w-full border-teal-500 p-2" required placeholder="Product Name">
+                <label for="quantity" class="block mt-2">Product quantity</label>
+                <input type="number" name="quantity" id="quantity" class="border w-full border-teal-500 p-2" required placeholder="Quantity">
+                <label for="stock" class="block mt-2">Product stock</label>
+                <input type="number" name="stock" id="stock" class="border w-full border-teal-500 p-2" required disabled>
+            </div>
+            <div class="">
+                <label for="description" class="block">Product Name</label>
+                <input type="text" name="description" id="description" class="border w-full py-2 border-teal-500" required placeholder="Product Description">
+                <label for="mfd" class="block mt-2">Manufacturing Date</label>
+                <input type="date" name="mfd" id="mfd" class="border w-full py-2 border-teal-500" required>
+            </div>
+            <div>
+                <label for="price" class="block">Product Price</label>
+                <input type="number" name="price" id="price" class="border w-full py-2 border-teal-500" required placeholder="Product Price">
+                <label for="expd" class="block mt-2">Expiration Date</label>
+                <input type="date" name="expd" id="expd" class="border w-full py-2 border-teal-500" required>
+            </div>
+            <div class="">
+                <label for="rate" class="block">Product rate</label>
+                <input type="number" name="rate" id="rate" class="border w-full py-2 border-teal-500" required disabled>
+                <label for="profit" class="block mt-2">Product Profit</label>
+                <input type="number" name="profit" id="profit" class="border w-full py-2 border-teal-500" required disabled>
+            </div>
+        </div>
+    </div>
+        <div class="text-center">
+            <p>In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a
+            document or a typeface without relying on meaningful content. Lorem ipsum may be used as a placeholder before final copy
+            is available.</p>
+            <button  class="bg-teal-500 text-white px-4 py-2 hover:font-bold hover:bg-teal-700 shadow mt-3 mb-5 ml-10">Purchase</button>
+        </div>
+    
+    </form>
+            
+        
+    
 </div>
+
 {% endblock content %}
