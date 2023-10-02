@@ -27,12 +27,15 @@ class Product(models.Model):
     # Relationship
     name = models.CharField(max_length=100)
     description = models.CharField(max_length=200)
-    price = models.IntegerField()
-    quantity = models.IntegerField()
+    price = models.IntegerField(default=0)
+    bulk_price = models.IntegerField(default=0)
+    quantity = models.IntegerField(default=0)
+    rate = models.FloatField(default=0)
     mfd = models.DateField()
     expd = models.DateField()
-    profit = models.IntegerField()
-    stock = models.IntegerField()
+    profit = models.IntegerField(default=0)
+    stock = models.IntegerField(default=0)
+   
     
     
     def __str__(self):

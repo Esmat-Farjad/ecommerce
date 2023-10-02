@@ -2,53 +2,148 @@
 {% load static %}
 {% block content %}
 
-<div class="content m-10">
+<div class="m-10 border p-10">
     <div class="text-center text-4xl">
         <p class="my-5">Purchase Products</p>
     </div>
-    <form action="" class="p-10 inline">
-        <p class="text-md">Please fill the products details correctly</p>
+    <p class="text-sky-500">
+        <strong><i class="fa-solid fa-plus"></i></strong>
+        Adding a new brand product to your stock.
+    </p>
+    <form action="{% url 'store:purchase' %}" method="POST" class="p-10 inline">
         {% csrf_token %}
         <div class="grid lg:grid-cols-4 sm:grid-cols-1 gap-4">
             <div class="">
                 <label for="name" class="block">Product Name</label>
                 <input type="text" name="name" id="name" class="border w-full border-teal-500 p-2" required placeholder="Product Name">
                 <label for="quantity" class="block mt-2">Product quantity</label>
-                <input type="number" name="quantity" id="quantity" class="border w-full border-teal-500 p-2" required placeholder="Quantity">
-                <label for="stock" class="block mt-2">Product stock</label>
-                <input type="number" name="stock" id="stock" class="border w-full border-teal-500 p-2" required disabled>
+                <input type="number" name="quantity" id="quantity" class="border w-full border-teal-500 p-2" required
+                    placeholder="Quantity">
+                <small class="text-red-500 p-0 m-0" id="show_message"></small>
             </div>
             <div class="">
-                <label for="description" class="block">Product Name</label>
-                <input type="text" name="description" id="description" class="border w-full py-2 border-teal-500" required placeholder="Product Description">
+                <label for="description" class="block">Product Description</label>
+                <input type="text" name="description" id="description" class="border w-full p-2 border-teal-500" required placeholder="Product Description">
+                <label for="category" class="block">Product Category</label>
+                <select name="category" id="category" class="p-2 border-teal-500 w-full border">
+                    <option value="" disabled selected>Please select...</option>
+                    {% for cat in category %}
+                        <option value="{{cat.id}}">{{cat.name}}</option>
+                    {% endfor %}
+                    
+                </select>
                 <label for="mfd" class="block mt-2">Manufacturing Date</label>
-                <input type="date" name="mfd" id="mfd" class="border w-full py-2 border-teal-500" required>
+                <input type="date" name="mfd" id="mfd" class="border w-full p-2 border-teal-500" required>
+                
             </div>
             <div>
-                <label for="price" class="block">Product Price</label>
-                <input type="number" name="price" id="price" class="border w-full py-2 border-teal-500" required placeholder="Product Price">
+                <label for="bprice" class="block">Bulk Price</label>
+                <input type="number" name="bprice" id="bprice" onchange="calculate()" class="border w-full p-2 border-teal-500" required
+                    placeholder="Product Bulk Price">
+                <label for="price" class="block mt-2">Product Price</label>
+                <input type="number" name="price" id="price" class="border w-full p-2 border-teal-500" required placeholder="Product Price">
                 <label for="expd" class="block mt-2">Expiration Date</label>
-                <input type="date" name="expd" id="expd" class="border w-full py-2 border-teal-500" required>
+                <input type="date" name="expd" id="expd" class="border w-full p-2 border-teal-500" required>
             </div>
             <div class="">
-                <label for="rate" class="block">Product rate</label>
-                <input type="number" name="rate" id="rate" class="border w-full py-2 border-teal-500" required disabled>
+                <label for="stock" class="block">Product stock</label>
+                <input type="number" name="stock" id="stock" class="border rounded-full w-full border-gray-200 p-2" required disabled>
+                <label for="rate" class="block mt-2">Product rate</label>
+                <input type="number" name="rate" id="rate" class="border rounded-full w-full p-2 border-gray-200" required disabled>
+                <small class="text-red-500 p-0 m-0" id="alert_message"></small>
                 <label for="profit" class="block mt-2">Product Profit</label>
-                <input type="number" name="profit" id="profit" class="border w-full py-2 border-teal-500" required disabled>
+                <input type="number" name="profit" id="profit" class="border rounded-full w-full p-2 border-gray-200" required disabled>
+                <small class="text-red-500 p-0 m-0" id="profit_message"></small>
             </div>
         </div>
-    </div>
-        <div class="text-center">
-            <p>In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a
-            document or a typeface without relying on meaningful content. Lorem ipsum may be used as a placeholder before final copy
-            is available.</p>
-            <button  class="bg-teal-500 text-white px-4 py-2 hover:font-bold hover:bg-teal-700 shadow mt-3 mb-5 ml-10">Purchase</button>
+        <p class="text-sky-500">
+            <Strong><i class="fa-solid fa-circle-info"></i></Strong>
+            Please fill the Product details correctly.
+        </p>
+        <div class="text-center mt-5">
+            <button type="submit" class="bg-teal-500 text-white px-4 py-2 hover:font-bold hover:bg-teal-700 shadow mt-3 mb-5 ml-10">Purchase</button>
         </div>
-    
     </form>
-            
-        
-    
 </div>
+<hr>
+<!-- PRODUCT DISPLAYING SECTION START -->
+<div class="mx-10 mb-10 p-10">
+<div class="heading">
+    <h1 class="text-4xl text-center">Product Details</h1>
+</div>
+<table class="table-auto w-full">
+    <thead class="w-full py-4 text-center bg-teal-500 shadow text-white">
+        <th class="py-4 border-design">#</th>
+        <th class="py-4 border-design">Product Name</th>
+        <th class="py-4 border-design">Product Description</th>
+        <th class="py-4 border-design">Product Category</th>
+        <th class="py-4 border-design">Product Rate</th>
+        <th class="py-4 border-design">Product Price</th>
+        <th class="py-4 border-design">Product profit</th>
+        <th class="py-4 border-design">Product stock</th>
+        <th class="py-4 border-design">Manufacturing Date</th>
+        <th class="py-4 border-design">Expiration Date</th>
+    </thead>
+    <tbody class="text-center shadow border">
+        
+        {% for item in product %}
+            <td class="py-3">{{item.id}}</td>
+            <td class="py-3">{{item.name}}</td>
+            <td class="py-3">{{item.description}}</td>
+            <td class="py-3">{{item.category}}</td>
+            <td class="py-3">{{item.rate}}</td>
+            <td class="py-3">{{item.price}}</td>
+            <td class="py-3">{{item.profit}}</td>
+            <td class="py-3">{{item.stock}}</td>
+            <td class="py-3">{{item.mfd}}</td>
+            <td class="py-3">{{item.expd}}</td>
+            
+        {% endfor %}
+    </tbody>
+</table>
+</div>
+<script>
+   
+    el = document.getElementById('bprice');
+    el.addEventListener('input', function (evt) {
+        var qty = document.getElementById('quantity').value;
+        if(qty) {
+            document.getElementById('stock').value = qty;
+            var b_price = evt.target.value;
+            var r = b_price/qty;
+            document.getElementById('rate').value = Math.round(r);
+        } else {
+            document.getElementById('show_message').innerHTML = "Please provide the product quantity";
+        }
+    });
+    element = document.getElementById("price");
+    element.addEventListener('input', function(e) {
+        var r = document.getElementById('rate').value;
+            if(r != 0) {
+            var p = e.target.value;
+            var profit = p-r;
+            document.getElementById('profit').value = profit;
+            
+        } else {
+            document.getElementById("alert_message").innerHTML = "Please provide the product rate."
+        }
+    });
 
+    elem = document.getElementById("quantity");
+    elem.addEventListener("input", function(ev) {
+        var qty = ev.target.value;
+        document.getElementById('stock').value = qty;
+        var b_price = document.getElementById('bprice').value;
+        var r = b_price/qty;
+        document.getElementById('rate').value = Math.round(r);   
+       if(document.getElementById("show_message")) {
+            document.getElementById("show_message").style.display = "none";
+       }
+       
+       
+    });
+    if(document.getElementById('rate').value) {
+        document.getElementById("alert_message").style.display = "none";
+    }
+</script>
 {% endblock content %}

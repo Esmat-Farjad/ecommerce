@@ -1,7 +1,7 @@
 from django.shortcuts import redirect, render
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
-from .models import CustomUser, Store
+from .models import Category, CustomUser, Store, Product
 from .forms import UserCreationForm,StoreCreationForm
 
 # Create your views here.
@@ -72,6 +72,23 @@ def routeProduct(request, flag):
     return render(request, 'product.html', context)
 
 def purchase(request):
-   
-    context = {}
+    if request.method == 'POST':
+        name = request.POST['name']
+        description = request.POST['description']
+        category = request.POST['category']
+        price = request.POST['price']
+        bulk_price = request.POST['bprice']
+        quantity = request.POST['quantity']
+        mfd = request.POST['mfd']
+        expd = request.POST['expd']
+        rate = round(int(bulk_price)/int(quantity), 2)
+        profit = int(price) - int(rate)
+        stock = quantity
+        print(rate,profit,stock)
+        new_record = Product(name=name, description=description,category_id=category,price=price,bulk_price=bulk_price,quantity=quantity,rate=rate,mfd=mfd,expd=expd,profit=profit,stock=stock)
+        new_record.save()
+        messages.success(request, "Product added successfully !")
+    product = Product.objects.all().order_by('-id')
+    cat = Category.objects.all()
+    context = {'category':cat,'product':product}
     return render(request, 'purchase.html', context)
