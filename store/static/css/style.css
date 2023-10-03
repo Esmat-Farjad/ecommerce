@@ -1,11 +1,29 @@
+@import url('https://fonts.googleapis.com/css2?family=AR+One+Sans&family=Montserrat:wght@100&family=Open+Sans:wght@300&family=Roboto:wght@300&display=swap');
+
+
 * {
-    font-family: 'Montserrat', sans-serif;
-    font-family: 'Open Sans', sans-serif;
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Roboto','AR One Sans','Montserrat','Open Sans', sans-serif;
+
 }
-.position-absolute{
-    position:absolute;
-    translate: middle;
-    left: 50%;
-    top: 50%;
+
+#border-design {
+    position: relative;
+    cursor: pointer;
+    margin-bottom: 2rem;
+}
+
+#border-design::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 3px;
+    width: 0%;
+    background-color: black;
+    transition: all ease 1s;
+}
+
+#border-design:hover::after {
+    width: 100%;
+    background-image: linear-gradient(to right, red, black);
 }

@@ -10,7 +10,7 @@
         <strong><i class="fa-solid fa-plus"></i></strong>
         Adding a new brand product to your stock.
     </p>
-    <form action="{% url 'store:purchase' %}" method="POST" class="p-10 inline">
+    <form action="{% url 'store:purchase' %}" method="POST" class="p-10 inline" enctype="multipart/form-data">
         {% csrf_token %}
         <div class="grid lg:grid-cols-4 sm:grid-cols-1 gap-4">
             <div class="">
@@ -20,6 +20,9 @@
                 <input type="number" name="quantity" id="quantity" class="border w-full border-teal-500 p-2" required
                     placeholder="Quantity">
                 <small class="text-red-500 p-0 m-0" id="show_message"></small>
+                <label for="item_pics" class="block mt-2">Item Image</label>
+                <input type="file" name="item_pics" id="item_pics" 
+                class="file:border file:rounded-full file:shadow file:p-2 hover:file:bg-teal-700 hover:file:font-bold file:bg-teal-500 file:text-white mb-2">
             </div>
             <div class="">
                 <label for="description" class="block">Product Description</label>
@@ -33,7 +36,7 @@
                     
                 </select>
                 <label for="mfd" class="block mt-2">Manufacturing Date</label>
-                <input type="date" name="mfd" id="mfd" class="border w-full p-2 border-teal-500" required>
+                <input type="date" name="mfd" id="mfd" class="border w-full p-2 border-teal-500">
                 
             </div>
             <div>
@@ -43,7 +46,7 @@
                 <label for="price" class="block mt-2">Product Price</label>
                 <input type="number" name="price" id="price" class="border w-full p-2 border-teal-500" required placeholder="Product Price">
                 <label for="expd" class="block mt-2">Expiration Date</label>
-                <input type="date" name="expd" id="expd" class="border w-full p-2 border-teal-500" required>
+                <input type="date" name="expd" id="expd" class="border w-full p-2 border-teal-500">
             </div>
             <div class="">
                 <label for="stock" class="block">Product stock</label>
@@ -69,25 +72,31 @@
 <!-- PRODUCT DISPLAYING SECTION START -->
 <div class="mx-10 mb-10 p-10">
 <div class="heading">
-    <h1 class="text-4xl text-center">Product Details</h1>
+    <h1 class="text-4xl text-center inline-block" id="border-design">Product Details</h1>
 </div>
 <table class="table-auto w-full">
-    <thead class="w-full py-4 text-center bg-teal-500 shadow text-white">
-        <th class="py-4 border-design">#</th>
-        <th class="py-4 border-design">Product Name</th>
-        <th class="py-4 border-design">Product Description</th>
-        <th class="py-4 border-design">Product Category</th>
-        <th class="py-4 border-design">Product Rate</th>
-        <th class="py-4 border-design">Product Price</th>
-        <th class="py-4 border-design">Product profit</th>
-        <th class="py-4 border-design">Product stock</th>
-        <th class="py-4 border-design">Manufacturing Date</th>
-        <th class="py-4 border-design">Expiration Date</th>
+    <thead class="w-full py-4 text-center bg-teal-500 shadow text-white ">
+        <th class="py-4 " id="border-design">#</th>
+        <th class="py-4 " id="border-design">Product Name</th>
+        <th class="py-4 " id="border-design">Product Description</th>
+        <th class="py-4 " id="border-design">Product Category</th>
+        <th class="py-4 " id="border-design">Product Rate</th>
+        <th class="py-4 " id="border-design">Product Price</th>
+        <th class="py-4" id="border-design">Product profit</th>
+        <th class="py-4 " id="border-design">Product stock</th>
+        <th class="py-4" id="border-design">Manufacturing Date</th>
+        <th class="py-4" id="border-design">Expiration Date</th>
     </thead>
     <tbody class="text-center shadow border">
         
         {% for item in product %}
-            <td class="py-3">{{item.id}}</td>
+        <tr class="border">
+            {% if item.image %}
+                <td class="py-3"><img src="{{item.image.url}}" alt="image" class="w-16 h-16 rounded-full shadow"></td>
+            {% elif not item.image %}
+                <td class="py-3"><img src="media/item_images/default.png" class="w-16 h-16 rounded-full shadow"></td>
+            {% endif %}
+            
             <td class="py-3">{{item.name}}</td>
             <td class="py-3">{{item.description}}</td>
             <td class="py-3">{{item.category}}</td>
@@ -97,12 +106,20 @@
             <td class="py-3">{{item.stock}}</td>
             <td class="py-3">{{item.mfd}}</td>
             <td class="py-3">{{item.expd}}</td>
-            
+        </tr>
         {% endfor %}
     </tbody>
 </table>
 </div>
 <script>
+    ele = document.getElementById("category");
+    ele.addEventListener('change', function(e) {
+        var a = e.target.value;
+        if(a == 1 || a == 2){
+            document.getElementById("mfd").style.display = "none";
+            document.getElementById("expd").style.display = "none";
+        }
+    })
    
     el = document.getElementById('bprice');
     el.addEventListener('input', function (evt) {

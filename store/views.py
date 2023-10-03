@@ -37,14 +37,8 @@ def signin(request):
     return render(request, 'signin.html', context)
 
 def sales(request):
-    if request.method == 'POST':
-        form = StoreCreationForm(request.POST)
-        if form.is_valid():
-            form.save()
-            messages.success(request, 'The Store added Successfully')
-            
-    form = StoreCreationForm()
-    context = {'form':form}
+    product = Product.objects.select_related('category')
+    context = {'product':product}
     return render(request, 'sales.html',context)
 
 def signout(request):
@@ -81,14 +75,29 @@ def purchase(request):
         quantity = request.POST['quantity']
         mfd = request.POST['mfd']
         expd = request.POST['expd']
+        item_pics=request.FILES['item_pics']
+            
         rate = round(int(bulk_price)/int(quantity), 2)
         profit = int(price) - int(rate)
         stock = quantity
         print(rate,profit,stock)
-        new_record = Product(name=name, description=description,category_id=category,price=price,bulk_price=bulk_price,quantity=quantity,rate=rate,mfd=mfd,expd=expd,profit=profit,stock=stock)
+        if category == 3 :
+            new_record = Product(name=name, description=description,category_id=category,price=price,bulk_price=bulk_price,quantity=quantity,rate=rate,mfd=mfd,expd=expd,profit=profit,stock=stock, image=item_pics)
+        else:
+            new_record = Product(name=name, description=description,category_id=category,price=price,bulk_price=bulk_price,quantity=quantity,rate=rate,profit=profit,stock=stock, image=item_pics)
+            
         new_record.save()
         messages.success(request, "Product added successfully !")
     product = Product.objects.all().order_by('-id')
     cat = Category.objects.all()
     context = {'category':cat,'product':product}
     return render(request, 'purchase.html', context)
+
+def dispatch(request, item):
+    if item:
+        product = Product.objects.get(id=item)
+        stock_list=[]
+        for x in range(1,product.stock):
+            stock_list.append(x)
+        context = {'product':product,'stock_list':stock_list}
+        return render(request, 'dispatch.html', context)

@@ -11,4 +11,5 @@ urlpatterns = [
     path('product/', views.product, name='product'),
     path('routeProduct/<flag>', views.routeProduct, name='routeProduct'),
     path('purchase/', views.purchase, name='purchase'),
+    path('dispatch/<item>', views.dispatch, name='dispatch'),
 ]

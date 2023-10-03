@@ -13,85 +13,45 @@
             <!-- <button class="bg-teal-500 text-white px-4 py-2 hover:font-bold hover:bg-teal-700 shadow my-3">Save</button> -->
         </form>
         </div>
-        </div>
+    </div>
         <hr>
-        <div class="mx-10 my-5">
-            <div class="grid grid-cols-4 gap-4">
+    <div class="mx-10 my-5">
+        <div class="grid grid-cols-4 gap-4">
                 <!-- shopping card -->
+                {% for item in product %}
+                
                 <div class="card rounded shadow border">
                     <div class="grid grid-cols-3">
                         <div class="avatar border mr-2">
                             <i class="fa-solid fa-image text-5xl"></i>
                         </div>
-                        <div class="details p-3 w-full col-span-2">
-                            <p class="font-bold inline-block">Product Name</p>
-                            <p class="text-xs">Product Description</p>
-                            <p>Price</p>
-                            <p class="text-green-600"><i class="fa-solid fa-check border rounded"></i>&nbsp;in stock</p>
-                            <p class="text-red-500">out of stock</p>
+                        <div class="details p-3 w-full col-span-2 relative">
+                            <p class="font-bold inline-block">{{item.name}}</p>
+                            
+                            <span class="absolute right-0 top-0 p-1 bg-teal-500 rounded-l-full mt-1 shadow">
+                                {% if item.category.id == 3 %}
+                                    <p class="m-0 p-0 inline-block text-white text-xs"><i class="fa-solid fa-plate-wheat"></i>&nbsp;{{item.category}}</p>
+                                {% elif item.category.id == 2 %}
+                                    <p class="m-0 p-0 inline-block text-white text-xs"><i class="fa-solid fa-shoe-prints"></i>&nbsp;{{item.category}}</p>
+                                    {% elif item.category.id == 1 %}
+                                    <p class="m-0 p-0 inline-block text-white text-xs"><i class="fa-solid fa-shirt"></i>&nbsp;{{item.category}}</p>
+                                {% endif %}
+                                
+                            </span>
+                            <p class="text-xs">{{item.description}}</p>
+                            <p>{{item.price}} $</p>
+                            {% if item.stock %}
+                                <p class="text-green-600"><i class="fa-solid fa-check border rounded"></i>&nbsp;in stock</p>
+                            {% else %}
+                                <p class="text-red-500">out of stock</p>
+                            {% endif %}
                             <a class="bg-teal-500 text-white py-1 px-2 rounded shadow hover:bg-teal-700 hover:font-bold" href="">add to card</a>
-                            <a class="bg-teal-500 text-white py-1 px-2 rounded shadow hover:bg-teal-700 hover:font-bold" href="">purchase</a>
+                            <a class="bg-teal-500 text-white py-1 px-2 rounded shadow hover:bg-teal-700 hover:font-bold" href="{% url 'store:dispatch' item.id %}">purchase</a>
                         </div>
                     </div>
                 </div>
-                <!-- shopping card -->
-                <div class="card rounded shadow border">
-                    <div class="grid grid-cols-3">
-                        <div class="avatar border mr-2">
-                            <i class="fa-solid fa-image text-5xl"></i>
-                        </div>
-                        <div class="details p-3 w-full col-span-2">
-                            <p class="font-bold inline-block">Product Name</p>
-                            <p class="text-xs">Product Description</p>
-                            <p>Price</p>
-                            <p class="text-green-600"><i class="fa-solid fa-check border rounded"></i>&nbsp;in stock</p>
-                            <p class="text-red-500">out of stock</p>
-                            <a class="bg-teal-500 text-white py-1 px-2 rounded shadow hover:bg-teal-700 hover:font-bold" href="">add to
-                                card</a>
-                            <a class="bg-teal-500 text-white py-1 px-2 rounded shadow hover:bg-teal-700 hover:font-bold"
-                                href="">purchase</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="card rounded shadow border">
-                    <div class="grid grid-cols-3">
-                        <div class="avatar border mr-2">
-                            <i class="fa-solid fa-image text-5xl"></i>
-                        </div>
-                        <div class="details p-3 w-full col-span-2">
-                            <p class="font-bold inline-block">Product Name</p>
-                            <p class="text-xs">Product Description</p>
-                            <p>Price</p>
-                            <p class="text-green-600"><i class="fa-solid fa-check border rounded"></i>&nbsp;in stock</p>
-                            <p class="text-red-500">out of stock</p>
-                            <a class="bg-teal-500 text-white py-1 px-2 rounded shadow hover:bg-teal-700 hover:font-bold" href="">add to
-                                card</a>
-                            <a class="bg-teal-500 text-white py-1 px-2 rounded shadow hover:bg-teal-700 hover:font-bold"
-                                href="">purchase</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="card rounded shadow border">
-                    <div class="grid grid-cols-3">
-                        <div class="avatar border mr-2">
-                            <i class="fa-solid fa-image text-5xl"></i>
-                        </div>
-                        <div class="details p-3 w-full col-span-2">
-                            <p class="font-bold inline-block">Product Name</p>
-                            <p class="text-xs">Product Description</p>
-                            <p>Price</p>
-                            <p class="text-green-600"><i class="fa-solid fa-check border rounded"></i>&nbsp;in stock</p>
-                            <p class="text-red-500">out of stock</p>
-                            <a class="bg-teal-500 text-white py-1 px-2 rounded shadow hover:bg-teal-700 hover:font-bold" href="">add to
-                                card</a>
-                            <a class="bg-teal-500 text-white py-1 px-2 rounded shadow hover:bg-teal-700 hover:font-bold"
-                                href="">purchase</a>
-                        </div>
-                    </div>
-                </div>
-        
+                {% endfor %}
+        </div>       <!-- shopping card -->
     </div>
 </div>
 {% endblock content %}

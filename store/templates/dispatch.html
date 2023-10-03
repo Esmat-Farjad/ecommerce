@@ -1,0 +1,67 @@
+{% extends 'main/base.html' %}
+{% load static %}
+{% block content %}
+<div class="">
+    <div class="heading m-10">
+        <h1 class="text-xl text-center">Item details for sale</h1>
+    </div>
+    <div class="grid lg:grid-cols-3 sm:cols1 lg:mx-20 sm:mx-5">
+        <div class="image m-5 border rounded">
+            <img src="{{product.image.url}}" alt="Product Image" class="w-full h-5/6 border rounded shadow hover:scale-125 transition ease-in-out duration-500">
+        </div>
+        <div class="details col-span-2 m-5 pr-10">
+            <div class="title">
+                <p class="text-2xl font-bold inline-block">{{product.name}}</p>
+                <span class="mx-10">
+                    <label for="quantity">Quantity</label>
+                    <select name="quantity" id="quantity" class="py-1 px-4 rounded border border-teal-300">
+                        {% for i in stock_list %}
+                            <option value="{{i}}">{{i}}</option>
+                        {% endfor %}
+                    </select>
+                </span>
+                <span class="">
+                    <p class="font-bold inline-block">Total Price: </p>
+                    <p class="font-bold inline-block" id="total_price"></p> $
+                </span>
+            </div>
+            <div class="body">
+                <small class="">{{product.description}}</small>
+            </div>
+            <div class="footer">
+                <p class="text-xl">{{product.price}} $</p>
+                <input type="number" name="price" id="price" hidden value="{{product.price}}">
+                {% if product.stock > 0 %}
+                    <p class="text-md text-green-500"><i class="fa-regular fa-square-check"></i>&nbsp;in stock</p>
+                {% else %}
+                <p class="text-md text-red-500"><i class="fa-solid fa-triangle-exclamation"></i>&nbsp;currently out of stock&nbsp;<i
+                        class="fa-regular fa-face-frown"></i></p>
+                {% endif %}
+                
+                
+                <p class="text-sm">MFD: {{product.mfd}}</p>
+                <p class="text-sm">EXPD: {{product.expd}}</p>
+            </div>
+            <div class="operations">
+            <button type="submit" class="bg-teal-500 text-white p-2 hover:font-bold hover:bg-teal-700 shadow mt-3 mb-3">Purchase</button>
+            <button type="submit" class="bg-red-500 text-white p-2 hover:font-bold hover:bg-red-700 shadow mt-3 mb-3">Cancel</button>
+            
+                
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    var p = document.getElementById("price").value;
+    var q = document.getElementById("quantity").value;
+    document.getElementById("total_price").innerHTML = p*q;
+    element=document.getElementById("quantity");
+    element.addEventListener("change", function(e) {
+        var a = e.target.value;
+        var p = document.getElementById("price").value;
+        var tp = a*p;
+        document.getElementById("total_price").innerHTML = tp;
+    });
+
+</script>
+{% endblock content %}
