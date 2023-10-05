@@ -1,73 +1,9 @@
 {% extends 'main/base.html' %}
 {% load static %}
 {% block content %}
-<div class="grid rows-2">
 
-    <div class="list-tab">
-        <div class="flex justify-center py-2 my-5">
-            {% if flag == 'list' %}
-                <span
-                    class="mx-2 shadow-lg py-2 px-4 border bg-teal-500 transition duration-500 ease-in-out rounded text-white cursor-pointer ">
-                    <a href="{% url 'store:routeProduct' 'list' %}">
-                        <i class="fa-solid fa-list-ul"></i>&nbsp;Product List
-                    </a>
-                </span>
-            {% else %}
-            <span
-                class="mx-2 shadow-lg py-2 px-4 border hover:bg-teal-500 transition duration-500 ease-in-out rounded hover:text-white cursor-pointer ">
-                <a href="{% url 'store:routeProduct' 'list' %}">
-                    <i class="fa-solid fa-list-ul"></i>&nbsp;Product List
-                </a>
-            </span>
-            {% endif %}
-            {% if flag == 'add' %}
-                <span
-                    class="mx-2 shadow-lg py-2 px-4 border bg-teal-500 transition duration-500 ease-in-out rounded text-white cursor-pointer ">
-                    <a href="{% url 'store:routeProduct' 'add' %}">
-                        <i class="fa-solid fa-plus"></i>&nbsp;Add New Product
-                    </a>
-                </span>
-            {% else %}
-                <span
-                    class="mx-2 shadow-lg py-2 px-4 border hover:bg-teal-500 transition duration-500 ease-in-out rounded hover:text-white cursor-pointer ">
-                    <a href="{% url 'store:routeProduct' 'add' %}">
-                        <i class="fa-solid fa-plus"></i>&nbsp;Add New Product
-                    </a>
-                </span>
-            {% endif %}
-            {% if flag == 'update' %}
-                <span
-                    class="mx-2 shadow-lg py-2 px-4 border bg-teal-500 transition duration-500 ease-in-out rounded text-white cursor-pointer ">
-                    <a href="{% url 'store:routeProduct' 'update' %}">
-                        <i class="fa-solid fa-pen"></i>&nbsp;Update Product
-                    </a>
-                </span>
-            {% else %}
-            <span
-                class="mx-2 shadow-lg py-2 px-4 border hover:bg-teal-500 transition duration-500 ease-in-out rounded hover:text-white cursor-pointer ">
-                <a href="{% url 'store:routeProduct' 'update' %}">
-                    <i class="fa-solid fa-pen"></i>&nbsp;Update Product
-                </a>
-            </span>
-            {% endif %}
-            {% if flag == 'delete' %}
-                <span
-                    class="mx-2 shadow-lg py-2 px-4 border bg-red-500 transition duration-500 ease-in-out rounded text-white cursor-pointer ">
-                    <a href="{% url 'store:routeProduct' 'delete' %}">
-                        <i class="fa-solid fa-trash"></i>&nbsp;Delete Product
-                    </a>
-                </span>
-            {% else %}
-                <span
-                    class="mx-2 shadow-lg py-2 px-4 border hover:bg-red-500 transition duration-500 ease-in-out rounded hover:text-white cursor-pointer ">
-                    <a href="{% url 'store:routeProduct' 'delete' %}">
-                        <i class="fa-solid fa-trash"></i>&nbsp;Delete Product
-                    </a>
-                </span>
-            {% endif %}
-        </div>
-    </div>
-    <hr>
+<div class="relative">
+
     <div class="main-content mx-10">
         {% if flag == 'list' %}
             
@@ -79,7 +15,7 @@
                     <div class="flex justify-center">
                         <form action="" method="POST" class="my-5">
                             {% csrf_token %}
-                            <input type="text" class="py-2 rounded border border-teal-400 w-96">
+                            <input type="text" class="p-2 rounded border border-teal-400 w-96 focus:outline-none focus:border:sky-500" placeholder="Search items">
                             <button class="rounded-full border bg-teal-500 hover:bg-teal-700 hover:text-white px-3 py-2"><i
                                     class="fa-solid fa-magnifying-glass"></i></button>
                             <!-- <button class="bg-teal-500 text-white px-4 py-2 hover:font-bold hover:bg-teal-700 shadow my-3">Save</button> -->
@@ -87,26 +23,44 @@
                     </div>
                 </div>
                 <div>
-                <table class="table-auto w-full text-center">
-                    <thead class="bg-teal-500 text-white">
+                <table class="table-auto w-full shadow-md">
+                    <thead class="bg-teal-500 text-white text-start">
                         <th class="py-2">#</th>
                         <th class="py-2">Name</th>
                         <th class="py-2">Description</th>
                         <th class="py-2">Category</th>
+                        <th class="py-2">Rate</th>
                         <th class="py-2">price</th>
+                        <th class="py-2">Profit</th>
                         <th class="py-2">MFD</th>
                         <th class="py-2">EXPD</th>
                         <th class="py-2">Stock</th>
+                        
+                        <th class="py-2">Manage</th>
                     </thead>
                     <tbody>
-                        <td class="py-2">item</td>
-                        <td class="py-2">item</td>
-                        <td class="py-2">item</td>
-                        <td class="py-2">item</td>
-                        <td class="py-2">item</td>
-                        <td class="py-2">item</td>
-                        <td class="py-2">item</td>
-                        <td class="py-2">item</td>
+                        
+                        {% for item in product %}
+                     
+                            <tr class="border hover:bg-gray-100 cursor-pointer hover:font-semiboldtransition duration-500 ease-in-out">
+                        
+                            <td class="p-2 border "><img src="{{item.image.url}}" class="w-16 h-16 rounded-full shadow border border-gray-400" alt=""></td>
+                            <td class="p-2 border ">{{item.name}}</td>
+                            <td class="p-2 border w-80">{{item.description}}</td>
+                            <td class="p-2 border ">{{item.category}}</td>
+                            <td class="p-2 border ">{{item.rate}} $</td>
+                            <td class="p-2 border ">{{item.price}} $</td>
+                            <td class="p-2 border ">{{item.profit}} $</td>
+                            <td class="p-2 border ">{{item.mfd}}</td>
+                            <td class="p-2 border ">{{item.expd}}</td>
+                            <td class="p-2 border ">{{item.stock}}</td>
+                            <td class="p-2">
+                                <p class="inline-block mr-3 hover:text-teal-600"><i class="fa-solid fa-pen"></i>&nbsp;<small class="hover:font-bold">Edit</small></p>
+                                <a class="inline-block btn-delete hover:text-red-600" data-stateName="{{item.id}}"><i class="fa-solid fa-eraser"></i>&nbsp;<small class="hover:font-bold">Delete</small></a>
+                            </td>
+                            </tr>
+                    
+                        {% endfor %}
                     </tbody>
                 </table>
             </div>
@@ -116,9 +70,46 @@
             {% include 'includes/update_product.html' %}
         {% elif flag == 'delete' %}
             <h1>DELETE PRODUCT</h1>
+            
         {% endif %}
         
-
     </div>
 </div>
+<!-- modal dialog for delete starts-->
+<div class="absolute lg:inset-x-1/3 sm:inset-x-32 sm:top-1/4 border shadow-lg rounded border-gray-400 bg-white lg:top-1/4 p-5 z-10" id="modal-dialog">
+    <div class="font-bold text-center">
+        <i class="fa-solid text-2xl fa-question rounded-full bg-green-100 py-2 px-3 text-green-700"></i>
+        <h1 class="text-2xl text-red-500 font-semibold ">Delete Conformation</h1>
+    </div>
+    <form action="{% url 'store:product' %}" method="POST">
+        {% csrf_token %}
+        <input type="number" name="getid" id="getid" class="" hidden>
+        <p class="text-xl text-center font-semibold">&nbsp;Are you sure you want to delete the Item ?</p>
+    <div class="text-center">
+        <button type="submit" class=" bg-teal-500 text-white px-4 py-2 hover:font-bold hover:bg-teal-700 shadow mt-3 mb-5 mr-1 rounded">Yes&nbsp;<i class="fa-regular fa-thumbs-up"></i></button>
+        <button type="button" class="btn-cancel bg-red-500 text-white px-4 py-2 hover:font-bold hover:bg-red-700 shadow mt-3 mb-5 mr-1 rounded">No&nbsp;<i class="fa-regular fa-thumbs-down"></i></button>
+    </div>
+    
+</div>
+<!-- modal dialog for delete ends -->
+<script>
+$(document).ready(function() {
+    $('.btn-delete[data-stateName]').click(function() {
+        $("#modal-dialog").animate({
+            height:'toggle'
+        });
+        var id = $(this).attr("data-stateName");
+        document.getElementById("getid").value = id;
+        
+    });
+});
+$(document).ready(function() {
+        $(".btn-cancel").click(function () {
+        $("#modal-dialog").animate({
+            height: 'toggle'
+        });
+    });
+});
+
+</script>
 {% endblock content %}

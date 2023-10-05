@@ -46,8 +46,12 @@ def signout(request):
     return render(request, 'signin.html')
 
 def product(request):
-    
-    context = {'flag':'list'}
+    if request.method == 'POST':
+        id = request.POST['getid']
+        Product.objects.filter(id=id).delete()
+        messages.success(request, "Item Deleted Successfully !")
+    product = Product.objects.all().order_by('-id')
+    context = {'product':product,'flag':'list'}
     return render(request, 'product.html', context)
 
 def routeProduct(request, flag):
@@ -101,3 +105,9 @@ def dispatch(request, item):
             stock_list.append(x)
         context = {'product':product,'stock_list':stock_list}
         return render(request, 'dispatch.html', context)
+    
+def display_details(request, iid):
+    p = Product.objects.get(id = iid)
+    context = {'p':p}
+    print(iid)
+    return render(request, 'item_details.html', context)   

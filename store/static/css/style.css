@@ -27,3 +27,6 @@
     width: 100%;
     background-image: linear-gradient(to right, red, black);
 }
+#modal-dialog{
+    display: none;
+}

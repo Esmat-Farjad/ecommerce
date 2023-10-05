@@ -1,0 +1,23 @@
+{% extends 'main/base.html' %}
+{% load static %}
+{% block content %}
+<div class="m-10">
+    <p class="text-center text-2xl">Product Details</p>
+    <div class="grid lg:grid-cols-2 sm:grid-cols-1">
+        <div class="details p-5">
+            <p class="text-xl font-bold">{{p.name}}</p>
+            <p class="text-sm font-bold">{{p.description}}</p>
+            <p class="text-xl font-bold">{{p.category}}</p>
+            <p class="text-xl font-bold">{{p.price}}</p>
+            <p class="text-xl font-bold">{{p.rate}}</p>
+            <p class="text-xl font-bold">{{p.profit}}</p>
+            <p class="text-xl font-bold">{{p.mfd}}</p>
+            <p class="text-xl font-bold">{{p.expd}}</p>
+            <p class="text-xl font-bold">{{p.stock}}</p>
+        </div>
+        <div class="image">
+            <img src="{{p.image.url}}" alt="">
+        </div>
+    </div>
+</div>
+{% endblock content %}
