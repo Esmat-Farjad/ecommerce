@@ -35,6 +35,7 @@ class Product(models.Model):
     expd = models.DateField(null=True, blank=True)
     profit = models.IntegerField(default=0)
     stock = models.IntegerField(default=0)
+    packet = models.IntegerField(default=0)
     image = models.ImageField(default='default.jpg', upload_to='item_images')
    
     

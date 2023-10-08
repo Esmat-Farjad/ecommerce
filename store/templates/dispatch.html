@@ -57,6 +57,7 @@
     document.getElementById("total_price").innerHTML = p*q;
     element=document.getElementById("quantity");
     element.addEventListener("change", function(e) {
+        
         var a = e.target.value;
         var p = document.getElementById("price").value;
         var tp = a*p;

@@ -54,20 +54,6 @@ def product(request):
     context = {'product':product,'flag':'list'}
     return render(request, 'product.html', context)
 
-def routeProduct(request, flag):
-    if flag == 'list':
-        sign = flag
-        context = {'flag':sign}
-    elif flag == 'add':
-        sign = flag
-        context = {'flag':sign}
-    elif flag == 'update':
-        sign = flag
-        context = {'flag':sign}
-    elif flag =='delete':
-        sign = flag
-        context = {'flag':sign}
-    return render(request, 'product.html', context)
 
 def purchase(request):
     if request.method == 'POST':
@@ -76,32 +62,36 @@ def purchase(request):
         category = request.POST['category']
         price = request.POST['price']
         bulk_price = request.POST['bprice']
-        quantity = request.POST['quantity']
         mfd = request.POST['mfd']
         expd = request.POST['expd']
+        packet = request.POST['packet_content']
         item_pics=request.FILES['item_pics']
-            
+        num_packet = request.POST['num_packet']
+        quantity = int(packet) * int(num_packet) 
         rate = round(int(bulk_price)/int(quantity), 2)
         profit = int(price) - int(rate)
         stock = quantity
         print(rate,profit,stock)
         if category == 3 :
-            new_record = Product(name=name, description=description,category_id=category,price=price,bulk_price=bulk_price,quantity=quantity,rate=rate,mfd=mfd,expd=expd,profit=profit,stock=stock, image=item_pics)
+            new_record = Product(name=name, description=description,category_id=category,price=price,bulk_price=bulk_price,quantity=quantity,rate=rate,mfd=mfd,expd=expd,profit=profit,stock=stock, packet=packet, image=item_pics)
         else:
-            new_record = Product(name=name, description=description,category_id=category,price=price,bulk_price=bulk_price,quantity=quantity,rate=rate,profit=profit,stock=stock, image=item_pics)
+            new_record = Product(name=name, description=description,category_id=category,price=price,bulk_price=bulk_price,quantity=quantity,rate=rate,profit=profit,stock=stock, packet=packet, image=item_pics)
             
         new_record.save()
         messages.success(request, "Product added successfully !")
     product = Product.objects.all().order_by('-id')
+    number = []
+    for x in range(1, 100,1):
+        number.append(x)
     cat = Category.objects.all()
-    context = {'category':cat,'product':product}
+    context = {'category':cat,'product':product,'num':number}
     return render(request, 'purchase.html', context)
 
 def dispatch(request, item):
     if item:
         product = Product.objects.get(id=item)
         stock_list=[]
-        for x in range(1,product.stock):
+        for x in range(1,product.stock+1):
             stock_list.append(x)
         context = {'product':product,'stock_list':stock_list}
         return render(request, 'dispatch.html', context)
@@ -111,3 +101,13 @@ def display_details(request, iid):
     context = {'p':p}
     print(iid)
     return render(request, 'item_details.html', context)   
+
+def update_product(request, pid):
+    if pid:
+        item = Product.objects.get(id=pid)
+        cat = Category.objects.all()
+        num_packet=[]
+        for i in range(0,100):
+            num_packet.append(i)
+        context = {'item':item, 'cat':cat,'num_packet':num_packet}
+        return render(request, 'includes/update_product.html', context)

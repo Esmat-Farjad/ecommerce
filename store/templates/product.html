@@ -3,11 +3,8 @@
 {% block content %}
 
 <div class="relative">
-
-    <div class="main-content mx-10">
-        {% if flag == 'list' %}
-            
-            <div class="grid lg:grid-row-2 m-5">
+    <div class="main-content mx-10"> 
+             <div class="grid lg:grid-row-2 m-5">
                 <div class="">
                     <h1 class="text-center text-4xl m-5">
                         Product Details
@@ -15,7 +12,7 @@
                     <div class="flex justify-center">
                         <form action="" method="POST" class="my-5">
                             {% csrf_token %}
-                            <input type="text" class="p-2 rounded border border-teal-400 w-96 focus:outline-none focus:border:sky-500" placeholder="Search items">
+                            <input type="text" class="p-2 rounded border border-teal-400 w-96 focus:outline-none focus:border-sky-500" placeholder="Search items">
                             <button class="rounded-full border bg-teal-500 hover:bg-teal-700 hover:text-white px-3 py-2"><i
                                     class="fa-solid fa-magnifying-glass"></i></button>
                             <!-- <button class="bg-teal-500 text-white px-4 py-2 hover:font-bold hover:bg-teal-700 shadow my-3">Save</button> -->
@@ -55,8 +52,11 @@
                             <td class="p-2 border ">{{item.expd}}</td>
                             <td class="p-2 border ">{{item.stock}}</td>
                             <td class="p-2">
-                                <p class="inline-block mr-3 hover:text-teal-600"><i class="fa-solid fa-pen"></i>&nbsp;<small class="hover:font-bold">Edit</small></p>
-                                <a class="inline-block btn-delete hover:text-red-600" data-stateName="{{item.id}}"><i class="fa-solid fa-eraser"></i>&nbsp;<small class="hover:font-bold">Delete</small></a>
+                                <a href="{% url 'store:update_product' item.id %}" class="inline-block mr-3 hover:text-teal-600"><i class="fa-solid fa-pen"></i>&nbsp;<small class="hover:font-bold">Edit</small></a>
+                                <a class="inline-block btn-delete hover:text-red-600" data-stateName="{{item.id}}">
+                                    <i class="fa-solid fa-eraser"></i>&nbsp;
+                                    <small class="hover:font-bold">Delete</small>
+                                </a>
                             </td>
                             </tr>
                     
@@ -64,21 +64,12 @@
                     </tbody>
                 </table>
             </div>
-        {% elif flag == 'add' %}
-            {% include 'includes/add_product.html' %}
-        {% elif flag == 'update' %}
-            {% include 'includes/update_product.html' %}
-        {% elif flag == 'delete' %}
-            <h1>DELETE PRODUCT</h1>
-            
-        {% endif %}
-        
     </div>
 </div>
 <!-- modal dialog for delete starts-->
 <div class="absolute lg:inset-x-1/3 sm:inset-x-32 sm:top-1/4 border shadow-lg rounded border-gray-400 bg-white lg:top-1/4 p-5 z-10" id="modal-dialog">
     <div class="font-bold text-center">
-        <i class="fa-solid text-2xl fa-question rounded-full bg-green-100 py-2 px-3 text-green-700"></i>
+        <i class="fa-solid text-2xl fa-question rounded-full bg-green-100 py-2 px-4 text-green-700"></i>
         <h1 class="text-2xl text-red-500 font-semibold ">Delete Conformation</h1>
     </div>
     <form action="{% url 'store:product' %}" method="POST">
