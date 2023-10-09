@@ -13,4 +13,6 @@ urlpatterns = [
     path('dispatch/<item>', views.dispatch, name='dispatch'),
     path('display_details/<iid>', views.display_details, name='display_details'),
     path('update_product/<pid>', views.update_product, name='update_product'),
+    path('stock/', views.stock, name='stock'),
+    path('stockRoute/<flag>', views.stockRoute, name='stockRoute'),
 ]

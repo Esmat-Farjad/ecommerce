@@ -1,3 +1,4 @@
+from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
@@ -111,3 +112,23 @@ def update_product(request, pid):
             num_packet.append(i)
         context = {'item':item, 'cat':cat,'num_packet':num_packet}
         return render(request, 'includes/update_product.html', context)
+
+def stock(request):
+    context = {}
+    return render(request, 'stock.html', context)
+def stockRoute(request, flag):
+    flag = int(flag)
+    context = {}
+    if flag == 1:
+        flag = flag
+        context = {'flag':flag}
+    elif flag == 2:
+        flag = flag
+        context = {'flag':flag}
+    elif flag == 3:
+        flag = flag
+        context = {'flag':flag}
+    elif flag == 4:
+        flag = flag
+        context = {'flag':flag}
+    return render(request, 'stock.html', context)
