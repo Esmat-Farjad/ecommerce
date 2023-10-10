@@ -4,50 +4,54 @@
 <div class="m-5 p-5">
 
     <div class="grid grid-cols-4 gap-2">
-        <div class="side border">
+        <div class="side border sticky">
             <h1 class="text-2xl text-center my-10">Side Menu</h1>
             <div class="" id="menu-div">
                 {% if flag == 1 %}
-                    <a class="px-3 py-3 w-full block bg-teal-500 text-white  transition ease-in-out duration-500 border-b my-1 mx-2"
+                    <a class="px-3 py-3 w-full block bg-teal-500 text-white  transition ease-in-out duration-500 border-b my-1 "
                         href=""><i class="fa-regular fa-file-lines"></i>&nbsp;Stock Summery active</a>
                 {% else %}
-                <a class="px-3 py-3 w-full block hover:bg-teal-500 hover:text-white hover: transition ease-in-out duration-500 border-b my-1 mx-2 "
+                <a class="px-3 py-3 w-full block hover:bg-teal-500 hover:text-white hover: transition ease-in-out duration-500 border-b my-1  "
                     href="{% url 'store:stockRoute' 1 %}"><i class="fa-regular fa-file-lines"></i>&nbsp;Stock Summery</a>
                 {% endif %}
             </div>
             <div class="" id="menu-div">
                 {% if flag == 2 %}
-                    <a class="px-3 py-3 w-full block bg-teal-500 text-white  transition ease-in-out duration-500 border-b my-1 mx-2"
+                    <a class="px-3 py-3 w-full block bg-teal-500 text-white  transition ease-in-out duration-500 border-b my-1 "
                         href=""><i class="fa-solid fa-plus"></i>&nbsp;Add to Stock active</a>
                 {% else %}
-                    <a class="px-3 py-3 w-full block hover:bg-teal-500 hover:text-white hover: transition ease-in-out duration-500 border-b my-1 mx-2 "
+                    <a class="px-3 py-3 w-full block hover:bg-teal-500 hover:text-white hover: transition ease-in-out duration-500 border-b my-1  "
                         href="{% url 'store:stockRoute' 2 %}"><i class="fa-solid fa-plus"></i>&nbsp;Add to Stock</a>
                 {% endif %}
             </div>
             <div class="" id="menu-div">
                 {% if flag == 3 %}
-                    <a class="px-3 py-3 w-full block bg-teal-500 text-white  transition ease-in-out duration-500 border-b my-1 mx-2"
+                    <a class="px-3 py-3 w-full block bg-teal-500 text-white  transition ease-in-out duration-500 border-b my-1 "
                         href=""><i class="fa-solid fa-recycle"></i>&nbsp;Update Stock active</a>
                 {% else %}
-                        <a class="px-3 py-3 w-full block hover:bg-teal-500 hover:text-white hover:font-semibold transition ease-in-out duration-500 border-b my-1 mx-2 "
+                        <a class="px-3 py-3 w-full block hover:bg-teal-500 hover:text-white hover:font-semibold transition ease-in-out duration-500 border-b my-1  "
                             href="{% url 'store:stockRoute' 3 %}"> <i class="fa-solid fa-recycle"></i>&nbsp; Update Stock </a>
                 {% endif %}
             </div>
             <div class="" id="menu-div">
                 {% if flag == 4 %}
-                    <a class="px-3 py-3 w-full block bg-teal-500 text-white  transition ease-in-out duration-500 border-b my-1 mx-2"
+                    <a class="px-3 py-3 w-full block bg-teal-500 text-white  transition ease-in-out duration-500 border-b my-1 "
                         href=""><i class="fa-solid fa-chart-simple"></i>&nbsp;Stock Information active</a>
                 {% else %}
-                    <a class="px-3 py-3 w-full block hover:bg-teal-500 hover:text-white hover: transition ease-in-out duration-500 border-b my-1 mx-2 "
+                    <a class="px-3 py-3 w-full block hover:bg-teal-500 hover:text-white hover: transition ease-in-out duration-500 border-b my-1  "
                         href="{% url 'store:stockRoute' 4 %}"><i class="fa-solid fa-chart-simple"></i>&nbsp;Stock Information</a>
                 {% endif %}
             </div>
     </div>
-    <div class="overscroll-contain col-span-3">
+    <div class="overflow-x-auto col-span-3">
         {% if flag == 1 %}
             {% include 'stock_summery.html' %}\
         {% elif flag == 2 %}
             {% include 'includes/add_stock.html' %}
+        {% elif flag == 3 %}
+            {% include 'includes/update_stock.html' %}
+        {% elif flag == 4 %}
+            {% include 'includes/stock_information.html' %}
         {% endif %}
     </div>
 </div>

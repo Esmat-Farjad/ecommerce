@@ -33,4 +33,11 @@
 .menu-design{
     position: relative;
 }
+.image-upload>input {
+    display: none;
+}
 
+.image-upload img {
+   
+    cursor: pointer;
+}

@@ -73,10 +73,10 @@ def purchase(request):
         profit = int(price) - int(rate)
         stock = quantity
         print(rate,profit,stock)
-        if category == 3 :
-            new_record = Product(name=name, description=description,category_id=category,price=price,bulk_price=bulk_price,quantity=quantity,rate=rate,mfd=mfd,expd=expd,profit=profit,stock=stock, packet=packet, image=item_pics)
-        else:
-            new_record = Product(name=name, description=description,category_id=category,price=price,bulk_price=bulk_price,quantity=quantity,rate=rate,profit=profit,stock=stock, packet=packet, image=item_pics)
+        # if category == 3 :
+        new_record = Product(name=name, description=description,category_id=category,price=price,bulk_price=bulk_price,quantity=quantity,rate=rate,mfd=mfd,expd=expd,profit=profit,stock=stock, packet=packet, image=item_pics)
+        # else:
+            # new_record = Product(name=name, description=description,category_id=category,price=price,bulk_price=bulk_price,quantity=quantity,rate=rate,profit=profit,stock=stock, packet=packet, image=item_pics)
             
         new_record.save()
         messages.success(request, "Product added successfully !")
@@ -126,9 +126,16 @@ def stockRoute(request, flag):
         flag = flag
         context = {'flag':flag}
     elif flag == 3:
+        product = Product.objects.select_related('category')
         flag = flag
-        context = {'flag':flag}
+        context = {'flag':flag, 'product':product}
     elif flag == 4:
         flag = flag
         context = {'flag':flag}
     return render(request, 'stock.html', context)
+
+def update_stock(request, pid):
+    if pid:
+        product = Product.objects.get(id=pid)
+        context = {'item':product}
+    return render(request, 'includes/update_product.html', context)

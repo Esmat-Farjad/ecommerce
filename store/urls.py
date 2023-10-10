@@ -15,4 +15,5 @@ urlpatterns = [
     path('update_product/<pid>', views.update_product, name='update_product'),
     path('stock/', views.stock, name='stock'),
     path('stockRoute/<flag>', views.stockRoute, name='stockRoute'),
+    path('update_stock/<pid>', views.update_stock, name='update_stock'),
 ]
