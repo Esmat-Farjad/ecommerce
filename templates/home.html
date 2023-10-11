@@ -7,11 +7,11 @@
         <img src="{% static 'image/background3.jpg' %}" class="w-full h-1/2"
             alt="...">
     </div>
-            <div class="absolute top-1/4 right-1/4">
+            <div class="absolute top-1/4 right-1/4 p-10 ">
                 <div class="lg:text-8xl sm:text-3xl md:text-5xl">
                 <strong class="font-semibold text-white" id="border-design">E-commerce</strong>
                 </div>
-                <p class="mt-5 border-b p-2 text-white">start to grow you business and evaluate your daily work</p>
+                <p class="mt-5 border-b p-2 text-white capitalize">start to grow up you business and evaluate your daily work</p>
                 {% if user.is_authenticated %}
                     <div class="font-semibold text-white my-5 shadow rounded">
                         <div class="border p-2 inline-block">
@@ -72,7 +72,7 @@
             let stuff = 0;
             function updated() {
                 let count = document.getElementById("d_num");
-                count.innerHTML = ++stuff;
+                count.innerHTML = new Intl.NumberFormat().format(++stuff);
                 if (stuff === Number(x)) {
                     clearInterval(counts);
                 }
@@ -91,7 +91,7 @@
             let m = 0;
             function updatedMonth() {
                 let count = document.getElementById("d_month");
-                count.innerHTML = m+=mn;
+                count.innerHTML = new Intl.NumberFormat().format(m+=mn);
                 if(m >= y) {
                     clearInterval(counts1);
                 }
@@ -100,7 +100,8 @@
         document.getElementById("d_month").innerHTML = 0;
     }
     //this section ends
-    let z = 87480;
+
+    let z = 87845;
     let zn = z/1000;
     let zm = Math.round(zn);
     if(z != 0) {
@@ -108,7 +109,7 @@
         let year = 0;
         function updatedYear() {
             let count = document.getElementById("d_year");
-            count.innerHTML = year+=zm;
+            count.innerHTML = new Intl.NumberFormat().format(year+=zm);
             if( year > z) {
                 clearInterval(counts2);
             } 
@@ -118,6 +119,7 @@
         document.getElementById("d_year").innerHTML = 0;
     }  
     });
+
 </script>
 
 {% endblock content %}

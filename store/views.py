@@ -4,6 +4,8 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from .models import Category, CustomUser, Store, Product
 from .forms import UserCreationForm,StoreCreationForm
+from django.db.models import Q
+
 
 # Create your views here.
 def home(request):
@@ -114,7 +116,13 @@ def update_product(request, pid):
         return render(request, 'includes/update_product.html', context)
 
 def stock(request):
-    context = {}
+    product = Product.objects.select_related('category')
+    context = {'flag':3, 'product':product}
+    if request.method == 'POST':
+        search = request.POST['search']
+        product = Product.objects.filter(Q(name__icontains=search) |  Q(description__icontains=search))
+        context = {'flag':3, 'product':product}
+        return render(request, 'stock.html', context)
     return render(request, 'stock.html', context)
 def stockRoute(request, flag):
     flag = int(flag)
@@ -134,8 +142,14 @@ def stockRoute(request, flag):
         context = {'flag':flag}
     return render(request, 'stock.html', context)
 
-def update_stock(request, pid):
-    if pid:
-        product = Product.objects.get(id=pid)
-        context = {'item':product}
-    return render(request, 'includes/update_product.html', context)
+def update_stock(request):
+    if request.method == 'POST':
+        item_id = request.POST['item_id']
+        new_stock = request.POST['new_stock']
+        old = Product.objects.get(id = item_id)
+        total_stock = int(old.stock) + int(new_stock)
+        Product.objects.filter(id = item_id).update(stock = total_stock)
+        messages.success(request,"The Stock Updated Successfully !")
+        product = Product.objects.select_related('category')
+    context = {'flag':3,'product':product}
+    return render(request, 'stock.html', context)

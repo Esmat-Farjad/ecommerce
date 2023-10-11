@@ -4,9 +4,9 @@
     </div>
     <div class="item-information">
         <div class=" text-center">
-            <form action="" class=" w-full flex justify-center p-5">
+            <form action="{% url 'store:stock' %}" method="POST" class=" w-full flex justify-center p-5">
                 {% csrf_token %}
-                <input type="text" class="focus:outline-none border-b border-sky-400 w-1/2 rounded focus:border-red-400 p-2" placeholder="Search item...">
+                <input type="text" name="search" id="search" class="focus:outline-none border-b border-sky-400 w-1/2 rounded focus:border-red-400 p-2" placeholder="Search item...">
                 <button><i class="fa-solid fa-magnifying-glass bg-gray-300 rounded-full p-2 hover:font-bold hover:bg-teal-400 hover:text-white"></i></button>
             </form>
             <p class="text-gray-500">Use search bar to find the product quickly...<i class="fa-solid fa-face-smile-wink"></i></p>
@@ -14,15 +14,20 @@
         <div class="absolute top-1/2 left-1/2" id="modal-dialog">
             <div class="border bg-white p-10 rounded shadow-2xl z-20">
                 <p class="text-center font-bold">Update Stock</p>
-                <form action="">
+                <form action="{% url 'store:update_stock' %}" method="POST">
                     {% csrf_token %}
                     <p>Available Stock: <strong id="stock_info"></strong>
                     </p>
-                    <label for="stock">Add to stock</label>
-                    <input type="number" min="0" class="p-2 w-full border border-sky-500 focus:outline-none focus:border-red-500 rounded" placeholder="Enter the new stock">
+                    <label for="new_stock">Add to stock</label>
+                    <input type="number" min="0" name="new_stock" id="new_stock" class="p-2 w-full border border-sky-500 focus:outline-none focus:border-red-500 rounded" placeholder="Enter the new stock">
                     <input type="number" name="item_id" id="item_id" hidden>
-                    <button class="bg-teal-500 text-white py-2 px-4 hover:bg-teal-700 hover my-3 text-center rounded shadow hover:font-semibold">Add</button>
-                    <button id="close-container"
+                    
+                    <p class="mt-0pt-0">
+                        <span class="text-sm">New Stock: </span>
+                        <span class="text-cyan-500 font-bold" id="updated_stock"></span>
+                    </p>
+                    <button type="submit" class="bg-teal-500 text-white py-2 px-4 hover:bg-teal-700 hover my-3 text-center rounded shadow hover:font-semibold">Add</button>
+                    <button id="close-container" type="button"
                     class="bg-red-500 text-white py-2 px-4 hover:bg-red-700 hover my-3 text-center rounded shadow hover:font-semibold">Close</button>
                 </form>
             </div>
@@ -74,6 +79,13 @@
     </div>
 </div>
 <script>
+    element=document.getElementById("new_stock");
+    element.addEventListener("input", function(e) {
+    var n = e.target.value;
+    var o = document.getElementById("stock_info").innerHTML;
+    var new_stock = Number(n) + Number(o);
+    document.getElementById("updated_stock").innerHTML = new_stock;
+    });
     $(document).ready(function() {
         $("#visible-content[data-stateName]").click(function() {
            $("#modal-dialog").animate({
@@ -92,4 +104,5 @@
             });
         });
     });
+    
 </script>

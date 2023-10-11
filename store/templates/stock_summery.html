@@ -1,8 +1,84 @@
 <div class="border">
-    <div class="text-center">
+    <div class="text-center m-5">
         <p class="text-4xl font-semibold">Stock Summery</p>
+        <p class="text-sky-600">The system data calculation report.</p>
     </div>
     <div class="main-content">
-        <p>there is the page</p>
+        <div class="flex justify-center gap-4 my-5">
+        <div class="inline-block p-2 border rounded shadow text-center hover:scale-150 hover:border-sky-500 hover:bg-white hover:shadow-lg duration-500 hover:cursor-pointer">
+            <p class="px-4 py-2 font-semibold">Total Product</p>
+            <p><span><i class="fa-brands fa-product-hunt text-sky-500"></i>&nbsp;&nbsp;</span>6756</p>
+        </div>
+        <div class="inline-block p-2 border rounded shadow text-center hover:scale-150 hover:border-sky-500 hover:bg-white hover:shadow-lg duration-500 hover:cursor-pointer">
+            <p class="px-4 py-2 font-semibold">Total Customer</p>
+            <p><span><i class="fa-solid fa-people-line text-sky-500"></i>&nbsp;&nbsp;</span>6756</p>
+        </div>
+        <div class="inline-block p-2 border rounded shadow text-center hover:scale-150 hover:border-sky-500 hover:bg-white hover:shadow-lg duration-500 hover:cursor-pointer">
+            <p class="px-4 py-2 font-semibold">Total product worth</p>
+            <p id="t_worth" class="inline-block"></p>
+            <span>&nbsp;<i class="fa-solid fa-dollar-sign"></i></span>
+        </div>
+        <div class="inline-block p-2 border rounded shadow text-center hover:scale-150 hover:border-sky-500 hover:bg-white hover:shadow-lg duration-500 hover:cursor-pointer">
+            <p class="px-4 py-2 font-semibold">Total Sale</p>
+            <p id="t_sale" class="inline-block"></p>
+            <span>&nbsp;<i class="fa-solid fa-dollar-sign"></i></span>
+        </div>
+        <div class="inline-block p-2 border rounded shadow text-center hover:scale-150 hover:border-sky-500 hover:bg-white hover:shadow-lg duration-500 hover:cursor-pointer">
+            <p class="px-4 py-2 font-semibold">Total Purchase</p>
+            <p id="t_purchase" class="inline-block"></p>
+            <span>&nbsp;<i class="fa-solid fa-dollar-sign"></i></span>
+        </div>
+        <div class="inline-block p-2 border rounded shadow text-center hover:scale-150 hover:border-sky-500 hover:bg-white hover:shadow-lg duration-500 hover:cursor-pointer">
+           
+            <p class="px-4 py-2 font-semibold">Total Expense</p>
+            <p id="t_expense" class="inline-block"></p>
+            <span>&nbsp;<i class="fa-solid fa-dollar-sign"></i></span>
+            </div>
+        </div>
     </div>
+    <div class="m-5">
+        <p class="text-2xl font-semibold capitalize"><i class="fa-regular fa-folder-open text-gray-400"></i>&nbsp;system selling report</p>
+        <div class="relative download-show">
+            <span class="absolute top-0 text-teal-500 z-20 right-0 text-2xl text-center me-5 cursor-pointer">
+                <p class="pb-0 mb-0"><i class="fa-solid m-0 fa-cloud-arrow-down "></i></p>
+                <span class="text-sm px-2 rounded-full bg-teal-500 text-white hidden " id="download">download</span>
+            </span>
+        </div>
+        <ul>
+            <li class=""><span class="text-blue-500 "><i class="fa-solid fa-calendar-day"></i>&nbsp;&nbsp;</span>Daily</li>
+            <li><span class="text-blue-500"><i class="fa-solid fa-calendar-week"></i>&nbsp;&nbsp;</span>weekly</li>
+            <li><span class="text-blue-500"><i class="fa-solid fa-calendar-days"></i>&nbsp;&nbsp;</span>Monthly</li>
+            <li><span class="text-blue-500"><i class="fa-solid fa-check-to-slot"></i>&nbsp;&nbsp;</span>Yearly</li>
+        </ul>
+    </div>
+    <div class="m-5">
+        <p class="text-2xl font-semibold capitalize"><i class="fa-regular fa-folder-open text-gray-400"></i>&nbsp;customer report</p>
+        <ul>
+            <li class=""><span class="text-blue-500 "><i class="fa-solid fa-calendar-day"></i>&nbsp;&nbsp;</span>Daily</li>
+            <li><span class="text-blue-500"><i class="fa-solid fa-calendar-week"></i>&nbsp;&nbsp;</span>weekly</li>
+            <li><span class="text-blue-500"><i class="fa-solid fa-calendar-days"></i>&nbsp;&nbsp;</span>Monthly</li>
+            <li><span class="text-blue-500"><i class="fa-solid fa-check-to-slot"></i>&nbsp;&nbsp;</span>Yearly</li>
+        </ul>
+    </div>
+    
+
+    <script>
+        $(document).ready(function() {
+            var total_sale = new Intl.NumberFormat().format(39872395);
+            var total_purchase = new Intl.NumberFormat().format(8945347);
+            var total_expense = new Intl.NumberFormat().format(45347);
+            var total_w = new Intl.NumberFormat().format(45454347);
+            document.getElementById("t_sale").innerHTML = total_sale;
+            document.getElementById("t_purchase").innerHTML = total_purchase;
+            document.getElementById("t_expense").innerHTML = total_expense;
+            document.getElementById("t_worth").innerHTML = total_w;
+        });
+        $(document).ready(function() {
+            $(".download-show").mouseenter(function() {
+                $("#download").animate({
+                    height:'toggle'
+                });
+            });
+        });
+    </script>
 </div>
