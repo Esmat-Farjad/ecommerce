@@ -5,53 +5,54 @@
     <div class="grid lg:grid-row-2 m-5">
         <div class="">
         <h1 class="text-3xl text-center">Sales Portal</h1>
+        
         <div class="flex justify-center">
-        <form action="" method="POST" class="my-5">
+        <form action="{% url 'store:sale_search' %}" method="POST" class="mt-5">
             {% csrf_token %}
-            <input type="text" class="py-2 rounded border border-teal-400 w-96">
-            <button class="rounded-full border bg-teal-500 hover:bg-teal-700 hover:text-white px-3 py-2"><i class="fa-solid fa-magnifying-glass"></i></button>
-            <!-- <button class="bg-teal-500 text-white px-4 py-2 hover:font-bold hover:bg-teal-700 shadow my-3">Save</button> -->
+            <input type="text" name="search" id="search" class="py-2 rounded border border-teal-400 w-96 focus:outline-none focus:border-cyan-500 px-3" placeholder="Enter the product name">
+            <button type="submit" class="rounded-full border bg-teal-500 hover:bg-teal-700 hover:text-white px-3 py-2"><i class="fa-solid fa-magnifying-glass"></i></button>
         </form>
         </div>
+        <p class="text-center text-slate-400 mb-10">To find the item quickly type the item name in the search input and press the search button</p>
     </div>
         <hr>
-    <div class="mx-10 my-5">
-        <div class="grid grid-cols-4 gap-4">
+    <div class="mx-20 my-10">
+        <div class="grid lg:grid-cols-4 gap-4 sm:grid-cols-1">
                 <!-- shopping card -->
                 {% for item in product %}
-                
-                <div class="card rounded shadow border">
-                    <div class="grid grid-cols-3">
-                        <div class="avatar border mr-2">
-                            <img src="{{item.image.url}}" class="w-96 h-50 rounded-l" alt="">
-                        </div>
-                        <div class="details p-3 w-full col-span-2 relative">
-                            <p class="font-bold inline-block">{{item.name}}</p>
-                            
-                            <span class="absolute right-0 top-0 p-1 bg-teal-500 rounded-l-full mt-1 shadow">
-                                {% if item.category.id == 3 %}
-                                    <p class="m-0 p-0 inline-block text-white text-xs"><i class="fa-solid fa-plate-wheat"></i>&nbsp;{{item.category}}</p>
-                                {% elif item.category.id == 2 %}
-                                    <p class="m-0 p-0 inline-block text-white text-xs"><i class="fa-solid fa-shoe-prints"></i>&nbsp;{{item.category}}</p>
-                                    {% elif item.category.id == 1 %}
-                                    <p class="m-0 p-0 inline-block text-white text-xs"><i class="fa-solid fa-shirt"></i>&nbsp;{{item.category}}</p>
-                                {% endif %}
-                                
-                            </span>
-                            <p class="text-xs">{{item.description}}</p>
-                            <p>{{item.price}} $</p>
-                            {% if item.stock %}
-                                <p class="text-green-600"><i class="fa-solid fa-check border rounded"></i>&nbsp;in stock</p>
+                    <div class="bg-white rounded overflow-hidden shadow-lg border relative m-2">
+                            <img src="{{item.image.url}}" class="h-52 w-full object-cover" alt="image">
+                        <div class="card-body p-4">
+                            <span class="font-semibold block text-slate-600 capitalize">{{item.name}}</span>
+                            <span class="block text-slate-500">{{item.description}}</span>
+                            <span class="font-semibold text-slate-600">{{item.price}}</span>&nbsp;<span><i class="fa-solid fa-dollar-sign"></i></span>
+                            {% if item.stock > 0 %}
+                                <span class="text-green-500 block"><i class="fa-solid fa-circle-check"></i>&nbsp;in stock</span>
                             {% else %}
-                                <p class="text-red-500">out of stock</p>
+                                <span class="text-red-500 block"><i class="fa-solid fa-triangle-exclamation"></i>&nbsp;currently out of stock</span>
                             {% endif %}
-                            <a class="bg-teal-500 text-white py-1 px-2 rounded shadow hover:bg-teal-700 hover:font-bold" href="">add to card</a>
-                            <a class="bg-teal-500 text-white py-1 px-2 rounded shadow hover:bg-teal-700 hover:font-bold" href="{% url 'store:dispatch' item.id %}">purchase</a>
+                            
+                        </div>
+                        <div class="p-4">
+                            <button class="bg-teal-500 text-white py-1 px-2 text-lg shadow">Buy</button>
+                            <button class="bg-teal-500 text-white py-1 px-2 shadow">
+                                <i class="fa-solid fa-cart-plus text-lg"></i>
+                            </button>
+                        </div>
+                        <div class="bg-gray-200 p-2 rounded-full absolute top-0 shadow-lg z-20 m-2">
+                            {% if item.category.name == "clothing" %}
+                                <i class="fa-solid fa-shirt"></i>
+                            {% elif item.category.name == "footwear" %}
+                                <i class="fa-solid fa-shoe-prints"></i>
+                            {% elif item.category.name == "food materials" %}
+                                <i class="fa-solid fa-utensils"></i>
+                            {% endif %}
+                            
                         </div>
                     </div>
-                </div>
                 {% endfor %}
         </div>       <!-- shopping card -->
     </div>
+    
 </div>
 {% endblock content %}

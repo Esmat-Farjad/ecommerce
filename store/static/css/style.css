@@ -1,10 +1,15 @@
-@import url('https://fonts.googleapis.com/css2?family=AR+One+Sans&family=Montserrat:wght@100&family=Open+Sans:wght@300&family=Roboto:wght@300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=AR+One+Sans&family=Montserrat:wght@100&family=Nunito+Sans:ital,opsz,wght@0,6..12,200;0,6..12,300;0,6..12,400;0,6..12,500;0,6..12,600;0,6..12,700;0,6..12,800;0,6..12,900;0,6..12,1000;1,6..12,200;1,6..12,300;1,6..12,400;1,6..12,500;1,6..12,600;1,6..12,700;1,6..12,800;1,6..12,900;1,6..12,1000&family=Open+Sans:wght@300&family=Roboto:wght@300;400&display=swap');
+
 
 
 * {
-    font-family: 'Roboto','AR One Sans','Montserrat','Open Sans', sans-serif;
-
+    font-family: 'Nunito Sans', sans-serif;
+    font-family: 'AR One Sans', sans-serif;
+    font-family: 'Montserrat', sans-serif;
+    font-family: 'Open Sans', sans-serif;
+    font-family: 'Roboto', sans-serif;
 }
+
 
 #border-design {
     position: relative;

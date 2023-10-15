@@ -153,3 +153,10 @@ def update_stock(request):
         product = Product.objects.select_related('category')
     context = {'flag':3,'product':product}
     return render(request, 'stock.html', context)
+
+def sale_search(request):
+    if request.method == 'POST':
+        search = request.POST['search']
+        product = Product.objects.filter(Q(name__icontains=search) |  Q(description__icontains=search))
+        context = {'product':product}
+        return render(request, 'sales.html', context)
