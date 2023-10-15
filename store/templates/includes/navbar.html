@@ -1,35 +1,71 @@
-<div class="nav">
-    <div class="p-5 border shadow-lg z-20">
-        
-            
-        
-        <div class="flex">
-            <span class="border">
-                <a href="{% url 'home' %}" class="text-3xl">Brand</a>
+{% load static %}
+<div class="nav border shadow">
+    <div class="grid grid-cols-2">
+        <div class="border">
+            <img src="{% static 'image/logo.png' %}" class=" mx-3 w-24 h-16" alt="">
+            <small class="mx-3">SHOPPING MART</small>
+        </div>
+        <div class="border lg:block sm:hidden xs:hidden text-lg">
+            {% if user.is_authenticated %}
+            <span>Hello</span>
+            <!-- <span class="mx-5 hover:font-bold cursor-pointer">
+                <a class="inline-block " href="{% url 'store:purchase' %}">Purchase&nbsp;<i class="fa-solid fa-cart-plus"></i></a>
+            </span> -->
+            <!-- <span class="inline-block mx-5 hover:font-bold cursor-pointer flex"><a class="" href="{% url 'store:sales' %}">Sales&nbsp;<i
+                        class="fa-solid fa-cart-shopping"></i></a></span>
+            <span class="inline-block mx-5 hover:font-bold cursor-pointer">
+                <a class="" href="{% url 'store:product' %}">Products&nbsp;<i class="fa-solid fa-box-open"></i></a>
             </span>
-            <div class="justify-end">
-                <ul class="inline mx-10 text-md">
-                    {% if user.is_authenticated %}
-                    <li class="inline mx-5 hover:font-bold cursor-pointer"><a href="{% url 'store:purchase' %}">Purchase&nbsp;<i
-                                class="fa-solid fa-cart-plus"></i></a></li>
-                    <li class="inline mx-5 hover:font-bold cursor-pointer"><a href="{% url 'store:sales' %}">Sales&nbsp;<i
-                                class="fa-solid fa-cart-shopping"></i></a></li>
-                    <li class="inline mx-5 hover:font-bold cursor-pointer"><a href="{% url 'store:product' %}">Products&nbsp;<i
-                                class="fa-solid fa-box-open"></i></a></li>
-                    <li class="inline mx-5 hover:font-bold cursor-pointer"><a href="{% url 'store:stock' %}">Manage Stock&nbsp;
-                        <i class="fa-solid fa-layer-group"></i>
-                    <li class="inline mx-5 hover:font-bold cursor-pointer"><a href="{% url 'store:signout' %}">logout&nbsp;<i
-                                class="fa-solid fa-user-minus"></i></a></li>
-                
-                    {% else %}
-                    <li class="inline mx-5 hover:font-bold cursor-pointer"><a href="{% url 'store:signin' %}">Sign In&nbsp;<i
-                                class="fa-solid fa-arrow-right-to-bracket"></i></a></li>
-                    <li class="inline mx-5 hover:font-bold cursor-pointer"><a href="{% url 'store:signup' %}">Sign Up&nbsp;<i
-                                class="fa-solid fa-user-plus"></i></a></li>
-                    {% endif %}
-                
-                </ul>
-            </div>
+            <span class="inline-block mx-5 hover:font-bold cursor-pointer">
+                <a class="" href="{% url 'store:stock' %}">Manage Stock&nbsp;<i class="fa-solid fa-layer-group"></i></a>
+            </span>
+            <span class="inline-block mx-5 hover:font-bold cursor-pointer">
+                <a class="" href="{% url 'store:signout' %}">logout&nbsp;<i class="fa-solid fa-user-minus"></i></a>
+            </span> -->
+            <!-- {% else %}
+            <span class="inline mx-5 hover:font-bold cursor-pointer"><a href="{% url 'store:signin' %}">Sign In&nbsp;<i
+                            class="fa-solid fa-arrow-right-to-bracket"></i></a></span>
+            <span class="inline mx-5 hover:font-bold cursor-pointer"><a href="{% url 'store:signup' %}">Sign Up&nbsp;<i
+                            class="fa-solid fa-user-plus"></i></a></span> -->
+            {% endif %}
+        </div>
+        <div class="sm:block text-end cursor-pointer md:block xs:block lg:hidden">
+            <i class="fa-solid fa-ellipsis-vertical px-3 text-2xl" id="btn_click"></i>
         </div>
     </div>
 </div>
+
+<div class="border py-5 hidden" id="toggleMenu">
+    {% if user.is_authenticated %}
+    <ul>
+    <li class="py-2 mx-5 hover:font-bold cursor-pointer"><a href="{% url 'store:purchase' %}">&nbsp;<i class="fa-solid fa-cart-plus"></i>&nbsp;Purchase</a></li>
+    <li class="py-2 mx-5 hover:font-bold cursor-pointer"><a href="{% url 'store:sales' %}"><i
+                class="fa-solid fa-cart-shopping"></i>&nbsp;Sales</a></li>
+    <li class="py-2 mx-5 hover:font-bold cursor-pointer"><a href="{% url 'store:product' %}"><i
+                class="fa-solid fa-box-open"></i>&nbsp;Products</a></li>
+    <li class="py-2 mx-5 hover:font-bold cursor-pointer"><a href="{% url 'store:stock' %}">
+            <i class="fa-solid fa-layer-group"></i>&nbsp;Manage Stock</a></li>
+    <li class="py-2 mx-5 hover:font-bold cursor-pointer"><a href="{% url 'store:signout' %}"><i
+                class="fa-solid fa-user-minus"></i>&nbsp;Log out</a></li>
+    {% else %}
+    <li class="py-2 mx-5 hover:font-bold cursor-pointer"><a href="{% url 'store:signin' %}"><i
+                class="fa-solid fa-arrow-right-to-bracket"></i>&nbsp;Sign In</a></li>
+    <li class="py-2 mx-5 hover:font-bold cursor-pointer"><a href="{% url 'store:signup' %}"><i
+                class="fa-solid fa-user-plus"></i>&nbsp;Sign Up</a></li>
+    </ul>
+    {% endif %}
+</div>
+<script>
+        const event = document.querySelector("#btn_click");
+        const el = document.querySelector("#toggleMenu");
+        event.addEventListener("click", function () {
+            if (el.classList.contains("hidden")) {
+                el.classList.remove("hidden");
+                el.classList.add("block");
+            } else {
+                el.classList.add("hidden");
+            }
+        });
+        
+   
+</script>
