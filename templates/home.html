@@ -4,39 +4,39 @@
 
 <div class="relative">
     <div class="w-full h-1/3">
-        <img src="{% static 'image/background3.jpg' %}" class="w-full h-1/2"
+        <img src="{% static 'image/background3.jpg' %}" class="w-full lg:h-1/2 sm:h-screen object-cover sm:blur-sm lg:blur-none sm:border "
             alt="...">
     </div>
-            <div class="absolute top-1/4 right-1/4 p-10 ">
+            <div class="absolute lg:top-1/4 right-1/4 p-10 sm:top-52 ">
                 <div class="lg:text-8xl sm:text-3xl md:text-5xl">
                 <strong class="font-semibold text-white" id="border-design">E-commerce</strong>
                 </div>
                 <p class="mt-5 border-b p-2 text-white capitalize">start to grow up you business and evaluate your daily work</p>
                 {% if user.is_authenticated %}
-                    <div class="font-semibold text-white my-5 shadow rounded">
-                        <div class="border p-2 inline-block">
-                            <p class="pb-0 text-xl px-10">
+                    <div class="font-semibold text-white lg:my-5 sm:my-2">
+                        <div class="border p-2 inline-block sm:rounded-full lg:rounded">
+                            <p class="pb-0 lg:text-xl sm:text-md lg:px-10 sm:px-5">
                                 <span>Today</span>
                             </p>
-                            <p class=" text-2xl pb-2 text-center">
+                            <p class="lg:text-2xl sm:text-lg pb-2 text-center">
                                 <span id="d_num"></span>
                                 <span><i class="fa-solid fa-dollar-sign"></i></span>
                             </p>
                         </div>
-                        <div class="border p-2 inline-block">
-                            <p class="pb-0 text-xl px-10">
+                        <div class="border p-2 inline-block sm:rounded-full lg:rounded">
+                            <p class="pb-0 lg:text-xl sm:text-md lg:px-10 sm:px-5">
                                 <span>This Month</span>
                             </p>
-                            <p class=" text-2xl pb-2 text-center">
+                            <p class=" lg:text-2xl sm:text-lg pb-2 text-center">
                                 <span id="d_month"></span>
                                 <span><i class="fa-solid fa-dollar-sign"></i></span>
                             </p>
                         </div>
-                        <div class="border p-2 inline-block">
-                            <p class="pb-0 text-xl px-10">
+                        <div class="border p-2 inline-block sm:rounded-full lg:rounded">
+                            <p class="pb-0 lg:text-xl sm:text-md lg:px-10 sm:px-5">
                                 <span>This Year</span>
                             </p>
-                            <p class=" text-2xl pb-2 text-center">
+                            <p class=" lg:text-2xl sm:text-lg pb-2 text-center">
                                 <span id="d_year"></span>
                                 <span><i class="fa-solid fa-dollar-sign"></i></span>
                             </p>
