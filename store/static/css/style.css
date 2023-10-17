@@ -49,5 +49,8 @@
 .animate{
     width: 0%;
     cursor: pointer;
-
+}
+.text-small{
+    font-size: 10px;
+    
 }

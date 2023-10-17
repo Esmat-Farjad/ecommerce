@@ -43,5 +43,22 @@ class Product(models.Model):
     def __str__(self):
         return self.name
     
+class Customer(models.Model):
+    name = models.CharField(max_length=50)
+    mobile = models.IntegerField()
+    def __str__(self):
+        return self.name 
+class Cart(models.Model):
+    customer = models.ForeignKey(CustomUser,related_name="user_id", on_delete=models.CASCADE)
+    date_created = models.DateTimeField(auto_now=True)
+    def __str__(self):
+        return self.customer 
+
+class cartItem(models.Model):
+    product = models.ForeignKey(Product,on_delete=models.CASCADE)
+    quantity = models.IntegerField(default=0)
+    date_created = models.DateTimeField(auto_now=True)
+    cart = models.ForeignKey(Cart, on_delete=models.CASCADE)
     
-  
+    def __str__(self):
+        return self.product

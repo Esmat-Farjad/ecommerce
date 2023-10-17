@@ -36,7 +36,7 @@
                         <div class="p-4">
                             <button class="bg-teal-500 text-white py-1 px-2 text-lg shadow">Buy</button>
                             <button class="bg-teal-500 text-white py-1 px-2 shadow">
-                                <i class="fa-solid fa-cart-plus text-lg"></i>
+                                <a href="{% url 'store:addToCart' item.id %}"><i class="fa-solid fa-cart-plus text-lg"></i></a>
                             </button>
                         </div>
                         <div class="bg-gray-200 p-2 rounded-full absolute top-0 shadow-lg z-20 m-2">

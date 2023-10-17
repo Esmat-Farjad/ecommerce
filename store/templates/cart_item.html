@@ -1,0 +1,78 @@
+{% extends 'main/base.html' %}
+{% load static %}
+{% block content %}
+<div class="contain m-10">
+    <div class="heading p-5 text-2xl text-center">Cart Items</div>
+    <div class="grid grid-cols-6">
+        <div class="side"></div>
+        <div class="border shadow-md col-span-4">
+            <table class="table-auto w-full rounded">
+                <thead class="text-xl font-bold bg-orange-500 text-white rounded">
+                    <th class="p-4">Image</th>
+                    <th class="p-4">Name</th>
+                    <th class="p-4">Price</th>
+                    <th class="p-4">Quantity</th>
+                    <th class="p-4">Manage</th>
+                </thead>
+                <tbody class="cart_container text-center">
+                    {% for product in products %}
+                    
+                        <tr class="border cursor-pointer hover:bg-gray-200 tranistion duration-500 ease-in-out">
+                            <td class="p-3"><img src="{{product.product.image.url}}" class="w-16 h-16 rounded-full" alt="image"></td>
+                            <td class="p-3">{{product.product.name}}</td>
+                            <td class="p-3"><span id="price">{{product.product.price}}</span>&nbsp;<i class="fa-solid fa-dollar-sign"></i></td>
+                            <td class="p-3">
+                                <input type="number" data-product-id="{{product.id}}" data-product-price="{{product.product.price}}" name="quantity" id="quantity" min="0" value="{{product.quantity}}" class="text-center foucs:outline-none focus:border-sky-500 border border-teal-500 p-2 rounded">
+                            </td>
+
+                            <td>
+                                <a class="text-red-500 hover:font-bold" href="" id="parent">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                                        class="w-6 h-6 inline-block">
+                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                            d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+                                    </svg>
+                                    <small class="text-red-500 block" id="hide-show">Remove product</small>
+                                </a>
+                            </td>
+                        </tr>
+                        
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="side"></div>
+    </div>
+    <div class="text-center p-5">
+        <a href="{% url 'store:purchaseItem' %}">
+        <button class="bg-teal-500 text-white rounded py-2 px-3 hover:bg-teal-600">Proceed to Purchase</button>
+        </a>
+    </div>
+</div>
+<script>
+    const cartContainer = document.querySelector('.cart_container');
+    cartContainer.addEventListener("input", function(e){
+        quantity = e.target.value;
+        cartItemId = e.target.dataset.productId;
+        price = e.target.dataset.productPrice;
+        total_price = price * quantity;
+
+        console.log(total_price);
+        const formData = new FormData();
+        //FETCH API
+        formData.append('quantity',quantity);
+        formData.append('price',price);
+        formData.append('cartItemId',cartItemId);
+        formData.append('csrfmiddlewaretoken','{{csrf_token}}');
+        console.log(formData);
+        fetch('{% url "store:update_quantity" %}',{
+            method: 'POST',
+            body: formData
+        }).then(response => response.json()).then(data =>{
+            console.log("success:", data);
+        }).catch(error => {
+            console.log("Error: ",error);
+        });
+    });
+</script>
+{% endblock content %}

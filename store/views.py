@@ -1,8 +1,8 @@
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import redirect, render
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
-from .models import Category, CustomUser, Store, Product
+from .models import Cart, Category, CustomUser, Customer, Store, Product, cartItem
 from .forms import UserCreationForm,StoreCreationForm
 from django.db.models import Q
 
@@ -160,3 +160,42 @@ def sale_search(request):
         product = Product.objects.filter(Q(name__icontains=search) |  Q(description__icontains=search))
         context = {'product':product}
         return render(request, 'sales.html', context)
+    
+def addToCart(request, iid):
+    if iid:
+        u = request.user.id
+        try:
+            obj = Cart.objects.values_list('id', flat=True).get(customer = u)
+            new_record = cartItem(product_id=iid, quantity=1, cart_id=obj)
+            new_record.save()
+            messages.success(request, "product added to cart")
+        except Cart.DoesNotExist:
+            obj = Cart(customer_id = u)
+            obj.save()
+            new_record = cartItem(product_id=iid, quantity=1, cart_id=obj.id)
+            new_record.save()
+            messages.success(request, "Product added to your cart successfully ! ")
+        customer_cart = Cart.objects.values_list('id', flat=True).get(customer_id=u)
+        cart_item = cartItem.objects.filter(cart_id=customer_cart).count()
+        product = Product.objects.all()
+        context = {'product':product,'item_count':cart_item}
+        return render(request, 'sales.html', context)
+    
+def cart_item(request):
+    cart_id = Cart.objects.values_list('id').get(customer_id = request.user.id)
+    products=cartItem.objects.select_related('product').filter(cart_id=cart_id)
+    context = {'products':products}
+    return render(request, 'cart_item.html', context)
+
+def update_quantity(request):
+    if request.method =='POST':
+        qty = request.POST['quantity']
+        cartItemId = request.POST['cartItemId']
+        cartItem.objects.filter(id=cartItemId).update(quantity=qty)
+        
+        data = {'quantity':qty, 'cart_item_id':cartItemId}
+    return JsonResponse(data, safe=False)
+
+def purchaseItem(request):
+    
+    return HttpResponse("PURCHASE PAGE")

@@ -17,4 +17,8 @@ urlpatterns = [
     path('stockRoute/<flag>', views.stockRoute, name='stockRoute'),
     path('update_stock/', views.update_stock, name='update_stock'),
     path('sale_search/', views.sale_search, name='sale_search'),
+    path('addToCart/<iid>', views.addToCart, name='addToCart'),
+    path('cart_item/', views.cart_item, name='cart_item'),
+    path('update_quantity/', views.update_quantity, name='update_quantity'),
+    path('purchaseItem/', views.purchaseItem, name='purchaseItem'),
 ]
