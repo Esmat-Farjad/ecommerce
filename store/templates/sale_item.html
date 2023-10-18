@@ -1,0 +1,81 @@
+{% extends 'main/base.html' %}
+{% load static %}
+{% block content %}
+<div class="m-10" id="print-content">
+    <div class="heading text-center capitalize">
+        {% if request.user.is_staff == 1 %}
+            <h1 class="font-bold  text-2xl inline-block">Administrations</h1>
+            <p class="mt-0 pt-0">the super admin sold this products to you</p>
+            <p class="mt-0 pt-0">you can check the system globally</p>
+        {% else %}
+            <h1 class="font-bold  text-2xl inline-block">{{store_info.store.name}}</h1>
+            <p class="mt-0 pt-0">{{store_info.store.description}}</p>
+            <p class="mt-0 pt-0">{{store_info.store.address}}</p>
+        {% endif %} 
+            
+    </div>
+    <div class="grid lg:grid-cols-3 md:grid-cols-1 sm:grid-cols-1 gap-4">
+        <div class="side"></div>
+        <div class="main">
+            <hr>
+            <div class="mt-5">
+                <h1 class="capitalize font-bold">Items list</h1>
+            </div>
+            <hr class="mb-1">
+            <hr>
+            <div>
+                <table class="table-auto w-full">
+                    <thead class="font-bold bg-gray-900 text-white text-left ">
+                        <th class="p-2">Sr.No</th>
+                        <th class="p-2">Name</th>
+                        <th class="p-2">Description</th>
+                        <th class="p-2">Quantity</th>
+                        <th class="p-2">Price</th>
+                        <th class="p-2">Total Price</th>
+                    </thead>
+                    <tbody>
+                        {% for p in sold_products %}
+                           <tr>
+                                <td class="p-2">{{forloop.counter}}</td>
+                                <td class="p-2">{{p.product.name}}</td>
+                                <td class="p-2 w-40">{{p.product.description}}</td>
+                                <td class="p-2">{{p.quantity}}</td>
+                                <td class="p-2">
+                                    <span>{{p.product.price}}</span>
+                                    <span class="font-bold">AFN</span>
+                                </td>
+                                <td class="p-2">
+                                    <span>{{p.total_price}}</span>
+                                    <span class="font-bold">AFN</span>
+                                </td>
+                           </tr> 
+                        {% endfor %}
+                    </tbody>
+                </table>
+                <div class="border p-3 text-red-500 font-bold">
+                    <p class="text-end">
+                        <span class="">Total</span>
+                        <span class="mx-1" >{{payment}}</span>
+                        <span>AFN</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="side"></div>
+    </div>
+</div>
+<div class="text-center mb-10">
+    <button class="btn bg-teal-500 text-white rounded py-2 px-5 hover:bg-teal-600 hover:font-semibold" onclick="printing()">Print</button>
+</div>
+
+<script type="text/javascript">
+    function printing() {
+        var printContains = document.getElementById("print-content").innerHTML;
+        var originalContains = document.body.innerHTML;
+        document.body.innerHTML = printContains;
+        window.print()
+        document.body.innerHTML = originalContains;
+}
+</script>
+
+{% endblock content %}

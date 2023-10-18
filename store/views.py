@@ -2,7 +2,7 @@ from django.http import HttpResponse, JsonResponse
 from django.shortcuts import redirect, render
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
-from .models import Cart, Category, CustomUser, Customer, Store, Product, cartItem
+from .models import Cart, Category, CustomUser, Sale, Store, Product, cartItem
 from .forms import UserCreationForm,StoreCreationForm
 from django.db.models import Q
 
@@ -166,9 +166,16 @@ def addToCart(request, iid):
         u = request.user.id
         try:
             obj = Cart.objects.values_list('id', flat=True).get(customer = u)
-            new_record = cartItem(product_id=iid, quantity=1, cart_id=obj)
-            new_record.save()
-            messages.success(request, "product added to cart")
+            try:
+                cartId = cartItem.objects.values_list('id', flat=True).get(product_id=iid)
+                qty = cartItem.objects.values_list('quantity', flat=True).get(product_id=iid)
+                qty += 1
+                cartItem.objects.filter(id=cartId).update(quantity=qty)
+                messages.success(request, "quantity updated")
+            except cartItem.DoesNotExist:
+                new_record = cartItem(product_id=iid, quantity=1, cart_id=obj)
+                new_record.save()
+                messages.success(request, "product added to cart")
         except Cart.DoesNotExist:
             obj = Cart(customer_id = u)
             obj.save()
@@ -197,5 +204,24 @@ def update_quantity(request):
     return JsonResponse(data, safe=False)
 
 def purchaseItem(request):
-    
-    return HttpResponse("PURCHASE PAGE")
+    user_id = request.user.id
+    my_cart_id = Cart.objects.values_list('id', flat=True).get(customer_id=user_id)
+    my_cart_item = cartItem.objects.select_related('product').filter(cart_id = my_cart_id)
+    my_list=[]
+    for val in my_cart_item:
+        total_price = int(val.quantity) * int(val.product.price)
+        profit=int(val.product.price) - int(val.product.rate)
+        total_profit = profit * val.quantity
+        stock = int(val.product.stock) - int(val.quantity)
+        new_record=Sale(quantity=val.quantity, total_price=total_price,  total_profit=total_profit, cart_id=my_cart_id, product_id=val.product.id )
+        new_record.save()
+        my_list.append(new_record)
+        Product.objects.filter(id=val.product.id).update(stock=stock)
+    messages.success(request, "stock updated, Sale Table created")
+    store_info = CustomUser.objects.select_related('store').get(id=user_id)
+    print(store_info.store)
+    payment = 0
+    for  i in my_list:
+        payment = payment + i.total_price
+    context = {'sold_products': my_list,'store_info':store_info,'payment':payment}
+    return render(request, 'sale_item.html', context)
