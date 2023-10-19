@@ -17,10 +17,10 @@
     </div>
         <hr>
     <div class="px-20 py-10">
-        <div class="grid lg:grid-cols-4 gap-4 sm:grid-cols-1">
+            <div class="grid lg:grid-cols-4 gap-4 sm:grid-cols-1 card_container" id="dataForm">
                 <!-- shopping card -->
                 {% for item in product %}
-                    <div class="rounded overflow-hidden shadow-lg border relative m-2">
+                    <div class="rounded overflow-hidden shadow-lg border relative m-2 ">
                             <img src="{{item.image.url}}" class="h-52 w-full object-cover" alt="image">
                         <div class="card-body p-4">
                             <span class="font-semibold block text-slate-600 capitalize">{{item.name}}</span>
@@ -33,26 +33,61 @@
                             {% endif %}
                             
                         </div>
-                        <div class="p-4">
-                            <button class="bg-teal-500 text-white py-1 px-2 text-lg shadow">Buy</button>
-                            <button class="bg-teal-500 text-white py-1 px-2 shadow">
-                                <a href="{% url 'store:addToCart' item.id %}"><i class="fa-solid fa-cart-plus text-lg"></i></a>
-                            </button>
-                        </div>
                         <div class="bg-gray-200 p-2 rounded-full absolute top-0 shadow-lg z-20 m-2">
                             {% if item.category.name == "clothing" %}
-                                <i class="fa-solid fa-shirt"></i>
+                            <i class="fa-solid fa-shirt"></i>
                             {% elif item.category.name == "footwear" %}
-                                <i class="fa-solid fa-shoe-prints"></i>
+                            <i class="fa-solid fa-shoe-prints"></i>
                             {% elif item.category.name == "food materials" %}
-                                <i class="fa-solid fa-utensils"></i>
+                            <i class="fa-solid fa-utensils"></i>
                             {% endif %}
-                            
+                        </div>
+                        
+                        <div class="p-4" >
+                            {% if item.stock < 0 %}
+                                <button type="button" disabled class="rounded shadow-lg bg-teal-400 text-white py-1 px-2 text-lg shadow">Buy</button>
+                                <button type="button" disabled class="rounded shadow-lg bg-teal-400 text-white py-1 px-2 shadow">
+                                    <i class="fa-solid fa-cart-plus text-lg"></i>
+                                </button>
+                            {% elif item.stock > 0 %}
+                                <button class="rounded shadow-lg bg-teal-500 text-white py-1 px-2 text-lg shadow">Buy</button>
+                                <!-- ADD TO CART START -->
+                                <button data-cart-item-id="{{item.id}}" class="add_to_cart_btn rounded shadow-lg bg-teal-500 text-white py-1 px-2 shadow">
+                                    Add To Cart&nbsp;<i class="fa-solid fa-cart-plus text-lg"></i>
+                                </button>
+                                <!-- ADD TO CART END -->
+                            {% endif %}
                         </div>
                     </div>
                 {% endfor %}
-        </div>       <!-- shopping card -->
+            </div>      <!-- shopping card -->
     </div>
-    
 </div>
+
+<script>
+    const cartElement = document.querySelector('#dataForm');
+    cartElement.addEventListener('click', function(e) {
+        e.preventDefault();
+       // console.log(e.target.classList)
+       const cartItemBtn = e.target.closest('.add_to_cart_btn');
+       if(!cartItemBtn) return
+       //console.log(cartItemBtn.dataset.cartItemId);
+       var id = cartItemBtn.dataset.cartItemId;
+       console.log(id);
+       const formData = new FormData();
+       formData.append('itemId', id);
+       formData.append('csrfmiddlewaretoken', '{{csrf_token}}');
+       console.log(formData);
+       fetch('{% url "store:addToCart" %}',{
+        method: 'POST',
+        body: formData
+       }).then(response => response.json()).then(data => {
+        console.log("success: ", data);
+        document.getElementById("item_count").innerHTML=data.cart_item;
+        document.getElementById("item_count_mobile").innerHTML = data.cart_item;
+       }).catch(error =>{
+        console.log(error);
+       });
+    });
+</script>
 {% endblock content %}

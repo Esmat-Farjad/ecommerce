@@ -11,8 +11,7 @@
                 <a class="mx-5 inline-block hover:font-bold cursor-pointer relative px-4" href="{% url 'store:cart_item' %}">
                     <!-- component -->
                     <div class="t-0 absolute right-0">
-                        <p class="flex h-2 w-2 items-center justify-center rounded-full bg-red-500 p-3 text-xs text-white">
-                            {{item_count}}
+                        <p class="flex h-2 w-2 items-center justify-center rounded-full bg-red-500 p-2 text-xs text-white" id="item_count">
                         </p>
                     </div>
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
@@ -41,7 +40,11 @@
 <div class="py-5 hidden" id="toggleMenu">
     {% if user.is_authenticated %}
     <ul>
-    <li class="py-2 mx-5 hover:font-bold cursor-pointer"><a href="{% url 'store:purchase' %}">&nbsp;<i class="fa-solid fa-cart-plus"></i>&nbsp;Purchase</a></li>
+    <li class="py-2 mx-5 hover:font-bold cursor-pointer "><a href="{% url 'store:cart_item' %}">
+        <i class="fa-solid fa-bag-shopping"></i>&nbsp;My Cart&nbsp;
+        <small id="item_count_mobile" class="rounded mx-3 px-2 py-px bg-teal-500 text-white"></small>
+    </a></li>
+    <li class="py-2 mx-4 hover:font-bold cursor-pointer"><a href="{% url 'store:purchase' %}">&nbsp;<i class="fa-solid fa-cart-plus"></i>&nbsp;Purchase</a></li>
     <li class="py-2 mx-5 hover:font-bold cursor-pointer"><a href="{% url 'store:sales' %}"><i
                 class="fa-solid fa-cart-shopping"></i>&nbsp;Sales</a></li>
     <li class="py-2 mx-5 hover:font-bold cursor-pointer"><a href="{% url 'store:product' %}"><i

@@ -161,11 +161,14 @@ def sale_search(request):
         context = {'product':product}
         return render(request, 'sales.html', context)
     
-def addToCart(request, iid):
-    if iid:
+def addToCart(request):
+    if request.method == 'POST':
+        iid = request.POST['itemId']
         u = request.user.id
+        #TRYING TO GET THE CUSTOMER CART START
         try:
-            obj = Cart.objects.values_list('id', flat=True).get(customer = u)
+            myCartId = Cart.objects.values_list('id', flat=True).get(customer = u)
+            #TRYING TO CHECK WHETHER THE ITEM EXIST IN THE CART OR NOT START
             try:
                 cartId = cartItem.objects.values_list('id', flat=True).get(product_id=iid)
                 qty = cartItem.objects.values_list('quantity', flat=True).get(product_id=iid)
@@ -173,20 +176,23 @@ def addToCart(request, iid):
                 cartItem.objects.filter(id=cartId).update(quantity=qty)
                 messages.success(request, "quantity updated")
             except cartItem.DoesNotExist:
-                new_record = cartItem(product_id=iid, quantity=1, cart_id=obj)
+                new_record = cartItem(product_id=iid, quantity=1, cart_id=myCartId)
                 new_record.save()
                 messages.success(request, "product added to cart")
+            #TRYING TO CHECK WHETHER THE ITEM EXIST IN THE CART OR NOT END
         except Cart.DoesNotExist:
             obj = Cart(customer_id = u)
             obj.save()
             new_record = cartItem(product_id=iid, quantity=1, cart_id=obj.id)
             new_record.save()
             messages.success(request, "Product added to your cart successfully ! ")
+        #TRYING TO GET THE CUSTOMER CART ENDS
         customer_cart = Cart.objects.values_list('id', flat=True).get(customer_id=u)
         cart_item = cartItem.objects.filter(cart_id=customer_cart).count()
-        product = Product.objects.all()
-        context = {'product':product,'item_count':cart_item}
-        return render(request, 'sales.html', context)
+        message = "success"
+        status = 200
+        data = {"message":message, "status":status, "cart_item":cart_item}
+        return JsonResponse(data, safe=False)
     
 def cart_item(request):
     cart_id = Cart.objects.values_list('id').get(customer_id = request.user.id)
@@ -207,7 +213,11 @@ def purchaseItem(request):
     user_id = request.user.id
     my_cart_id = Cart.objects.values_list('id', flat=True).get(customer_id=user_id)
     my_cart_item = cartItem.objects.select_related('product').filter(cart_id = my_cart_id)
+    
+    
+    
     my_list=[]
+    
     for val in my_cart_item:
         total_price = int(val.quantity) * int(val.product.price)
         profit=int(val.product.price) - int(val.product.rate)
@@ -217,6 +227,7 @@ def purchaseItem(request):
         new_record.save()
         my_list.append(new_record)
         Product.objects.filter(id=val.product.id).update(stock=stock)
+        
     messages.success(request, "stock updated, Sale Table created")
     store_info = CustomUser.objects.select_related('store').get(id=user_id)
     print(store_info.store)
@@ -224,4 +235,17 @@ def purchaseItem(request):
     for  i in my_list:
         payment = payment + i.total_price
     context = {'sold_products': my_list,'store_info':store_info,'payment':payment}
+    
+    cartItem.objects.filter(cart_id = my_cart_id).delete()
+    
+    messages.success(request, "Your Cart item has been Removed")
+    
     return render(request, 'sale_item.html', context)
+
+def RemoveCartIem(request, pid):
+    if pid:
+        cartItem.objects.filter(id=pid).delete()
+        cart_id = Cart.objects.values_list('id').get(customer_id = request.user.id)
+    products=cartItem.objects.select_related('product').filter(cart_id=cart_id)
+    context = {'products':products}
+    return render(request, 'cart_item.html', context)
