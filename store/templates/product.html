@@ -37,7 +37,7 @@
                     </thead>
                     <tbody>
                         
-                        {% for item in product %}
+                        {% for item in page_obj.object_list %}
                      
                             <tr class="border hover:bg-gray-100 cursor-pointer hover:font-semiboldtransition duration-500 ease-in-out">
                         
@@ -59,10 +59,36 @@
                                 </a>
                             </td>
                             </tr>
-                    
                         {% endfor %}
                     </tbody>
                 </table>
+                <!-- Paginator navigation button start -->
+                <div class="flex justify-center my-5 py-3">
+                    {% if page_obj.has_previous %}
+                    <a href="?page={{page_obj.previous_page_number}}" class="relative tooltip">
+                        <i
+                            class="fa-solid fa-chevron-left rounded-full hover:text-white text-white px-2 py-1 bg-teal-500 hover:bg-teal-600 hover:shadow-md"></i>
+                        <small
+                            class="tooltip-text absolute top-0 right-10 rounded bg-teal-500 text-white px-3 shadow-lg">Previous</small>
+                    </a>
+                    {% else %}
+                    <i class="fa-solid fa-chevron-left rounded-full text-black px-2 py-1 bg-gray-300"></i>
+                    {% endif %}
+                    <span class="font-bold mx-10">Page
+                        <span class="bg-slate-300 text-dark rounded-full px-2 py-1">{{page_obj.number}}</span> of
+                        <span class="bg-slate-300 text-dark rounded-full px-2 py-1">{{page_obj.paginator.num_pages}}</span>
+                    </span>
+                    {% if page_obj.has_next %}
+                    <a href="?page={{page_obj.next_page_number}}" class="tooltip relative">
+                        <i
+                            class="fa-solid fa-chevron-right rounded-full hover:text-white text-white px-2 py-1 bg-teal-500 hover:bg-teal-600 shadow-md hover:shadow-lg"></i>
+                        <small class="tooltip-text absolute top-0 left-10 rounded bg-teal-500 text-white px-3 shadow-lg">Next</small>
+                    </a>
+                    {% else %}
+                    <i class="fa-solid fa-chevron-right rounded-full text-black px-2 py-1 bg-gray-300"></i>
+                    {% endif %}
+                </div>
+                <!-- paginator navigation button end -->
             </div>
     </div>
 </div>

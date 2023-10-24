@@ -22,5 +22,6 @@ urlpatterns = [
     path('update_quantity/', views.update_quantity, name='update_quantity'),
     path('purchaseItem/', views.purchaseItem, name='purchaseItem'),
     path('RemoveCartIem/<pid>', views.RemoveCartIem, name='RemoveCartIem'),
+    path('purchaseSearch/', views.purchaseSearch, name='purchaseSearch'),
     
 ]

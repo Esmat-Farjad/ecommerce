@@ -6,6 +6,30 @@
     <div class="text-center text-4xl">
         <p class="my-5">Purchase Products</p>
     </div>
+    <div class="flex justify-center">
+        <form action="{% url 'store:purchaseSearch' %}" method="POST" class="my-5">
+            {% csrf_token %}
+            <input type="text" name="search" id="search" class="p-2 rounded border border-teal-400 w-96 focus:outline-none focus:border-sky-500"
+                placeholder="Search items">
+            <button type="submit" class="rounded-full border bg-teal-500 hover:bg-teal-700 hover:text-white px-3 py-2">
+                <i class="fa-solid fa-magnifying-glass"></i>
+            </button>
+        </form>
+    </div>
+    <div class="text-center">
+        <div>
+            <p class="text-sm">If the product dose not exist, purchase the new product</p>
+            <p class="text-sm">Purchasing the new brand product click the <span class="font-bold">Purchase New Item</span></p>
+        </div>
+        <button id="contentHandler" class="bg-teal-500 text-white rounded px-3 pt-2 pb-1 hover:bg-teal-600 hover:font-semibold hover:shadow-lg">
+            Purchase New Item
+            <p class="text-center">
+                <i id="down" class="fa-solid fa-chevron-down bg-teal-400 rounded-full p-2"></i>
+                <i id="up" class="fa-solid fa-chevron-up bg-teal-400 rounded-full p-2 hidden"></i>
+            </p>
+        </button>
+    </div>
+<div id="purchaseContainer" class="hidden">
     <p class="text-sky-500">
         <strong><i class="fa-solid fa-plus"></i></strong>
         Adding a new brand product to your stock.
@@ -98,6 +122,7 @@
         </div>
     </form>
 </div>
+</div>
 <hr>
 <!-- PRODUCT DISPLAYING SECTION START -->
 <div class="mx-10 mb-10 p-10">
@@ -120,7 +145,7 @@
     </thead>
     <tbody class="text-center shadow border">
         
-        {% for item in product %}
+        {% for item in page_obj.object_list %}
         <tr class="border">
             {% if item.image %}
                 <td class="py-3"><img src="{{item.image.url}}" alt="image" class="w-16 h-16 rounded-full shadow"></td>
@@ -129,7 +154,7 @@
             {% endif %}
             
             <td class="py-3">{{item.name}}</td>
-            <td class="py-3">{{item.description}}</td>
+            <td class="py-3 text-start w-40">{{item.description}}</td>
             <td class="py-3">{{item.category}}</td>
             <td class="py-3">{{item.packet}}</td>
             <td class="py-3">{{item.rate}}</td>
@@ -142,8 +167,52 @@
         {% endfor %}
     </tbody>
 </table>
+<!-- paginator navigation button start -->
+<div class="flex justify-center my-5 py-3">
+    {% if page_obj.has_previous %}
+    <a href="?page={{page_obj.previous_page_number}}" class="relative tooltip">
+        <i
+            class="fa-solid fa-chevron-left rounded-full hover:text-white text-white px-2 py-1 bg-teal-500 hover:bg-teal-600 hover:shadow-md"></i>
+        <small
+            class="tooltip-text absolute top-0 right-10 rounded bg-teal-500 text-white px-3 shadow-lg">Previous</small>
+    </a>
+    {% else %}
+    <i class="fa-solid fa-chevron-left rounded-full text-black px-2 py-1 bg-gray-300"></i>
+    {% endif %}
+    <span class="font-bold mx-10">Page
+        <span class="bg-slate-300 text-dark rounded-full px-2 py-1">{{page_obj.number}}</span> of
+        <span class="bg-slate-300 text-dark rounded-full px-2 py-1">{{page_obj.paginator.num_pages}}</span>
+    </span>
+    {% if page_obj.has_next %}
+    <a href="?page={{page_obj.next_page_number}}" class="tooltip relative">
+        <i
+            class="fa-solid fa-chevron-right rounded-full hover:text-white text-white px-2 py-1 bg-teal-500 hover:bg-teal-600 shadow-md hover:shadow-lg"></i>
+        <small class="tooltip-text absolute top-0 left-10 rounded bg-teal-500 text-white px-3 shadow-lg">Next</small>
+    </a>
+    {% else %}
+    <i class="fa-solid fa-chevron-right rounded-full text-black px-2 py-1 bg-gray-300"></i>
+    {% endif %}
+</div>
+<!-- paginator navigation button end -->
 </div>
 <script>
+        const t = document.querySelector("#contentHandler");
+            t.addEventListener("click", function () {
+                var down = document.getElementById("down");
+                var up = document.getElementById("up");
+                if(! down.classList.contains("hidden")){
+                    up.classList.remove("hidden");
+                    down.classList.add("hidden");
+                } else {
+                    up.classList.add("hidden");
+                    down.classList.remove("hidden");
+                }
+                $("#purchaseContainer").animate({
+                    height: 'toggle'
+                }, 1000);
+
+            });
+
      /*CATEGORY CHECKING STARTS*/
     ele = document.getElementById("category");
     ele.addEventListener('change', function(e) {
@@ -161,16 +230,16 @@
     var num = e.target.value;
     var tq = x*num;
     document.getElementById('quantity').value =tq;
+    document.getElementById("stock").value = tq;
    });
    //QUANTITY CALCULATION ENDS
 
-    el = document.getElementById('bprice');
-    el.addEventListener('input', function (evt) {
-        var qty = document.getElementById('quantity').value;
-        if(qty != "") {
-            document.getElementById('stock').value = qty;
+    element = document.getElementById('bprice');
+    element.addEventListener('input', function (evt) {
+        var package = document.getElementById('packet_content').value;
+        if(package != "") {
             var b_price = evt.target.value;
-            var r = b_price/qty;
+            var r = b_price/package;
             document.getElementById('rate').value = Math.round(r);
         } else {
             document.getElementById('show_message').innerHTML = "Please provide the product quantity";

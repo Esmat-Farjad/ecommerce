@@ -69,7 +69,17 @@ def product(request):
         Product.objects.filter(id=id).delete()
         messages.success(request, "Item Deleted Successfully !")
     product = Product.objects.all().order_by('-id')
-    context = {'product':product,'flag':'list'}
+    #Paginator start
+    p = Paginator(product, 5)
+    page_number = request.GET.get('page')
+    try:
+        page_obj = p.get_page(page_number)
+    except PageNotAnInteger:
+        page_obj = p.page(1)
+    except EmptyPage:
+        page_obj = p.page(p.num_pages)
+    # paginator end
+    context = {'page_obj':page_obj,'flag':'list'}
     return render(request, 'product.html', context)
 
 
@@ -86,7 +96,8 @@ def purchase(request):
         item_pics=request.FILES['item_pics']
         num_packet = request.POST['num_packet']
         quantity = int(packet) * int(num_packet) 
-        rate = round(int(bulk_price)/int(quantity), 2)
+        new_rate = int(bulk_price)/int(packet)
+        rate = int(new_rate)
         profit = int(price) - int(rate)
         stock = quantity
         print(rate,profit,stock)
@@ -98,11 +109,21 @@ def purchase(request):
         new_record.save()
         messages.success(request, "Product added successfully !")
     product = Product.objects.all().order_by('-id')
+    #Paginator start
+    p = Paginator(product, 5 )
+    page_number = request.GET.get('page')
+    try:
+        page_obj = p.get_page(page_number)
+    except PageNotAnInteger:
+        page_obj = p.page(1)
+    except EmptyPage:
+        page_obj = p.page(p.num_pages)
+    #Paginator end
     number = []
     for x in range(1, 100,1):
         number.append(x)
     cat = Category.objects.all()
-    context = {'category':cat,'product':product,'num':number}
+    context = {'category':cat,'page_obj':page_obj,'num':number}
     return render(request, 'purchase.html', context)
 
 def dispatch(request, item):
@@ -264,3 +285,23 @@ def RemoveCartIem(request, pid):
     products=cartItem.objects.select_related('product').filter(cart_id=cart_id)
     context = {'products':products}
     return render(request, 'cart_item.html', context)
+
+def purchaseSearch(request):
+    goods = ''
+    if request.method == 'POST':
+        item = request.POST['search']
+        product = Product.objects.filter(Q(name__icontains=item) |  Q(description__icontains=item))
+        goods = product
+        
+    p = Paginator(goods, 5)
+    page_number = request.GET.get('page')
+    try:
+        page_obj = p.get_page(page_number)
+    except PageNotAnInteger:
+        page_obj = p.page(1)
+    except EmptyPage:
+        page_obj = p.page(p.num_pages)
+        
+    context = {'page_obj':page_obj}
+    return render(request, 'purchase.html', context)
+                

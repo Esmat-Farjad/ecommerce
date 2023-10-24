@@ -62,6 +62,7 @@
                 {% endfor %}
                 <!-- shopping card -->
             </div>
+            <!-- Pagination Start -->
             <div class="flex justify-center my-5 py-3">
                 {% if page_obj.has_previous %}
                     <a href="?page={{page_obj.previous_page_number}}" class="relative tooltip">
@@ -83,7 +84,8 @@
                 {% else %}
                     <i class="fa-solid fa-chevron-right rounded-full text-black px-2 py-1 bg-gray-300"></i>
                 {% endif %}
-            </div>      
+            </div>
+            <!-- Pagination End -->
     </div>
 </div>
 
