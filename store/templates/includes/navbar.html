@@ -1,10 +1,11 @@
-    
+{% load static %}
 <div class="nav border shadow">
     <div class="grid grid-cols-2">
         <div class="">
-            {% load static %}
-            <img src="{% static 'image/logo.png' %}" class=" mx-3 w-24 h-16" alt="">
-            <small class="mx-3">SHOPPING MART</small>
+            <a href="{% url 'home' %}">
+                <img src="{% static 'image/logo.png' %}" class=" mx-3 w-24 h-16" alt="">
+                <small class="mx-3">SHOPPING MART</small>
+            </a>
         </div>
         <div class="lg:block sm:hidden pt-6 text-lg text-end me-5">
             {% if user.is_authenticated %}

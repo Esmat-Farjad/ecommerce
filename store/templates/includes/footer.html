@@ -1,8 +1,89 @@
-<div class="footer p-5 border ">
-    <ul class="inline">
-        <li>item</li>
-        <li>item</li>
-        <li>item</li>
-    </ul>
-    <p class="text-center">all right reserved &copy; 2023</p>
+{% load static %}
+<div class="footer m-0 rounded shadow pt-5 px-5 border bg-gray-800 text-white">
+    <div class="grid grid-cols-3">
+        <div class="menu px-10 py-5">
+            <p class="text-gray-400"><i class="fa-solid fa-info bg-gray-700 rounded-full px-2 pb-1"></i>&nbsp;Information</p>
+            <ul class="text-sm ms-6 ">
+                <li class="py-2 cursor-pointer transition ease-in-out duration-500 hover:text-sky-500 hover:font-semibold">About Us</li>
+                <li class="py-2 cursor-pointer transition ease-in-out duration-500 hover:text-sky-500 hover:font-semibold">Contact Us</li>
+                <li class="py-2 cursor-pointer transition ease-in-out duration-500 hover:text-sky-500 hover:font-semibold">Join Us</li>
+            </ul>
+        </div>
+        <div class="text-center py-10 text-gray-400">
+            <p class="text-center">All rights reserved &copy; 2023</p>
+            <p class="text-sm mt-3">Join us on social media</p>
+            <div>
+                <span class="text-xl mx-2 cursor-pointer tooltip relative" id="facebook">
+                    <i class="fa-brands text-blue-500 fa-facebook"></i>
+                    <small class="absolute top-0 right-8 text-sm rounded bg-gray-800 text-gray-400 py-1 px-2 shadow-lg tooltip-text">Facebook</small>
+                </span>
+                <span class="text-xl mx-2 cursor-pointer tooltip relative" id="threads">
+                    <i class="fa-brands text-white fa-threads"></i></i>
+                    <small class="absolute top-0 right-8 text-sm rounded bg-gray-800 text-gray-400 py-1 px-2 shadow-lg tooltip-text">Threads</small>
+                </span>
+                <span class="text-xl mx-2 cursor-pointer relative tooltip" id="youtube">
+                    <i class="fa-brands text-red-500 fa-youtube"></i>
+                    <small class="absolute top-0 right-8 text-sm rounded bg-gray-800 text-gray-400 py-1 px-2 shadow-lg tooltip-text">Youtube</small>
+                </span>
+                <span class="text-xl mx-2 cursor-pointer relative tooltip" id="twitter">
+                    <i class="fa-brands fa-x-twitter"></i>
+                    <small class="absolute top-0 right-8 text-sm rounded bg-gray-800 text-gray-400 py-1 px-2 shadow-lg tooltip-text">Twitter</small>
+                </span>
+                <span class="text-xl mx-2 cursor-pointer relative tooltip" id="instagram">
+                    <i class="fa-brands fa-instagram"></i>
+                    <small class="absolute top-0 right-8 text-sm rounded bg-gray-800 text-gray-400 py-1 px-2 shadow-lg tooltip-text">Instagram</small>
+                </span> 
+            </div>
+            <div class="mt-5 mb-0">
+                <span class="text-gray-400 me-3">
+                    <i class="fa-solid fa-phone bg-gray-700 rounded-full p-2"></i>&nbsp;
+                    +93 (0) 74 862 1879
+                </span>
+                <span class="text-gray-400">
+                    <i class="fa-regular fa-envelope bg-gray-700 rounded-full p-2"></i>&nbsp;
+                    query@e-commerce.come
+                </span>
+            </div>
+            
+        </div>
+        <div class="">
+            <div class="flex justify-center pt-10">
+                <a href="{% url 'home' %}" class="inline-block shadow-md rounded">
+                    <img src="{% static 'image/logo.png' %}" class="mx-3 w-24 h-16" alt="">
+                    <small class="mx-3 font-semibold">SHOPPING MART</small>
+                </a>
+            </div>
+            <div>
+                <p class="text-sm text-gray-400 text-center">
+                    In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of
+                    a
+                    document or a typeface without relying on meaningful content. Lorem ipsum may be used as a placeholder before final
+                    copy
+                    is available.
+                </p>
+            </div>
+            <div class="mt-3 text-gray-400 text-center">
+                agree with our
+                <a href="#" class="text-blue-500 text-sm">
+                    privacy policy & terms of use
+                </a>
+            </div>
+        </div>
+    </div>
+    
+<script>
+    /*const element = document.querySelector("#facebook");
+    element.addEventListener("mouseover", function() {
+        var id = document.getElementById("show-facebook");
+        if(id.classList.contains("hidden")){
+            id.classList.remove("hidden");
+        }
+    });
+    element.addEventListener("mouseleave", function(){
+        var id = document.getElementById("show-facebook");
+        if(! id.classList.contains("hidden")) {
+            id.classList.add("hidden");
+        }
+    });*/
+</script>
 </div>

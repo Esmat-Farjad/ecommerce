@@ -53,3 +53,9 @@
 .text-small{
     font-size: 10px;  
 }
+.tooltip-text {
+    display: none;
+}
+.tooltip:hover .tooltip-text{
+    display: block;
+}
