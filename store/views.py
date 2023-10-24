@@ -5,6 +5,7 @@ from django.contrib.auth import authenticate, login, logout
 from .models import Cart, Category, CustomUser, Sale, Store, Product, cartItem
 from .forms import UserCreationForm,StoreCreationForm
 from django.db.models import Q
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 
 # Create your views here.
@@ -41,7 +42,21 @@ def signin(request):
 
 def sales(request):
     product = Product.objects.select_related('category')
-    context = {'product':product}
+    # setting up paginator
+    p = Paginator(product, 5)
+    #creating paginator
+    page_number = request.GET.get('page')
+    #getting the desire page number from the url
+    try:
+        page_obj = p.get_page(page_number)
+        #return the desire page object
+    except PageNotAnInteger:
+        page_obj = p.page(1)
+        #if page number is not an integer then assign the first page 
+    except EmptyPage:
+        #if the page i empty then return the last page
+        page_obj = p.page(p.num_pages)
+    context = {'page_obj':page_obj}
     return render(request, 'sales.html',context)
 
 def signout(request):
