@@ -1,3 +1,4 @@
+import json
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import redirect, render
 from django.contrib import messages
@@ -6,6 +7,7 @@ from .models import Cart, Category, CustomUser, Sale, Store, Product, cartItem
 from .forms import UserCreationForm,StoreCreationForm
 from django.db.models import Q
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.core.serializers import serialize
 
 
 # Create your views here.
@@ -334,4 +336,19 @@ def sale_info(request):
     
     context = {'page_obj':page_obj}
     return render(request, 'includes/sale_info.html', context)
+
+def getItemInfo(request):
+    if request.method == 'POST':
+        pid = request.POST['pid']
+        productId = Sale.objects.values_list('product', flat=True).get(id=pid)
+        productInfo = Product.objects.filter(id=productId).values()
+        
+        cartId = Sale.objects.values_list('cart', flat=True).get(id=pid)
+        customer_id = Cart.objects.values_list('customer', flat=True).get(id=cartId)
+       
+        customer_info = CustomUser.objects.values_list('first_name', 'last_name').get(id=customer_id)
+        saleProduct = Sale.objects.select_related('product').filter(id = pid).values()
+        data = {'saleProduct':list(saleProduct), 'customerInfo':list(customer_info), 'productInfo':list(productInfo)}
+    
+        return JsonResponse(data, safe=False)
                 

@@ -1,7 +1,7 @@
 {% extends 'main/base.html' %}
 {% load static %}
 {% block content %}
-<div class="p-10 m-5">
+<div class="p-10 m-5 relative">
     <div class="heading">
         <h1 class="text-2xl text-center subpixel-antialiased">Sales Information</h1>
     </div>
@@ -86,8 +86,174 @@
             </div>
             <!-- paginator navigation button end -->
     </div>
+    <!-- Modal dialog start -->
+    <div class="m-10 p-10 absolute top-0 right-32 left-32 shadow-2xl rounded border bg-white z-40 hidden" id="detailsContainer">
+        <div class="text-2xl subpixel-antialiased text-center">
+            <p>Product Complete Information</p>
+        </div>
+        
+        <div class="grid lg:grid-cols-3 sm:grid-cols-1 mt-5 gap-3 mb-2">
+            <div class="">
+                <p class="text-lg text-white pl-3 py-1 bg-teal-400"><i class="fa-solid fa-file-invoice"></i>&nbsp;Product Details</p>
+                <table class="table-fixed w-full font-bold mx-5">
+                    <tr class="">
+                        <td class="mr-2 ">Product Name</td>
+                        <td id="name" class="text-cyan-500 font-light"></td>
+                    </tr>
+                    <tr class="">
+                        <td class="mr-2 ">Product Description</td>
+                        <td id="description" class="text-cyan-500 font-light"></td>
+                    </tr>
+                    <tr class="">
+                        <td class="mr-2 ">Product Packet</td>
+                        <td id="packet" class="text-cyan-500 font-light"></td>
+                    </tr>
+                </table>
+            </div>
+            <div class="">
+                <p class="text-lg text-white pl-3 py-1 bg-teal-400"><i class="fa-solid fa-file-invoice-dollar"></i>&nbsp;Item Price Details</p>
+                <table class="table-fixed w-full font-bold mx-5">
+                    <tr class="">
+                        <td class="mr-2 ">Bulk price</td><td id="Bulk" class="text-cyan-500 font-light"></td>
+                    </tr>
+                    <tr class="">
+                        <td class="mr-2 ">Rate</td>
+                        <td id="rate" class="text-cyan-500 font-light"></td>
+                    </tr>
+                    <tr class="">
+                        <td class="mr-2 ">Price</td>
+                        <td id="price" class="text-cyan-500 font-light"></td>
+                    </tr>
+                    <tr class="">
+                        <td class="mr-2 ">Profit</td>
+                        <td id="profit" class="text-cyan-500 font-light"></td>
+                    </tr>
+                    <tr class="">
+                        <td class="mr-2 ">Quantity</td>
+                        <td id="quantity" class="text-cyan-500 font-light"></td>
+                    </tr>
+                    <tr class="">
+                        <td class="mr-2 ">Total Profit</td>
+                        <td id="totalProfit" class="text-cyan-500 font-light"></td>
+                    </tr>
+                    <tr class="">
+                        <td class="mr-2 ">Total Price</td>
+                        <td id="totalPrice" class="text-cyan-500 font-light"></td>
+                    </tr>
+                </table>
+            </div>
+            <div class="">
+                <p class="text-lg text-white pl-3 py-1 bg-teal-400"><i class="fa-solid fa-circle-info"></i>&nbsp;Item Extra Details</p>
+                <table class="table-fixed w-full font-bold mx-5">
+                    <tr class="">
+                        <td class="mr-2 ">Manufacturing Date</td>
+                        <td type="date" id="mfd" class="text-cyan-500 font-light"></td>
+                    </tr>
+                    <tr class="">
+                        <td class="mr-2 ">Expiration Date</td>
+                        <td id="expd" class="text-cyan-500 font-light"></td>
+                    </tr>
+                    <tr class="">
+                        <td class="mr-2 ">Sale Date</td>
+                        <td id="sale_date" class="text-cyan-500 font-light">
+                        </td>
+                    </tr>
+                    <tr class="">
+                        <td class="mr-2 ">Sales Person</td>
+                        <td id="sales_person" class="text-cyan-500 font-light"></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <p class="text-cyan-500 mt-5 ">
+            <i class="fa-solid fa-circle-info"></i>&nbsp;The information provided is base on system
+            calculation from sales data record.</p>
+        <hr>
+        <div class="footer text-center mt-5">
+            <button class="btn-close bg-red-500 text-white py-1 px-3 rounded shadow-md hover:bg-red-600">Close&nbsp;<i class="fa-solid fa-circle-chevron-up"></i></button>
+        </div>
+    </div>
+    <!-- Modal dialog end -->
 </div>
+
 <script>
     
+    const tableBodyClick = document.querySelector("#tbodyClickHandler");
+    tableBodyClick.addEventListener("click", function(e) {
+        e.preventDefault();
+        const rowItemClick = e.target.closest('.row-click');
+        if(! rowItemClick) return;
+        var itemID = rowItemClick.dataset.itemId;
+        const formData = new FormData();
+        formData.append('pid', itemID);
+        formData.append('csrfmiddlewaretoken', '{{csrf_token}}');
+        fetch('{% url "store:getItemInfo" %}',{
+            method: 'POST',
+            body: formData
+        }).then(response => response.json()).then(data =>{
+           //
+            //sale info
+            document.getElementById("totalPrice").innerHTML = data.saleProduct[0].total_price;
+            document.getElementById("totalProfit").innerHTML = data.saleProduct[0].total_profit;
+            document.getElementById("quantity").innerHTML = data.saleProduct[0].quantity;
+            //console.log(data.saleProduct[0].date_created)
+            var d = new Date(data.saleProduct[0].date_created);
+            var hour = d.getHours();
+            var min = d.getMinutes();
+            var sec = d.getSeconds();
+            var day = d.getDate();
+            var month = d.getMonth();
+            var year = d.getFullYear();
+            var saleDate = year + '/' + month + '/' + day + '  -  ' + hour + ':' + min + ':' + sec;
+            document.getElementById("sale_date").innerHTML = saleDate;
+            //product info
+            console.log(data.productInfo);
+            document.getElementById("name").innerText = data.productInfo[0].name;
+            document.getElementById("description").innerHTML = data.productInfo[0].description;
+            document.getElementById("packet").innerHTML = data.productInfo[0].packet;
+            document.getElementById("price").innerHTML = data.productInfo[0].price;
+            document.getElementById("rate").innerHTML = data.productInfo[0].rate;
+            document.getElementById("profit").innerHTML = data.productInfo[0].profit;
+            document.getElementById("Bulk").innerHTML = data.productInfo[0].bulk_price;
+
+           
+            var md = new Date(data.productInfo[0].mfd);
+            var hour = md.getHours();
+            var min = md.getMinutes();
+            var sec = md.getSeconds();
+            var day = md.getDate();
+            var month = md.getMonth();
+            var year = md.getFullYear();
+            var mfd = year + '/' + month + '/' + day + '  -  ' + hour + ':' + min + ':' + sec;
+            document.getElementById("mfd").innerHTML = mfd;
+            var exd = new Date(data.productInfo[0].expd);
+            var hour = exd.getHours();
+            var min = exd.getMinutes();
+            var sec = exd.getSeconds();
+            var day = exd.getDate();
+            var month = exd.getMonth();
+            var year = exd.getFullYear();
+            var expd = year + '/' + month + '/' + day + '  -  ' + hour + ':' + min + ':' + sec;
+            document.getElementById("expd").innerHTML = expd; 
+
+            if(data.customer_info == null )
+            {
+                document.getElementById("sales_person").innerHTML = "Administrator";
+            } else {document.getElementById('sales_person').innerHTML = data.customer_info[0].first_name;}
+
+        }).catch(error =>{
+            console.log("Error", error);
+        });
+        $("#detailsContainer").animate({
+            height: 'toggle'
+        },1000);
+    });
+    $(document).ready(function() {
+        $('.btn-close').click(function() {
+            $("#detailsContainer").animate({
+                height: 'toggle'
+            }, 1000);
+        });
+    });
 </script>
 {% endblock content %}

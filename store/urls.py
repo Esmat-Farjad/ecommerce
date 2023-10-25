@@ -24,5 +24,6 @@ urlpatterns = [
     path('RemoveCartIem/<pid>', views.RemoveCartIem, name='RemoveCartIem'),
     path('purchaseSearch/', views.purchaseSearch, name='purchaseSearch'),
     path('sale_info/', views.sale_info, name='sale_info'),
+    path('getItemInfo/',views.getItemInfo, name='getItemInfo'),
     
 ]
