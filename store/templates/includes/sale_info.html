@@ -8,20 +8,26 @@
     <div class="grid lg:grid-cols-5 sm:gird-cols-1 subpixel-antialiased">
         <div class=""></div>
         <div class="col-span-3">
-        <form action="{% url 'store:sale_info' %}" method="POST" class="lg:flex lg:justify-center md:fex md:justify-center py-5">
-            <span class="p-5 border rounded shadow bg-white lg:text-center sm:block">
-                <h1 class="text-lg text-start font-bold subpixel-antialiased"><i class="fa-solid fa-sliders"></i>&nbsp;Filter</h1>
-                <p class="text-sky-500 mb-3 text-start text-sm subpixel-antialiased"><i class="fa-solid fa-info bg-gray-200 py-1 px-2 rounded-full"></i>&nbsp;Get sales information by date.</p>
-            {% csrf_token %}
-            <label for="from" class="lg:p-2 sm:pt-2 lg:inline-block sm:block">From</label>
-            <input type="date" id="from" name="from"
-                class="border p-2 border-teal-500 w-52 mx-4 rounded-md focus:outline-none focus:border-sky-700">
-            <label for="to" class="lg:p-2 sm:pt-2 sm:block lg:inline-block">To</label>
-            <input type="date" id="to" name="to" class="border p-2 border-teal-500 w-52 mx-4 rounded-md focus:outline-none focus:border-sky-700">
-            
-            <button type="submit" class="bg-teal-500 text-white px-3 py-1 rounded hover:bg-teal-600 ">Apply Filter</button>
-            </span>
-        </form>
+            <form action="{% url 'store:sale_info' %}" method="POST"
+                class="lg:flex lg:justify-center md:fex md:justify-center py-5">
+                <span class="p-5 border rounded shadow bg-white lg:text-center sm:block">
+                    <h1 class="text-lg text-start font-bold subpixel-antialiased"><i
+                            class="fa-solid fa-sliders"></i>&nbsp;Filter</h1>
+                    <p class="text-sky-500 mb-3 text-start text-sm subpixel-antialiased"><i
+                            class="fa-solid fa-info bg-gray-200 py-1 px-2 rounded-full"></i>&nbsp;Get sales information
+                        by date.</p>
+                    {% csrf_token %}
+                    <label for="from" class="lg:p-2 sm:pt-2 lg:inline-block sm:block">From</label>
+                    <input type="date" id="from" name="from"
+                        class="border p-2 border-teal-500 w-52 mx-4 rounded-md focus:outline-none focus:border-sky-700">
+                    <label for="to" class="lg:p-2 sm:pt-2 sm:block lg:inline-block">To</label>
+                    <input type="date" id="to" name="to"
+                        class="border p-2 border-teal-500 w-52 mx-4 rounded-md focus:outline-none focus:border-sky-700">
+
+                    <button type="submit" class="bg-teal-500 text-white px-3 py-1 rounded hover:bg-teal-600 ">Apply
+                        Filter</button>
+                </span>
+            </form>
         </div>
         <div class=""></div>
     </div>
@@ -40,26 +46,26 @@
                 <th class="px-2 py-3">Total profit</th>
             </thead>
             <tbody class="" id="tbodyClickHandler">
-                {% for item in page_obj.object_list  %}
-                    <tr class="row-click border cursor-pointer hover:bg-gray-100" data-item-id="{{item.id}}">
-                        <td class="p-2 text-center ">
-                            <img src="{{item.product.image.url}}" class="rounded-full w-8 h-8" alt="">
-                        </td>
-                        <td class="p-2 text-center">{{item.date_created}}</td>
-                        <td class="p-2 text-center">{{item.product.name}}</td>
-                        <td class="p-2 text-center w-40">{{item.product.description}}</td>
-                        <td class="p-2 text-center">{{item.product.rate}}</td>
-                        <td class="p-2 text-center">{{item.product.profit}}</td>
-                        <td class="p-2 text-center">{{item.quantity}}</td>
-                        <td class="p-2 text-center">{{item.product.price}}</td>
-                        <td class="p-2 text-center">{{item.total_price}}</td>
-                        <td class="p-2 text-center">{{item.total_profit}}</td>
-                    </tr>
+                {% for item in page_obj.object_list %}
+                <tr class="row-click border cursor-pointer hover:bg-gray-100" data-item-id="{{item.id}}">
+                    <td class="p-2 text-center ">
+                        <img src="{{item.product.image.url}}" class="rounded-full w-8 h-8" alt="">
+                    </td>
+                    <td class="p-2 text-center">{{item.date_created}}</td>
+                    <td class="p-2 text-center">{{item.product.name}}</td>
+                    <td class="p-2 text-center w-40">{{item.product.description}}</td>
+                    <td class="p-2 text-center">{{item.product.rate}}</td>
+                    <td class="p-2 text-center">{{item.product.profit}}</td>
+                    <td class="p-2 text-center">{{item.quantity}}</td>
+                    <td class="p-2 text-center">{{item.product.price}}</td>
+                    <td class="p-2 text-center">{{item.total_price}}</td>
+                    <td class="p-2 text-center">{{item.total_profit}}</td>
+                </tr>
                 {% endfor %}
             </tbody>
         </table>
-            <!-- paginator navigation button start -->
-            <div class="flex justify-center my-5 py-3">
+        <!-- paginator navigation button start -->
+        <div class="flex justify-center my-5 py-3">
             {% if page_obj.has_previous %}
             <a href="?page={{page_obj.previous_page_number}}" class="relative tooltip">
                 <i
@@ -78,23 +84,25 @@
             <a href="?page={{page_obj.next_page_number}}" class="tooltip relative">
                 <i
                     class="fa-solid fa-chevron-right rounded-full hover:text-white text-white px-2 py-1 bg-teal-500 hover:bg-teal-600 shadow-md hover:shadow-lg"></i>
-                <small class="tooltip-text absolute top-0 left-10 rounded bg-teal-500 text-white px-3 shadow-lg">Next</small>
+                <small
+                    class="tooltip-text absolute top-0 left-10 rounded bg-teal-500 text-white px-3 shadow-lg">Next</small>
             </a>
             {% else %}
             <i class="fa-solid fa-chevron-right rounded-full text-black px-2 py-1 bg-gray-300"></i>
             {% endif %}
-            </div>
-            <!-- paginator navigation button end -->
+        </div>
+        <!-- paginator navigation button end -->
     </div>
     <!-- Modal dialog start -->
-    <div class="m-10 p-10 absolute top-0 right-32 left-32 shadow-2xl rounded border bg-white z-40 hidden" id="detailsContainer">
-        <div class="text-2xl subpixel-antialiased text-center">
+    <div class="m-10 absolute top-0 right-32 left-32 shadow-2xl rounded border bg-white z-40 hidden"
+        id="detailsContainer">
+        <div class="text-3xl subpixel-antialiased text-center mt-5 p-10">
             <p>Product Complete Information</p>
         </div>
-        
-        <div class="grid lg:grid-cols-3 sm:grid-cols-1 mt-5 gap-3 mb-2">
+        <div class="grid lg:grid-cols-3 sm:grid-cols-1 mt-3 gap-3 mb-2 px-10">
             <div class="">
-                <p class="text-lg text-white pl-3 py-1 bg-teal-400"><i class="fa-solid fa-file-invoice"></i>&nbsp;Product Details</p>
+                <p class="text-lg text-white pl-3 py-1 bg-teal-400"><i
+                        class="fa-solid fa-file-invoice"></i>&nbsp;Product Details</p>
                 <table class="table-fixed w-full font-bold mx-5">
                     <tr class="">
                         <td class="mr-2 ">Product Name</td>
@@ -111,10 +119,12 @@
                 </table>
             </div>
             <div class="">
-                <p class="text-lg text-white pl-3 py-1 bg-teal-400"><i class="fa-solid fa-file-invoice-dollar"></i>&nbsp;Item Price Details</p>
+                <p class="text-lg text-white pl-3 py-1 bg-teal-400"><i
+                        class="fa-solid fa-file-invoice-dollar"></i>&nbsp;Item Price Details</p>
                 <table class="table-fixed w-full font-bold mx-5">
                     <tr class="">
-                        <td class="mr-2 ">Bulk price</td><td id="Bulk" class="text-cyan-500 font-light"></td>
+                        <td class="mr-2 ">Bulk price</td>
+                        <td id="Bulk" class="text-cyan-500 font-light"></td>
                     </tr>
                     <tr class="">
                         <td class="mr-2 ">Rate</td>
@@ -143,7 +153,8 @@
                 </table>
             </div>
             <div class="">
-                <p class="text-lg text-white pl-3 py-1 bg-teal-400"><i class="fa-solid fa-circle-info"></i>&nbsp;Item Extra Details</p>
+                <p class="text-lg text-white pl-3 py-1 bg-teal-400"><i class="fa-solid fa-circle-info"></i>&nbsp;Item
+                    Extra Details</p>
                 <table class="table-fixed w-full font-bold mx-5">
                     <tr class="">
                         <td class="mr-2 ">Manufacturing Date</td>
@@ -165,33 +176,36 @@
                 </table>
             </div>
         </div>
-        <p class="text-cyan-500 mt-5 ">
+        <p class="text-cyan-500 mt-5 px-10">
             <i class="fa-solid fa-circle-info"></i>&nbsp;The information provided is base on system
-            calculation from sales data record.</p>
-        <hr>
-        <div class="footer text-center mt-5">
-            <button class="btn-close bg-red-500 text-white py-1 px-3 rounded shadow-md hover:bg-red-600">Close&nbsp;<i class="fa-solid fa-circle-chevron-up"></i></button>
+            calculation from sales data record.
+            <hr class="mx-10">
+        </p>
+        
+        <div class="footer text-center mt-5 pb-10">
+            <button class="btn-close bg-red-500 text-white py-1 px-3 rounded shadow-md hover:bg-red-600">Close&nbsp;<i
+                    class="fa-solid fa-circle-chevron-up"></i></button>
         </div>
     </div>
     <!-- Modal dialog end -->
 </div>
 
 <script>
-    
+
     const tableBodyClick = document.querySelector("#tbodyClickHandler");
-    tableBodyClick.addEventListener("click", function(e) {
+    tableBodyClick.addEventListener("click", function (e) {
         e.preventDefault();
         const rowItemClick = e.target.closest('.row-click');
-        if(! rowItemClick) return;
+        if (!rowItemClick) return;
         var itemID = rowItemClick.dataset.itemId;
         const formData = new FormData();
         formData.append('pid', itemID);
         formData.append('csrfmiddlewaretoken', '{{csrf_token}}');
-        fetch('{% url "store:getItemInfo" %}',{
+        fetch('{% url "store:getItemInfo" %}', {
             method: 'POST',
             body: formData
-        }).then(response => response.json()).then(data =>{
-           //
+        }).then(response => response.json()).then(data => {
+            //
             //sale info
             document.getElementById("totalPrice").innerHTML = data.saleProduct[0].total_price;
             document.getElementById("totalProfit").innerHTML = data.saleProduct[0].total_profit;
@@ -216,7 +230,7 @@
             document.getElementById("profit").innerHTML = data.productInfo[0].profit;
             document.getElementById("Bulk").innerHTML = data.productInfo[0].bulk_price;
 
-           
+
             var md = new Date(data.productInfo[0].mfd);
             var hour = md.getHours();
             var min = md.getMinutes();
@@ -234,22 +248,21 @@
             var month = exd.getMonth();
             var year = exd.getFullYear();
             var expd = year + '/' + month + '/' + day + '  -  ' + hour + ':' + min + ':' + sec;
-            document.getElementById("expd").innerHTML = expd; 
+            document.getElementById("expd").innerHTML = expd;
 
-            if(data.customer_info == null )
-            {
+            if (data.customer_info == null) {
                 document.getElementById("sales_person").innerHTML = "Administrator";
-            } else {document.getElementById('sales_person').innerHTML = data.customer_info[0].first_name;}
+            } else { document.getElementById('sales_person').innerHTML = data.customer_info[0].first_name; }
 
-        }).catch(error =>{
+        }).catch(error => {
             console.log("Error", error);
         });
         $("#detailsContainer").animate({
             height: 'toggle'
-        },1000);
+        }, 1000);
     });
-    $(document).ready(function() {
-        $('.btn-close').click(function() {
+    $(document).ready(function () {
+        $('.btn-close').click(function () {
             $("#detailsContainer").animate({
                 height: 'toggle'
             }, 1000);
