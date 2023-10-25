@@ -62,15 +62,12 @@
     </ul>
     {% endif %}
     <script>
-        const event = document.querySelector("#btn_click");
-        const el = document.querySelector("#toggleMenu");
-        event.addEventListener("click", function () {
-            if (el.classList.contains("hidden")) {
-                el.classList.remove("hidden");
-                el.classList.add("block");
-            } else {
-                el.classList.add("hidden");
-            }
+        $(document).ready(function() {
+            $("#btn_click").click(function(){
+                $("#toggleMenu").animate({
+                    height: 'toggle'
+                }, 1000);
+            });
         });
     </script>
 </div>

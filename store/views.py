@@ -175,7 +175,7 @@ def stockRoute(request, flag):
         context = {'flag':flag, 'product':product}
     elif flag == 4:
         flag = flag
-        context = {'flag':flag}
+        return redirect("store:sale_info")
     return render(request, 'stock.html', context)
 
 def update_stock(request):
@@ -304,4 +304,34 @@ def purchaseSearch(request):
         
     context = {'page_obj':page_obj}
     return render(request, 'purchase.html', context)
+
+def sale_info(request):
+    if request.method == 'POST':
+        date_form = request.POST['from']
+        date_to = request.POST['to']
+        product = Sale.objects.filter(current_issue__isnull=True, date_created__range=(date_form, date_to))
+        p = Paginator(product, 6)
+        page_number = request.GET.get('page')
+        try:
+            page_obj = p.get_page(page_number)
+        except PageNotAnInteger:
+            page_obj = p.page(1)
+        except EmptyPage:
+            page_obj = p.page(p.num_pages)
+        
+        context = {'page_obj':page_obj}
+        return render(request, 'includes/sale_info.html', context)
+        
+    product = Sale.objects.select_related('product').order_by('-date_created')
+    p = Paginator(product, 6)
+    page_number = request.GET.get('page')
+    try:
+        page_obj = p.get_page(page_number)
+    except PageNotAnInteger:
+        page_obj = p.page(1)
+    except EmptyPage:
+        page_obj = p.page(p.num_pages)
+    
+    context = {'page_obj':page_obj}
+    return render(request, 'includes/sale_info.html', context)
                 

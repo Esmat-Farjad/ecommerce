@@ -36,10 +36,10 @@
             <div class="" id="menu-div">
                 {% if flag == 4 %}
                     <a class="px-3 py-3 w-full block bg-teal-500 text-white  transition ease-in-out duration-500 border-b my-1 "
-                        href=""><i class="fa-solid fa-chart-simple"></i>&nbsp;Stock Information active</a>
+                        href=""><i class="fa-solid fa-chart-simple"></i>&nbsp;sale Information active</a>
                 {% else %}
                     <a class="px-3 py-3 w-full block hover:bg-teal-500 hover:text-white hover: transition ease-in-out duration-500 border-b my-1  "
-                        href="{% url 'store:stockRoute' 4 %}"><i class="fa-solid fa-chart-simple"></i>&nbsp;Stock Information</a>
+                        href="{% url 'store:stockRoute' 4 %}"><i class="fa-solid fa-chart-simple"></i>&nbsp;sale Information</a>
                 {% endif %}
             </div>
     </div>
@@ -51,7 +51,7 @@
         {% elif flag == 3 %}
             {% include 'includes/update_stock.html' %}
         {% elif flag == 4 %}
-            {% include 'includes/stock_information.html' %}
+            {% include 'includes/sale_info.html' %}
         {% endif %}
     </div>
 </div>

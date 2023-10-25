@@ -1,0 +1,93 @@
+{% extends 'main/base.html' %}
+{% load static %}
+{% block content %}
+<div class="p-10 m-5">
+    <div class="heading">
+        <h1 class="text-2xl text-center subpixel-antialiased">Sales Information</h1>
+    </div>
+    <div class="grid lg:grid-cols-5 sm:gird-cols-1 subpixel-antialiased">
+        <div class=""></div>
+        <div class="col-span-3">
+        <form action="{% url 'store:sale_info' %}" method="POST" class="lg:flex lg:justify-center md:fex md:justify-center py-5">
+            <span class="p-5 border rounded shadow bg-white lg:text-center sm:block">
+                <h1 class="text-lg text-start font-bold subpixel-antialiased"><i class="fa-solid fa-sliders"></i>&nbsp;Filter</h1>
+                <p class="text-sky-500 mb-3 text-start text-sm subpixel-antialiased"><i class="fa-solid fa-info bg-gray-200 py-1 px-2 rounded-full"></i>&nbsp;Get sales information by date.</p>
+            {% csrf_token %}
+            <label for="from" class="lg:p-2 sm:pt-2 lg:inline-block sm:block">From</label>
+            <input type="date" id="from" name="from"
+                class="border p-2 border-teal-500 w-52 mx-4 rounded-md focus:outline-none focus:border-sky-700">
+            <label for="to" class="lg:p-2 sm:pt-2 sm:block lg:inline-block">To</label>
+            <input type="date" id="to" name="to" class="border p-2 border-teal-500 w-52 mx-4 rounded-md focus:outline-none focus:border-sky-700">
+            
+            <button type="submit" class="bg-teal-500 text-white px-3 py-1 rounded hover:bg-teal-600 ">Apply Filter</button>
+            </span>
+        </form>
+        </div>
+        <div class=""></div>
+    </div>
+    <div class="sale-content">
+        <table class="table-auto w-full subpixel-antialiased">
+            <thead class="bg-teal-500 text-white">
+                <th class="px-2 py-3">#</th>
+                <th class="px-2 py-3">Date</th>
+                <th class="px-2 py-3">name</th>
+                <th class="px-2 py-3">Description</th>
+                <th class="px-2 py-3">Rate</th>
+                <th class="px-2 py-3">Profit</th>
+                <th class="px-2 py-3">Quantity</th>
+                <th class="px-2 py-3">Price</th>
+                <th class="px-2 py-3">Total price</th>
+                <th class="px-2 py-3">Total profit</th>
+            </thead>
+            <tbody class="" id="tbodyClickHandler">
+                {% for item in page_obj.object_list  %}
+                    <tr class="row-click border cursor-pointer hover:bg-gray-100" data-item-id="{{item.id}}">
+                        <td class="p-2 text-center ">
+                            <img src="{{item.product.image.url}}" class="rounded-full w-8 h-8" alt="">
+                        </td>
+                        <td class="p-2 text-center">{{item.date_created}}</td>
+                        <td class="p-2 text-center">{{item.product.name}}</td>
+                        <td class="p-2 text-center w-40">{{item.product.description}}</td>
+                        <td class="p-2 text-center">{{item.product.rate}}</td>
+                        <td class="p-2 text-center">{{item.product.profit}}</td>
+                        <td class="p-2 text-center">{{item.quantity}}</td>
+                        <td class="p-2 text-center">{{item.product.price}}</td>
+                        <td class="p-2 text-center">{{item.total_price}}</td>
+                        <td class="p-2 text-center">{{item.total_profit}}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+            <!-- paginator navigation button start -->
+            <div class="flex justify-center my-5 py-3">
+            {% if page_obj.has_previous %}
+            <a href="?page={{page_obj.previous_page_number}}" class="relative tooltip">
+                <i
+                    class="fa-solid fa-chevron-left rounded-full hover:text-white text-white px-2 py-1 bg-teal-500 hover:bg-teal-600 hover:shadow-md"></i>
+                <small
+                    class="tooltip-text absolute top-0 right-10 rounded bg-teal-500 text-white px-3 shadow-lg">Previous</small>
+            </a>
+            {% else %}
+            <i class="fa-solid fa-chevron-left rounded-full text-black px-2 py-1 bg-gray-300"></i>
+            {% endif %}
+            <span class="font-bold mx-10">Page
+                <span class="bg-slate-300 text-dark rounded-full px-2 py-1">{{page_obj.number}}</span> of
+                <span class="bg-slate-300 text-dark rounded-full px-2 py-1">{{page_obj.paginator.num_pages}}</span>
+            </span>
+            {% if page_obj.has_next %}
+            <a href="?page={{page_obj.next_page_number}}" class="tooltip relative">
+                <i
+                    class="fa-solid fa-chevron-right rounded-full hover:text-white text-white px-2 py-1 bg-teal-500 hover:bg-teal-600 shadow-md hover:shadow-lg"></i>
+                <small class="tooltip-text absolute top-0 left-10 rounded bg-teal-500 text-white px-3 shadow-lg">Next</small>
+            </a>
+            {% else %}
+            <i class="fa-solid fa-chevron-right rounded-full text-black px-2 py-1 bg-gray-300"></i>
+            {% endif %}
+            </div>
+            <!-- paginator navigation button end -->
+    </div>
+</div>
+<script>
+    
+</script>
+{% endblock content %}
