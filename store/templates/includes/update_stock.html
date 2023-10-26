@@ -2,7 +2,7 @@
     <div class="heading text-4xl text-center">
         <h1>Update Stock</h1>
     </div>
-    <div class="item-information">
+    <div class="item-information m-0 mainContainer" >
         <div class=" text-center">
             <form action="{% url 'store:stock' %}" method="POST" class=" w-full flex justify-center p-5">
                 {% csrf_token %}
@@ -11,8 +11,9 @@
             </form>
             <p class="text-gray-500">Use search bar to find the product quickly...<i class="fa-solid fa-face-smile-wink"></i></p>
         </div>
-        <div class="absolute top-1/2 left-1/2" id="modal-dialog">
-            <div class="border bg-white p-10 rounded shadow-2xl z-20">
+        <!-- modal dialog start -->
+        <div class="absolute top-1/2 left-1/2 disableBlur z-50" id="modal-dialog">
+            <div class="border p-10 rounded shadow-2xl z-20 rounded-md bg-gray-800 text-white">
                 <p class="text-center font-bold">Update Stock</p>
                 <form action="{% url 'store:update_stock' %}" method="POST">
                     {% csrf_token %}
@@ -32,14 +33,16 @@
                 </form>
             </div>
         </div>
+       <!-- modal dialog -->
         <p class="text-blue-400 mx-5"><i class="fa-solid fa-circle-info"></i>&nbsp;Please select the product to update the stock</p>
-        <div class="data-contain m-5">
-            <table class="table-auto w-full">
-                <thead class="bg-teal-500 text-white font-semibold text-md">
-                    <th class="py-3 rounded">Image</th>
+        <div class="data-contain my-5 mx-3">
+            <table class="table-auto w-full shadow">
+                <thead class="bg-teal-500 text-white font-semibold">
+                    <th class="py-3 ">Image</th>
                     <th class="py-3">Name</th>
                     <th class="py-3">Description</th>
                     <th class="py-3">Category</th>
+                    <th class="py-3 pr-2">Stock</th>
                     <th class="py-3">Rate</th>
                     <th class="py-3">Price</th>
                     <th class="py-3">Profit</th>
@@ -47,18 +50,19 @@
                     <th class="py-3">Packet</th>
                     <th class="py-3">MF Date</th>
                     <th class="py-3">Exp Date</th>
-                    <th class="py-3 rounded">Stock</th>
+                    
                 </thead>
                 <tbody class="text-sm text-center">
-                    {% for item in product %}
+                    {% for item in page_obj.object_list %}
                     
                     <tr id="visible-content" data-stateName="{{item.id}}" data-stateId="{{item.stock}}"
-                        class="hover:bg-gray-100 hover:font-semibold cursor-pointer border">
+                        class="hover:bg-gray-100 hover:text-cyan-500 cursor-pointer border">
                     
                     <td class="p-2"><img src="{{item.image.url}}" class="w-20 h-20 rounded-full" alt=""></td>
                     <td class="p-2">{{item.name}}</td>
-                    <td class="p-2">{{item.description}}</td>
+                    <td class="p-2 w-40 ">{{item.description}}</td>
                     <td class="p-2">{{item.category}}</td>
+                    <td class="p-2 font-bold">{{item.stock}}</td>
                     <td class="p-2">{{item.rate}}&nbsp;<i class="fa-solid fa-dollar-sign"></i></td>
                     <td class="p-2">{{item.price}}&nbsp;<i class="fa-solid fa-dollar-sign"></i></td>
                     <td class="p-2">{{item.profit}}&nbsp;<i class="fa-solid fa-dollar-sign"></i></td>
@@ -66,12 +70,39 @@
                     <td class="p-2">{{item.packet}}</td>
                     <td class="p-2">{{item.mfd}}</td>
                     <td class="p-2">{{item.expd}}</td>
-                    <td class="p-2">{{item.stock}}</td>
+                    
                     </tr>
                     
                     {% endfor %}
                 </tbody>
             </table>
+            <!-- paginator navigation button start -->
+            <div class="flex justify-center my-5 py-3">
+                {% if page_obj.has_previous %}
+                <a href="?page={{page_obj.previous_page_number}}" class="relative tooltip">
+                    <i
+                        class="fa-solid fa-chevron-left rounded-full hover:text-white text-white px-2 py-1 bg-teal-500 hover:bg-teal-600 hover:shadow-md"></i>
+                    <small
+                        class="tooltip-text absolute top-0 right-10 rounded bg-teal-500 text-white px-3 shadow-lg">Previous</small>
+                </a>
+                {% else %}
+                <i class="fa-solid fa-chevron-left rounded-full text-black px-2 py-1 bg-gray-300"></i>
+                {% endif %}
+                <span class="font-bold mx-10">Page
+                    <span class="bg-slate-300 text-dark rounded-full px-2 py-1">{{page_obj.number}}</span> of
+                    <span class="bg-slate-300 text-dark rounded-full px-2 py-1">{{page_obj.paginator.num_pages}}</span>
+                </span>
+                {% if page_obj.has_next %}
+                <a href="?page={{page_obj.next_page_number}}" class="tooltip relative">
+                    <i
+                        class="fa-solid fa-chevron-right rounded-full hover:text-white text-white px-2 py-1 bg-teal-500 hover:bg-teal-600 shadow-md hover:shadow-lg"></i>
+                    <small class="tooltip-text absolute top-0 left-10 rounded bg-teal-500 text-white px-3 shadow-lg">Next</small>
+                </a>
+                {% else %}
+                <i class="fa-solid fa-chevron-right rounded-full text-black px-2 py-1 bg-gray-300"></i>
+                {% endif %}
+            </div>
+            <!-- paginator navigation button end -->
         </div>
 
     
@@ -88,13 +119,15 @@
     });
     $(document).ready(function() {
         $("#visible-content[data-stateName]").click(function() {
+           $(".mainContainer").addClass("enableBlur");
            $("#modal-dialog").animate({
-            height:'toggle'
+            height:'toggle' 
            });
+           
            var id = $(this).attr("data-stateName");
            var s = $(this).attr("data-stateId");
            document.getElementById("stock_info").innerHTML = s;
-           document.getElementById("item_id").value = id;
+           document.getElementById("item_id").value = id; 
         });
     });
     $(document).ready(function () {
@@ -102,6 +135,8 @@
             $("#modal-dialog").animate({
                 height: 'toggle'
             });
+           $(".mainContainer").removeClass("enableBlur");
+
         });
     });
     

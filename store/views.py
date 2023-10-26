@@ -1,3 +1,4 @@
+from datetime import datetime
 import json
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import redirect, render
@@ -8,6 +9,8 @@ from .forms import UserCreationForm,StoreCreationForm
 from django.db.models import Q
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.core.serializers import serialize
+from django.db.models import Sum
+from django.utils import timezone
 
 
 # Create your views here.
@@ -155,7 +158,15 @@ def update_product(request, pid):
 
 def stock(request):
     product = Product.objects.select_related('category')
-    context = {'flag':3, 'product':product}
+    p = Paginator(product, 6)
+    page_number = request.GET.get('page')
+    try:
+        page_obj = p.get_page(page_number)
+    except PageNotAnInteger:
+        page_obj = p.page(1)
+    except EmptyPage:
+        page_obj = p.page(p.num_pages)
+    context = {'flag':3, 'page_obj':page_obj}
     if request.method == 'POST':
         search = request.POST['search']
         product = Product.objects.filter(Q(name__icontains=search) |  Q(description__icontains=search))
@@ -167,14 +178,32 @@ def stockRoute(request, flag):
     context = {}
     if flag == 1:
         flag = flag
-        context = {'flag':flag}
+        total = Sale.objects.all().aggregate(Sum('total_profit'), Sum('total_price'))
+        totalStock = Product.objects.all().aggregate(Sum('stock'))
+        today = datetime.today()
+        year = today.year
+        month = today.month
+        day = today.day
+       
+        today = Sale.objects.filter(date_created__year = year,date_created__month=month, date_created__day=day).aggregate(Sum('total_price'), Sum('total_profit'), Sum('quantity'))
+        
+        context = {'flag':flag, 'total':total, 'totalStock':totalStock, 'today':today}
     elif flag == 2:
         flag = flag
         context = {'flag':flag}
     elif flag == 3:
         product = Product.objects.select_related('category')
+        p = Paginator(product, 6)
+        page_number = request.GET.get('page')
+        try:
+            page_obj = p.get_page(page_number)
+        except PageNotAnInteger:
+            page_obj = p.page(1)
+        except EmptyPage:
+            page_obj = p.page(p.num_pages)
         flag = flag
-        context = {'flag':flag, 'product':product}
+        context = {'flag':flag, 'page_obj':page_obj}
+        
     elif flag == 4:
         flag = flag
         return redirect("store:sale_info")
@@ -346,9 +375,10 @@ def getItemInfo(request):
         cartId = Sale.objects.values_list('cart', flat=True).get(id=pid)
         customer_id = Cart.objects.values_list('customer', flat=True).get(id=cartId)
        
-        customer_info = CustomUser.objects.values_list('first_name', 'last_name').get(id=customer_id)
+        customer_info = CustomUser.objects.values().get(id=customer_id)
+        print(customer_info)
         saleProduct = Sale.objects.select_related('product').filter(id = pid).values()
-        data = {'saleProduct':list(saleProduct), 'customerInfo':list(customer_info), 'productInfo':list(productInfo)}
+        data = {'saleProduct':list(saleProduct), 'customerInfo':customer_info, 'productInfo':list(productInfo)}
     
         return JsonResponse(data, safe=False)
                 

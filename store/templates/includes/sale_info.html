@@ -219,7 +219,7 @@
             var day = d.getDate();
             var month = d.getMonth();
             var year = d.getFullYear();
-            var saleDate = year + '/' + month + '/' + day + '  -  ' + hour + ':' + min + ':' + sec;
+            var saleDate = year + '/' + month + '/' + day + '    ' + hour + ':' + min + ':' + sec;
             document.getElementById("sale_date").innerHTML = saleDate;
             //product info
             console.log(data.productInfo);
@@ -239,7 +239,7 @@
             var day = md.getDate();
             var month = md.getMonth();
             var year = md.getFullYear();
-            var mfd = year + '/' + month + '/' + day + '  -  ' + hour + ':' + min + ':' + sec;
+            var mfd = year + '/' + month + '/' + day + '  ' + hour + ':' + min + ':' + sec;
             document.getElementById("mfd").innerHTML = mfd;
             var exd = new Date(data.productInfo[0].expd);
             var hour = exd.getHours();
@@ -248,12 +248,11 @@
             var day = exd.getDate();
             var month = exd.getMonth();
             var year = exd.getFullYear();
-            var expd = year + '/' + month + '/' + day + '  -  ' + hour + ':' + min + ':' + sec;
+            var expd = year + '/' + month + '/' + day + '    ' + hour + ':' + min + ':' + sec;
             document.getElementById("expd").innerHTML = expd;
-
-            if (data.customer_info == null) {
+            if (data.customerInfo == null) {
                 document.getElementById("sales_person").innerHTML = "Administrator";
-            } else { document.getElementById('sales_person').innerHTML = data.customer_info[0].first_name; }
+            } else { document.getElementById("sales_person").innerHTML = data.customerInfo.first_name+" "+data.customerInfo.last_name; }
 
         }).catch(error => {
             console.log("Error", error);
@@ -263,7 +262,7 @@
             width: 'toggle',
             opacity:"1",
             top:"0"
-        }, 1000,"linear");
+        }, 500,"linear");
         $(".relative").addClass("enableBlur");
     });
     
@@ -273,7 +272,7 @@
                 width:'toggle',
                 opacity: "0",
                 bottom: "0" 
-            }, 1000,"linear");
+            }, 500,"linear");
         $(".relative").removeClass("enableBlur");
 
         });

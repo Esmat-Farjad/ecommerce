@@ -7,24 +7,19 @@
                 <small class="mx-3">SHOPPING MART</small>
             </a>
         </div>
-        <div class="lg:block sm:hidden pt-6 text-lg text-end me-5">
+        <div class="lg:block sm:hidden py-3 text-end me-5">
             {% if user.is_authenticated %}
-                <a class="mx-5 inline-block hover:font-bold cursor-pointer relative px-4" href="{% url 'store:cart_item' %}">
-                    <!-- component -->
+                <a class="mx-5 inline-block hover:font-bold cursor-pointer relative px-4 mt-1" href="{% url 'store:cart_item' %}">
                     <div class="t-0 absolute right-0">
-                        <p class="flex h-2 w-2 items-center justify-center rounded-full bg-red-500 p-2 text-xs text-white" id="item_count">
-                        </p>
+                        <p class="flex h-2 w-2 items-center justify-center rounded-full bg-red-500 p-1 text-xs text-white" id="item_count"></p>
                     </div>
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
-                        class="mt-3 w-8 h-8">
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                            d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007zM8.625 10.5a.375.375 0 11-.75 0 .375.375 0 01.75 0zm7.5 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
-                    </svg>
+                    <i class="fa-solid text-xl fa-basket-shopping bg-gray-200 hover:text-white hover:bg-teal-500 hover:shadow-lg transition ease-in-out duration-500 rounded-full p-2"></i>
                 </a>
                 <a href="{% url 'store:purchase' %}" class="mx-5 inline-block hover:font-bold cursor-pointer"><i class="fa-solid fa-cart-plus"></i>&nbsp;Purchase</a>
                 <a class="mx-5 inline-block hover:font-bold cursor-pointer" href="{% url 'store:sales' %}"><i class="fa-solid fa-cart-shopping"></i>&nbsp;Sales</a>
                 <a class="mx-5 inline-block hover:font-bold cursor-pointer" href="{% url 'store:product' %}"><i class="fa-solid fa-box-open"></i>&nbsp;Products</a>
                 <a class="mx-5 inline-block hover:font-bold cursor-pointer" href="{% url 'store:stock' %}"><i class="fa-solid fa-layer-group"></i>&nbsp;Manage Stock</a>
+                <a class="mx-5 inline-block hover:font-bold cursor-pointer" href="{% url 'store:sale_info' %}"><i class="fa-brands fa-shopify"></i>&nbsp;Manage Sales</a>
                 <a class="mx-5 inline-block hover:font-bold cursor-pointer" href="{% url 'store:signout' %}"><i class="fa-solid fa-user-minus"></i>&nbsp;Logout</a>
                 
             {% else %}
@@ -38,10 +33,10 @@
     </div>
 </div>
 
-<div class="py-5 hidden" id="toggleMenu">
+<div class="my-5 hidden shadow-md" id="toggleMenu">
     {% if user.is_authenticated %}
-    <ul>
-    <li class="py-2 mx-5 hover:font-bold cursor-pointer "><a href="{% url 'store:cart_item' %}">
+    <ul class="">
+    <li class="my-2 mx-5 hover:font-bold cursor-pointer "><a href="{% url 'store:cart_item' %}">
         <i class="fa-solid fa-bag-shopping"></i>&nbsp;My Cart&nbsp;
         <small id="item_count_mobile" class="rounded mx-3 px-2 py-px bg-teal-500 text-white"></small>
     </a></li>
@@ -52,6 +47,9 @@
                 class="fa-solid fa-box-open"></i>&nbsp;Products</a></li>
     <li class="py-2 mx-5 hover:font-bold cursor-pointer"><a href="{% url 'store:stock' %}">
             <i class="fa-solid fa-layer-group"></i>&nbsp;Manage Stock</a></li>
+    <li class="py-2 mx-5 hover:font-bold cursor-pointer"><a href="{% url 'store:sale_info' %}">
+        <i class="fa-brands fa-shopify"></i>&nbsp;Manage Sales</a>
+    </li>
     <li class="py-2 mx-5 hover:font-bold cursor-pointer"><a href="{% url 'store:signout' %}"><i
                 class="fa-solid fa-user-minus"></i>&nbsp;Log out</a></li>
     {% else %}

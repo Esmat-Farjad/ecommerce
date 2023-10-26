@@ -27,7 +27,7 @@
             <div class="" id="menu-div">
                 {% if flag == 3 %}
                     <a class="px-3 py-3 w-full block bg-teal-500 text-white  transition ease-in-out duration-500 border-b my-1 "
-                        href=""><i class="fa-solid fa-recycle"></i>&nbsp;Update Stock active</a>
+                        href="{% url 'store:stockRoute' 3 %}"><i class="fa-solid fa-recycle"></i>&nbsp;Update Stock active</a>
                 {% else %}
                         <a class="px-3 py-3 w-full block hover:bg-teal-500 hover:text-white hover:font-semibold transition ease-in-out duration-500 border-b my-1  "
                             href="{% url 'store:stockRoute' 3 %}"> <i class="fa-solid fa-recycle"></i>&nbsp; Update Stock </a>
@@ -39,7 +39,7 @@
                         href=""><i class="fa-solid fa-chart-simple"></i>&nbsp;sale Information active</a>
                 {% else %}
                     <a class="px-3 py-3 w-full block hover:bg-teal-500 hover:text-white hover: transition ease-in-out duration-500 border-b my-1  "
-                        href="{% url 'store:stockRoute' 4 %}"><i class="fa-solid fa-chart-simple"></i>&nbsp;sale Information</a>
+                        href="{% url 'store:stockRoute' 4 %}"><i class="fa-solid fa-chart-simple"></i>&nbsp;Stock Information</a>
                 {% endif %}
             </div>
     </div>
