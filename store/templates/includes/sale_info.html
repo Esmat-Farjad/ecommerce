@@ -2,6 +2,7 @@
 {% load static %}
 {% block content %}
 <div class="p-10 m-5 relative">
+    
     <div class="heading">
         <h1 class="text-2xl text-center subpixel-antialiased">Sales Information</h1>
     </div>
@@ -94,8 +95,8 @@
         <!-- paginator navigation button end -->
     </div>
     <!-- Modal dialog start -->
-    <div class="m-10 absolute top-0 right-32 left-32 shadow-2xl rounded border bg-white z-40 hidden"
-        id="detailsContainer">
+    <div class="m-10 absolute top-0 right-32 left-32 shadow-2xl rounded border z-40 hidden opacity-0 disableBlur bg-slate-800 text-white"
+        id="detailsContainer" aria-hidden="true" aria-disabled="true" tabindex="-1">
         <div class="text-3xl subpixel-antialiased text-center mt-5 p-10">
             <p>Product Complete Information</p>
         </div>
@@ -103,7 +104,7 @@
             <div class="">
                 <p class="text-lg text-white pl-3 py-1 bg-teal-400"><i
                         class="fa-solid fa-file-invoice"></i>&nbsp;Product Details</p>
-                <table class="table-fixed w-full font-bold mx-5">
+                <table class="table-fixed w-full mx-5">
                     <tr class="">
                         <td class="mr-2 ">Product Name</td>
                         <td id="name" class="text-cyan-500 font-light"></td>
@@ -121,7 +122,7 @@
             <div class="">
                 <p class="text-lg text-white pl-3 py-1 bg-teal-400"><i
                         class="fa-solid fa-file-invoice-dollar"></i>&nbsp;Item Price Details</p>
-                <table class="table-fixed w-full font-bold mx-5">
+                <table class="table-fixed w-full mx-5">
                     <tr class="">
                         <td class="mr-2 ">Bulk price</td>
                         <td id="Bulk" class="text-cyan-500 font-light"></td>
@@ -155,7 +156,7 @@
             <div class="">
                 <p class="text-lg text-white pl-3 py-1 bg-teal-400"><i class="fa-solid fa-circle-info"></i>&nbsp;Item
                     Extra Details</p>
-                <table class="table-fixed w-full font-bold mx-5">
+                <table class="table-fixed w-full mx-5">
                     <tr class="">
                         <td class="mr-2 ">Manufacturing Date</td>
                         <td type="date" id="mfd" class="text-cyan-500 font-light"></td>
@@ -258,15 +259,26 @@
             console.log("Error", error);
         });
         $("#detailsContainer").animate({
-            height: 'toggle'
-        }, 1000);
+            height:'toggle',
+            width: 'toggle',
+            opacity:"1",
+            top:"0"
+        }, 1000,"linear");
+        $(".relative").addClass("enableBlur");
     });
+    
     $(document).ready(function () {
         $('.btn-close').click(function () {
             $("#detailsContainer").animate({
-                height: 'toggle'
-            }, 1000);
+                width:'toggle',
+                opacity: "0",
+                bottom: "0" 
+            }, 1000,"linear");
+        $(".relative").removeClass("enableBlur");
+
         });
+        
+        
     });
 </script>
 {% endblock content %}
