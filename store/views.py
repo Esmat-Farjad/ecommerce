@@ -342,9 +342,9 @@ def purchaseSearch(request):
 
 def sale_info(request):
     if request.method == 'POST':
-        date_form = request.POST['from']
+        date_from = request.POST['from']
         date_to = request.POST['to']
-        product = Sale.objects.filter(current_issue__isnull=True, date_created__range=(date_form, date_to))
+        product = Sale.objects.filter( date_created__range=(date_from, date_to))
         p = Paginator(product, 6)
         page_number = request.GET.get('page')
         try:
@@ -385,4 +385,27 @@ def getItemInfo(request):
         data = {'saleProduct':list(saleProduct), 'customerInfo':customer_info, 'productInfo':list(productInfo)}
     
         return JsonResponse(data, safe=False)
-                
+    
+def summeryByDate(request):
+    if request.method == 'POST':
+        date_to = request.POST['to']
+        date_from = request.POST['from']
+        
+        filter_info = {
+            'start_day' : date_from,
+            'end_day' : date_to 
+        }
+        selectedData = Sale.objects.filter( date_created__range=(date_from, date_to)).aggregate(Sum('total_price'), Sum('total_profit'), Sum('quantity'))
+        flag = 1
+        total = Sale.objects.all().aggregate(Sum('total_profit'), Sum('total_price'))
+        totalStock = Product.objects.all().aggregate(Sum('stock'))
+        today = datetime.today()
+        year = today.year
+        month = today.month
+        day = today.day
+        today = Sale.objects.filter(date_created__year = year,date_created__month=month, date_created__day=day).aggregate(Sum('total_price'), Sum('total_profit'), Sum('quantity'))
+        context = {'flag':flag, 'total':total, 'totalStock':totalStock, 'today':today, 'selectedData':selectedData,'filterInfo':filter_info}
+        return render(request, 'stock.html', context)
+    return redirect("store:stockRoute", 1)
+    
+               

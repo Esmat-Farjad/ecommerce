@@ -68,17 +68,71 @@
                 <p id="t_expense" class="inline-block">{{today.quantity__sum | intcomma}}</p>
                 <span>&nbsp;<i class="fa-solid fa-dollar-sign"></i></span>
             </div>
-            
         </div>
     </div>
     <div class="m-5">
-        <p class="text-2xl font-semibold capitalize"><i class="fa-regular fa-folder-open text-gray-400"></i>&nbsp;customer report</p>
-        <ul>
-            <li class=""><span class="text-blue-500 "><i class="fa-solid fa-calendar-day"></i>&nbsp;&nbsp;</span>Daily</li>
-            <li><span class="text-blue-500"><i class="fa-solid fa-calendar-week"></i>&nbsp;&nbsp;</span>weekly</li>
-            <li><span class="text-blue-500"><i class="fa-solid fa-calendar-days"></i>&nbsp;&nbsp;</span>Monthly</li>
-            <li><span class="text-blue-500"><i class="fa-solid fa-check-to-slot"></i>&nbsp;&nbsp;</span>Yearly</li>
-        </ul>
+        <p class="text-2xl font-semibold capitalize"><i class="fa-solid fa-ranking-star"></i>&nbsp;Report Generation</p>
+        <p class="text-blue-500"><i class="fa-solid fa-arrow-right"></i>&nbsp;Check out your profit and selling report by the date.</p>
+
+        <!-- filter result start -->
+        {% if selectedData %}
+        <div class="border shadow rounded">
+            <p class="text-2xl text-center mt-3 font-semibold">Generated Details</p>
+        <p class="px-3 mt-0 text-center text-blue-500 mb-1 text-sm"><i class="fa-solid fa-cubes-stacked"></i>&nbsp; The below information extracted from
+            <span class="text-red-500">{{filterInfo.start_day}}</span> To <span class="text-red-500">{{filterInfo.end_day}}</span> 
+        </p>
+        <div class="flex justify-center p-5">
+            <div
+                class="mx-2 inline-block p-2 border rounded shadow text-center hover:scale-150 hover:border-sky-500 hover:bg-white hover:shadow-lg duration-500 hover:cursor-pointer">
+                <p class="px-4 py-2 font-semibold">Today Sale</p>
+                <p id="t_expense" class="inline-block">{{selectedData.total_price__sum | intcomma}}</p>
+                <span>&nbsp;<i class="fa-solid fa-dollar-sign"></i></span>
+            </div>
+            <div
+                class="mx-2 inline-block p-2 border rounded shadow text-center hover:scale-150 hover:border-sky-500 hover:bg-white hover:shadow-lg duration-500 hover:cursor-pointer">
+                <p class="px-4 py-2 font-semibold">Today Profit</p>
+                <p id="t_expense" class="inline-block">{{selectedData.total_profit__sum | intcomma}}</p>
+                <span>&nbsp;<i class="fa-solid fa-dollar-sign"></i></span>
+            </div>
+            <div
+                class="mx-2 inline-block p-2 border rounded shadow text-center hover:scale-150 hover:border-sky-500 hover:bg-white hover:shadow-lg duration-500 hover:cursor-pointer">
+                <p class="px-4 py-2 font-semibold">Today Number of Product Sold</p>
+                <p id="t_expense" class="inline-block">{{selectedData.quantity__sum | intcomma}}</p>
+                <span>&nbsp;<i class="fa-solid fa-dollar-sign"></i></span>
+            </div>
+        </div>
+        </div>
+        {% endif %}
+        <!-- filter result end -->
+
+        <!-- FILTER FORM START -->
+        <div class="grid lg:grid-cols-5 sm:gird-cols-1 subpixel-antialiased">
+            <div class=""></div>
+            <div class="col-span-3">
+                <form action="{% url 'store:summeryByDate' %}" method="POST"
+                    class="lg:flex lg:justify-center md:fex md:justify-center py-5">
+                    <span class="p-5 border rounded shadow bg-white lg:text-center sm:block">
+                        <h1 class="text-lg text-start font-bold subpixel-antialiased"><i
+                                class="fa-solid fa-sliders"></i>&nbsp;Filter</h1>
+                        <p class="text-sky-500 mb-3 text-start text-sm subpixel-antialiased"><i
+                                class="fa-solid fa-info bg-gray-200 py-1 px-2 rounded-full"></i>&nbsp;Get sales information
+                            by date.</p>
+                        {% csrf_token %}
+                        <label for="from" class="lg:p-2 sm:pt-2 lg:inline-block sm:block">From</label>
+                        <input type="date" id="from" name="from"
+                            class="border p-2 border-teal-500 w-52 mx-4 rounded-md focus:outline-none focus:border-sky-700">
+                        <label for="to" class="lg:p-2 sm:pt-2 sm:block lg:inline-block">To</label>
+                        <input type="date" id="to" name="to"
+                            class="border p-2 border-teal-500 w-52 mx-4 rounded-md focus:outline-none focus:border-sky-700">
+                        <button type="submit" class="bg-teal-500 text-white px-3 py-1 rounded hover:bg-teal-600 ">Apply
+                            Filter</button>
+                    </span>
+                </form>
+            </div>
+            <div class=""></div>
+        </div>
+        <!-- FILTER FORM END -->
+        
     </div>
     <div class="sale-portal">
         <div class="text-center">
