@@ -11,7 +11,7 @@
             {% if user.is_authenticated %}
                 <a class="mx-5 inline-block hover:font-bold cursor-pointer relative px-4 mt-1" href="{% url 'store:cart_item' %}">
                     <div class="t-0 absolute right-0">
-                        <p class="flex h-2 w-2 items-center justify-center rounded-full bg-red-500 p-1 text-xs text-white" id="item_count"></p>
+                        <p class="flex h-2 w-2 items-center justify-center rounded-full bg-red-500 p-2 text-xs text-white" id="item_count"></p>
                     </div>
                     <i class="fa-solid text-xl fa-basket-shopping bg-gray-200 hover:text-white hover:bg-teal-500 hover:shadow-lg transition ease-in-out duration-500 rounded-full p-2"></i>
                 </a>

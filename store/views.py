@@ -15,7 +15,13 @@ from django.utils import timezone
 
 # Create your views here.
 def home(request):
-    return render(request, 'home.html')
+    today = datetime.today()
+    year = today.year
+    month = today.month
+    day = today.day
+    today = Sale.objects.filter(date_created__year = year,date_created__month=month, date_created__day=day).aggregate(Sum('total_price'), Sum('total_profit'), Sum('quantity'))
+    context = {'today':today}
+    return render(request, 'home.html', context)
 
 def base(request):
     return render(request, 'main/base.html')
@@ -184,9 +190,7 @@ def stockRoute(request, flag):
         year = today.year
         month = today.month
         day = today.day
-       
         today = Sale.objects.filter(date_created__year = year,date_created__month=month, date_created__day=day).aggregate(Sum('total_price'), Sum('total_profit'), Sum('quantity'))
-        
         context = {'flag':flag, 'total':total, 'totalStock':totalStock, 'today':today}
     elif flag == 2:
         flag = flag
