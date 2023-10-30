@@ -1,7 +1,7 @@
 {% extends 'main/base.html' %}
 {% load static %}
 {% block content %}
-<div class="sales">
+<div class="sales relative">
     <div class="grid lg:grid-row-2 m-5">
         <div class="">
         <h1 class="text-3xl text-center">Sales Portal</h1>
@@ -50,7 +50,7 @@
                                     <i class="fa-solid fa-cart-plus text-lg"></i>
                                 </button>
                             {% elif item.stock > 0 %}
-                                <button class="rounded shadow-lg bg-teal-500 text-white py-1 px-2 text-lg shadow">Buy</button>
+                                <button data-buy-item-id="{{item.id}}" class="rounded shadow-lg bg-teal-500 text-white py-1 px-2 text-lg shadow" id="buyItem">Buy</button>
                                 <!-- ADD TO CART START -->
                                 <button data-cart-item-id="{{item.id}}" class="add_to_cart_btn rounded shadow-lg bg-teal-500 text-white py-1 px-2 shadow">
                                     Add To Cart&nbsp;<i class="fa-solid fa-cart-plus text-lg"></i>
@@ -87,6 +87,24 @@
             </div>
             <!-- Pagination End -->
     </div>
+    <div id="slidBar" class="absolute w-1/3 h-3/4 shadow-2xl top-0 right-0 z-50 bg-gray-800 rounded-md text-white ">
+        <div class="px-3 py-2">
+            <i class="fa-solid fa-xmark font-bold text-2xl" id="closeToggle"></i>
+            <div class="grid grid-cols-3 gap-3">
+                <div class="" id="itemImage">
+
+                </div>
+                <div class="col-span-2">
+                    <p id="itemName"></p>
+                    <p id="itemDescription"></p>
+                    <p id="itemExpd"></p>
+                    <p id="itemPrice"></p>
+                    <p id="itemQuantity"></p>
+                    <p id="itemTotal_price"></p>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <script>
@@ -95,7 +113,9 @@
         e.preventDefault();
        // console.log(e.target.classList)
        const cartItemBtn = e.target.closest('.add_to_cart_btn');
-       if(!cartItemBtn) return
+       const buyItem = e.target.closest('#buyItem');
+       
+       if(cartItemBtn) {
        //console.log(cartItemBtn.dataset.cartItemId);
        var id = cartItemBtn.dataset.cartItemId;
        console.log(id);
@@ -113,6 +133,39 @@
        }).catch(error =>{
         console.log(error);
        });
+       }
+       if(buyItem) {
+        var id = buyItem.dataset.buyItemId;
+        console.log(id);
+        const formData = new FormData();
+        formData.append('itemId', id),
+        formData.append('flag','buy'),
+        formData.append('csrfmiddlewaretoken', '{{csrf_token}}');
+        console.log(formData);
+        fetch('{% url "store:buyItem" %}', {
+            method: 'POST',
+            body: formData
+        }).then(response => response.json()).then(data=>{
+            console.log(data.product[0].name);
+            document.getElementById("itemName").innerHTML=data.product[0].name;
+            document.getElementById("itemDescription").innerHTML=data.product[0].description;
+            document.getElementById("itemPrice").innerHTML=data.product[0].price;
+            document.getElementById("itemQuantity")
+            
+            /*$("#slidBar").animate({
+                width:'toggle'
+            },500);*/
+        }).catch(error=>{
+            console.log(error);
+        });
+       }
+    });
+    $(document).ready(function(){
+        $("#closeToggle").click(function(){
+            $("#slidBar").animate({
+                width:'toggle'
+            },500)
+        });
     });
 </script>
 {% endblock content %}

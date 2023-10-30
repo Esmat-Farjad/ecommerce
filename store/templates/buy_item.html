@@ -1,0 +1,19 @@
+{% extends 'main/base.html' %}
+{% load static %}
+{% block content %}
+<div class="main">
+    <div class="">
+        <p class="text-center text-2xl">Buy Product</p>
+        <ul>
+            {% for item in product %}
+                <li>{{item.name}}</li>
+                <li>{{item.description}}</li>
+                <li>{{item.price}}</li>
+                <li>{{item.quantity}}</li>
+                <li>{{item.total_price}}</li>
+                <li>{{item.total_profit}}</li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+{% endblock content %}

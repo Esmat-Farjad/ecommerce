@@ -1,5 +1,7 @@
 from datetime import datetime
 import json
+import math
+import os
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import redirect, render
 from django.contrib import messages
@@ -21,6 +23,7 @@ def home(request):
     day = today.day
     today = Sale.objects.filter(date_created__year = year,date_created__month=month, date_created__day=day).aggregate(Sum('total_price'), Sum('total_profit'), Sum('quantity'))
     context = {'today':today}
+    print(today)
     return render(request, 'home.html', context)
 
 def base(request):
@@ -95,6 +98,7 @@ def product(request):
 
 
 def purchase(request):
+    color = ''
     if request.method == 'POST':
         name = request.POST['name']
         description = request.POST['description']
@@ -104,21 +108,20 @@ def purchase(request):
         mfd = request.POST['mfd']
         expd = request.POST['expd']
         packet = request.POST['packet_content']
-        item_pics=request.FILES['item_pics']
         num_packet = request.POST['num_packet']
+        
+        item_pics=request.FILES['item_pics']
         quantity = int(packet) * int(num_packet) 
         new_rate = int(bulk_price)/int(packet)
-        rate = int(new_rate)
-        profit = int(price) - int(rate)
+        rate =int(new_rate)
+        profit = math.floor(int(price) - int(rate))
         stock = quantity
-        print(rate,profit,stock)
-        # if category == 3 :
+    
         new_record = Product(name=name, description=description,category_id=category,price=price,bulk_price=bulk_price,quantity=quantity,rate=rate,mfd=mfd,expd=expd,profit=profit,stock=stock, packet=packet, image=item_pics)
-        # else:
-            # new_record = Product(name=name, description=description,category_id=category,price=price,bulk_price=bulk_price,quantity=quantity,rate=rate,profit=profit,stock=stock, packet=packet, image=item_pics)
-            
         new_record.save()
         messages.success(request, "Product added successfully !")
+         
+        
     product = Product.objects.all().order_by('-id')
     #Paginator start
     p = Paginator(product, 5 )
@@ -134,7 +137,7 @@ def purchase(request):
     for x in range(1, 100,1):
         number.append(x)
     cat = Category.objects.all()
-    context = {'category':cat,'page_obj':page_obj,'num':number}
+    context = {'category':cat,'page_obj':page_obj,'num':number, 'color':color}
     return render(request, 'purchase.html', context)
 
 def dispatch(request, item):
@@ -408,4 +411,14 @@ def summeryByDate(request):
         return render(request, 'stock.html', context)
     return redirect("store:stockRoute", 1)
     
-               
+def buyItem(request):
+    if request.method == 'POST':
+        item_id = request.POST['itemId']
+        product = Product.objects.filter(id = item_id).values()
+        data = {'product':list(product), 'Message': 'Success', 'status':200}
+        return JsonResponse(data, safe=False)
+        
+def buyRoute(request, dataItem):
+    print(dataItem)
+    context = {'product':dataItem}
+    return render(request, 'buy_item.html', context)       

@@ -42,10 +42,10 @@
                 <span class="rounded-full py-1 px-2 bg-indigo-600 text-end text-white text-sm">1</span>
                 <label for="name" class="block">Product Name</label>
                 <input type="text" name="name" id="name" class="border w-full border-teal-500 focus:outline-none focus:border-sky-700 p-2" required placeholder="Product Name">
-                <label for="description" class="block">Product Description</label>
+                <label for="description" class="block mt-2">Product Description</label>
                 <input type="text" name="description" id="description" class="border w-full p-2 border-teal-500 focus:outline-none focus:border-sky-700" required
                     placeholder="Product Description">
-                <label for="category" class="block">Product Category</label>
+                <label for="category" class="block mt-2">Product Category</label>
                 <select name="category" id="category" class="p-2 border-teal-500 focus:outline-none focus:border-sky-700 w-full border">
                     <option value="" disabled selected>Please select...</option>
                     {% for cat in category %}
@@ -76,7 +76,7 @@
                 <small class="text-red-500 p-0 m-0" id="show_message"></small>
                 <label for="item_pics" class="block mt-2">Item Image</label>
                 <input type="file" name="item_pics" id="item_pics" 
-                class="file:border file:rounded-full file:shadow file:p-2 hover:file:bg-teal-700 hover:file:font-bold file:bg-teal-500 file:text-white mb-2">
+                class="file:border file:rounded-full file:shadow file:p-2 hover:file:bg-teal-700 hover:file:font-bold file:bg-teal-500 file:text-white mb-2" required>
             </div>
             <div class="p-5 border-2 border-indigo-500 rounded">
                 <p class="text-lg font-semibold text-muted inline-block"><i class="fa-solid fa-hand-holding-dollar rounded-full bg-gray-300 p-2 mb-3 "></i>&nbsp;Product Pricing Information</p>
@@ -232,6 +232,14 @@
     document.getElementById('quantity').value =tq;
     document.getElementById("stock").value = tq;
    });
+   pc = document.getElementById("packet_content");
+    pc.addEventListener("input", function (e) {
+        var x = document.getElementById("num_packet").value;
+        var num = e.target.value;
+        var tq = x * num;
+        document.getElementById('quantity').value = tq;
+        document.getElementById("stock").value = tq;
+    });
    //QUANTITY CALCULATION ENDS
 
     element = document.getElementById('bprice');

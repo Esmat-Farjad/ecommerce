@@ -103,26 +103,26 @@
             }
         } else {
         document.getElementById("d_month").innerHTML = 0;
-    }
-    //this section ends
+        }
+        //this section ends
 
-    var z = $("#quantity").text();
-    let z_speed = z/10;
-    
-    if(z != 0) {
-        let counts2 = setInterval(updatedYear);
-        let year = 0;
-        function updatedYear() {
-            let count = document.getElementById("d_year");
-            count.innerHTML = new Intl.NumberFormat().format(year++);
-            if( year > z) {
-                clearInterval(counts2);
+        var z = $("#quantity").text();
+        let z_speed = z/10;
+        z = Number(z);
+        if(z > 0) {
+            let counts2 = setInterval(updatedYear);
+            let year = 0;
+            function updatedYear() {
+                let count = document.getElementById("d_year");
+                count.innerHTML = new Intl.NumberFormat().format(year++);
+                if( year > z) {
+                    clearInterval(counts2);
+                } 
             } 
-        } 
-    }
-    else {
-        document.getElementById("d_year").innerHTML = 0;
-    }  
+        }
+        else {
+            document.getElementById("d_year").innerHTML = 0;
+        }  
     });
 
 </script>
