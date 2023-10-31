@@ -92,7 +92,7 @@
             <i class="fa-solid fa-xmark font-bold text-2xl" id="closeToggle"></i>
             <div class="grid grid-cols-3 gap-3">
                 <div class="" id="itemImage">
-
+                    <img src="" id="myImage" alt="" class="w-32 h-32">
                 </div>
                 <div class="col-span-2">
                     <p id="itemName"></p>
@@ -146,11 +146,14 @@
             method: 'POST',
             body: formData
         }).then(response => response.json()).then(data=>{
-            console.log(data.product[0].name);
+            console.log(data.product);
             document.getElementById("itemName").innerHTML=data.product[0].name;
             document.getElementById("itemDescription").innerHTML=data.product[0].description;
             document.getElementById("itemPrice").innerHTML=data.product[0].price;
-            document.getElementById("itemQuantity")
+            
+            var image = data.product[0].image;
+            alert(image);
+            document.getElementById("myImage").src= data.product.image.url;
             
             /*$("#slidBar").animate({
                 width:'toggle'
