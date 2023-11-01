@@ -28,5 +28,6 @@ urlpatterns = [
     path('summeryByDate/', views.summeryByDate, name='summeryByDate'),
     path('buyItem/', views.buyItem, name='buyItem'),
     path('buyRoute/<dataItem>', views.buyRoute, name='buyRoute'),
+    path('saleItem/', views.saleItem, name='saleItem'),
     
 ]

@@ -64,7 +64,7 @@ class Sale(models.Model):
     quantity = models.IntegerField()
     total_price = models.IntegerField()
     total_profit = models.IntegerField()
-    cart = models.ForeignKey(Cart, on_delete=models.CASCADE)
+    cart = models.ForeignKey(Cart, on_delete=models.CASCADE, null=True, blank=True)
     date_created = models.DateTimeField(auto_now=True)
     
     

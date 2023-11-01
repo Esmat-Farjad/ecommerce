@@ -1,5 +1,6 @@
 {% extends 'main/base.html' %}
 {% load static %}
+{% load humanize %}
 {% block content %}
 <div class="sales relative">
     <div class="grid lg:grid-row-2 m-5">
@@ -87,20 +88,40 @@
             </div>
             <!-- Pagination End -->
     </div>
-    <div id="slidBar" class="absolute w-1/3 h-3/4 shadow-2xl top-0 right-0 z-50 bg-gray-800 rounded-md text-white ">
-        <div class="px-3 py-2">
+    <div id="slidBar" class="absolute lg:w-1/3 lg:h-3/4 sm:w-full sm:h-screen shadow-2xl top-0 right-0 z-50 bg-gray-800 rounded-md text-white hidden ">
+        <div class="px-3 py-2" id="print-content">
             <i class="fa-solid fa-xmark font-bold text-2xl" id="closeToggle"></i>
-            <div class="grid grid-cols-3 gap-3">
-                <div class="" id="itemImage">
-                    <img src="" id="myImage" alt="" class="w-32 h-32">
-                </div>
-                <div class="col-span-2">
-                    <p id="itemName"></p>
-                    <p id="itemDescription"></p>
-                    <p id="itemExpd"></p>
-                    <p id="itemPrice"></p>
-                    <p id="itemQuantity"></p>
-                    <p id="itemTotal_price"></p>
+            <div class="text-center px-5">
+                <p class="text-2xl">Product information</p>
+                <table class="table-fixed w-full " >
+                    <thead class="font-bold text-white border p-3">
+                        <th class="py-2">Name</th>
+                        <th class="py-2">Description</th>
+                        <th class="py-2">Price</th>
+                        <th class="py-2">Quantity</th>
+                        <th class="py-2">Total Price</th>
+                    </thead>
+                    <tbody>
+                        <td class="py-2" id="itemName"></td>
+                        <td class="py-2 text-sm" id="itemDescription"></td>
+                        <td class="py-2">
+                            <span id="itemPrice"></span>
+                            <span class="font-bold">AFN</span>
+                        </td>
+                        <td class="py-2">
+                            <input type="number" id="quantity" value="1" name="quantity" min="0" class="w-16 px-2 py-1 bg-gray-800 rounded border">
+                        </td>
+                        <td class="py-2">
+                            <span id="total_price"></span>
+                            <span class="font-bold">AFN</span>
+                        </td>
+                    </tbody>
+                </table>
+                <hr class="my-5">
+                <div>
+                    <input type="number" class="hidden" id="product_id" name="product_id">
+                
+                    <button id="submitButton" class="bg-teal-500 text-white px-2 py-1 rounded">Purchase</button>
                 </div>
             </div>
         </div>
@@ -108,6 +129,40 @@
 </div>
 
 <script>
+    const submitButton = document.querySelector("#submitButton");
+    submitButton.addEventListener("click", function(e) {
+        e.preventDefault();
+        var product_id = document.getElementById("product_id").value;
+        var quantity = document.getElementById("quantity").value;
+        
+        const formData = new FormData();
+        formData.append('pid',product_id);
+        formData.append('qty',quantity);
+       
+        formData.append('csrfmiddlewaretoken','{{csrf_token}}');
+        console.log(formData);
+        fetch('{% url "store:saleItem" %}',{
+            method: 'POST',
+            body: formData
+        }).then(response =>response.json()).then(data =>{
+            console.log("success: ", data);
+            printing();
+            $("#slidBar").animate({
+                width:'toggle'
+            },500)
+        }).catch(error =>{
+            console.log("Error: ",error);
+        });
+    });
+    const inputElement = document.querySelector("#quantity");
+    inputElement.addEventListener("input", function(e) {
+        var qty = e.target.value;
+        var price = document.getElementById("itemPrice").innerText;
+        var total = Number(qty) * Number(price);
+        document.getElementById("total_price").innerHTML = '';
+
+        document.getElementById("total_price").innerHTML = total;
+    });
     const cartElement = document.querySelector('#dataForm');
     cartElement.addEventListener('click', function(e) {
         e.preventDefault();
@@ -118,51 +173,64 @@
        if(cartItemBtn) {
        //console.log(cartItemBtn.dataset.cartItemId);
        var id = cartItemBtn.dataset.cartItemId;
-       console.log(id);
+    //    console.log(id);
        const formData = new FormData();
        formData.append('itemId', id);
        formData.append('csrfmiddlewaretoken', '{{csrf_token}}');
-       console.log(formData);
+    //    console.log(formData);
        fetch('{% url "store:addToCart" %}',{
         method: 'POST',
         body: formData
        }).then(response => response.json()).then(data => {
-        console.log("success: ", data);
+        // console.log("success: ", data);
         document.getElementById("item_count").innerHTML=data.cart_item;
         document.getElementById("item_count_mobile").innerHTML = data.cart_item;
        }).catch(error =>{
         console.log(error);
        });
        }
-       if(buyItem) {
+       if(buyItem) 
+       {
         var id = buyItem.dataset.buyItemId;
-        console.log(id);
+        // console.log(id);
         const formData = new FormData();
         formData.append('itemId', id),
         formData.append('flag','buy'),
         formData.append('csrfmiddlewaretoken', '{{csrf_token}}');
-        console.log(formData);
+        // console.log(formData);
         fetch('{% url "store:buyItem" %}', {
             method: 'POST',
             body: formData
         }).then(response => response.json()).then(data=>{
-            console.log(data.product);
+            
             document.getElementById("itemName").innerHTML=data.product[0].name;
             document.getElementById("itemDescription").innerHTML=data.product[0].description;
             document.getElementById("itemPrice").innerHTML=data.product[0].price;
+            document.getElementById("product_id").value=data.product[0].id;
+            var price = data.product[0].price;
+            var qty = document.getElementById("quantity").value;
+            var total_price = Number(price) * Number(qty);
+            document.getElementById("total_price").innerHTML = total_price;
             
-            var image = data.product[0].image;
-            alert(image);
-            document.getElementById("myImage").src= data.product.image.url;
             
-            /*$("#slidBar").animate({
+            
+            $("#slidBar").animate({
                 width:'toggle'
-            },500);*/
+            },500);
         }).catch(error=>{
             console.log(error);
         });
        }
     });
+    
+    function printing() {
+        var printContains = document.getElementById("print-content").innerHTML;
+        var originalContains = document.body.innerHTML;
+        document.body.innerHTML = printContains;
+        window.print()
+        document.body.innerHTML = originalContains;
+    }
+
     $(document).ready(function(){
         $("#closeToggle").click(function(){
             $("#slidBar").animate({

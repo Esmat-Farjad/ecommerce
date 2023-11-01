@@ -421,4 +421,22 @@ def buyItem(request):
 def buyRoute(request, dataItem):
     print(dataItem)
     context = {'product':dataItem}
-    return render(request, 'buy_item.html', context)       
+    return render(request, 'buy_item.html', context)   
+
+def saleItem(request):
+    if request.method == 'POST':
+        pid = request.POST['pid']
+        quantity = request.POST['qty']
+        pro = Product.objects.get(id=pid)
+        new_stock = int(pro.stock) - int(quantity)
+        total_price = int(quantity) * int(pro.price)
+        total_profit = int(quantity) * int(pro.profit)
+        new_stock = int(pro.stock) - int(quantity)
+        Product.objects.filter(id=pid).update(stock = new_stock)
+        new_record = Sale(product_id=pid, quantity=quantity,total_price=total_price,total_profit=total_profit)
+        new_record.save()
+        messages.success(request, "Product sold successfully ")
+        
+        
+        data = {'pid':pid,'qty':quantity}
+        return JsonResponse(data, safe=False)

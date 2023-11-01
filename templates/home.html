@@ -73,7 +73,9 @@
     $(document).ready(function() {
         var a = $("#total_sale").text();
         let x = Number(a);
-        let x_speed = x/100;
+        
+        let x_speed = x/10;
+       
         if (x != 0) {
             let counts = setInterval(updated);
             let stuff = 0;
@@ -90,7 +92,7 @@
         //end of the calculations
         var p = $("#total_profit").text();
         var y = Number(p);
-        let y_speed = y/100;
+        let y_speed = y/10;
         if(y != 0) {
             let counts1 = setInterval(updatedMonth);
             let m = 0;
