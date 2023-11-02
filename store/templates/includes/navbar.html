@@ -7,7 +7,7 @@
                 <small class="mx-3">SHOPPING MART</small>
             </a>
         </div>
-        <div class="lg:block sm:hidden py-3 text-end me-5">
+        <div class="lg:block sm:hidden py-3 text-end me-5 relative">
             {% if user.is_authenticated %}
                 <a class="mx-5 inline-block hover:font-bold cursor-pointer relative px-4 mt-1" href="{% url 'store:cart_item' %}">
                     <div class="t-0 absolute right-0">
@@ -18,14 +18,20 @@
                 <a href="{% url 'store:purchase' %}" class="mx-5 inline-block hover:font-bold cursor-pointer"><i class="fa-solid fa-cart-plus"></i>&nbsp;Purchase</a>
                 <a class="mx-5 inline-block hover:font-bold cursor-pointer" href="{% url 'store:sales' %}"><i class="fa-solid fa-cart-shopping"></i>&nbsp;Sales</a>
                 <a class="mx-5 inline-block hover:font-bold cursor-pointer" href="{% url 'store:product' %}"><i class="fa-solid fa-box-open"></i>&nbsp;Products</a>
-                <a class="mx-5 inline-block hover:font-bold cursor-pointer" href="{% url 'store:stock' %}"><i class="fa-solid fa-layer-group"></i>&nbsp;Manage Stock</a>
-                <a class="mx-5 inline-block hover:font-bold cursor-pointer" href="{% url 'store:sale_info' %}"><i class="fa-brands fa-shopify"></i>&nbsp;Manage Sales</a>
+                <span class="hover:font-bold cursor-pointer" id="dropdownHandler">Manager&nbsp;<i class="fa-solid fa-caret-down"></i></span>
+                
                 <a class="mx-5 inline-block hover:font-bold cursor-pointer" href="{% url 'store:signout' %}"><i class="fa-solid fa-user-minus"></i>&nbsp;Logout</a>
                 
             {% else %}
                 <a class="inline-block mx-5 hover:font-bold cursor-pointer" href="{% url 'store:signin' %}">Sign In&nbsp;<i class="fa-solid fa-arrow-right-to-bracket"></i></a>
                 <a class="inline-block mx-5 hover:font-bold cursor-pointer" href="{% url 'store:signup' %}">Sign Up&nbsp;<i class="fa-solid fa-user-plus"></i></a>
             {% endif %}
+            <div id="dropdownMenu" class="hidden absolute text-start w-52 h-40 rounded border pt-3 shadow-2xl z-50 top-24 right-16 bg-white transition ease-in-out duration-500">
+                <a class="p-3 mx-1  block hover:font-bold hover:bg-gray-100 cursor-pointer" href="{% url 'store:stock' %}">
+                    <i class="fa-solid fa-layer-group"></i>&nbsp;Manage Stock</a>
+                <a class="mx-1 hover:bg-gray-100 p-3  block hover:font-bold cursor-pointer" href="{% url 'store:sale_info' %}">
+                    <i class="fa-brands fa-shopify"></i>&nbsp;Manage Sales</a>
+            </div>
         </div>
         <div class="sm:block text-end cursor-pointer md:block pt-6 lg:hidden">
             <i class="fa-solid fa-ellipsis-vertical px-3 text-2xl" id="btn_click"></i>
@@ -66,6 +72,15 @@
                     height: 'toggle'
                 }, 1000);
             });
+        });
+        const MenuHandler = document.querySelector("#dropdownHandler");
+        MenuHandler.addEventListener("click", function(){
+            var dropdownMenuObj = document.getElementById("dropdownMenu");
+            if(dropdownMenuObj.classList.contains("hidden")) {
+                dropdownMenuObj.classList.remove("hidden");
+            } else {
+                dropdownMenuObj.classList.add("hidden");
+            }
         });
     </script>
 </div>
