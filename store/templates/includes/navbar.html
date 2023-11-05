@@ -23,8 +23,8 @@
                 <a class="mx-5 inline-block hover:font-bold cursor-pointer" href="{% url 'store:signout' %}"><i class="fa-solid fa-user-minus"></i>&nbsp;Logout</a>
                 
             {% else %}
-                <a class="inline-block mx-5 hover:font-bold cursor-pointer" href="{% url 'store:signin' %}">Sign In&nbsp;<i class="fa-solid fa-arrow-right-to-bracket"></i></a>
-                <a class="inline-block mx-5 hover:font-bold cursor-pointer" href="{% url 'store:signup' %}">Sign Up&nbsp;<i class="fa-solid fa-user-plus"></i></a>
+                <a class="inline-block mx-5 hover:font-bold cursor-pointer mt-5" href="{% url 'store:signin' %}">Sign In&nbsp;<i class="fa-solid fa-arrow-right-to-bracket"></i></a>
+                <a class="inline-block mx-5 hover:font-bold cursor-pointer mt-5" href="{% url 'store:signup' %}">Sign Up&nbsp;<i class="fa-solid fa-user-plus"></i></a>
             {% endif %}
             <div id="dropdownMenu" class="hidden absolute text-start w-52 h-40 rounded border pt-3 shadow-2xl z-50 top-24 right-16 bg-white transition ease-in-out duration-500">
                 <a class="p-3 mx-1  block hover:font-bold hover:bg-gray-100 cursor-pointer" href="{% url 'store:stock' %}">
@@ -39,9 +39,9 @@
     </div>
 </div>
 
-<div class="my-5 hidden shadow-md" id="toggleMenu">
+<div class="hidden shadow-md" id="toggleMenu">
     {% if user.is_authenticated %}
-    <ul class="">
+    <ul class=" my-5 list-none">
     <li class="my-2 mx-5 hover:font-bold cursor-pointer "><a href="{% url 'store:cart_item' %}">
         <i class="fa-solid fa-bag-shopping"></i>&nbsp;My Cart&nbsp;
         <small id="item_count_mobile" class="rounded mx-3 px-2 py-px bg-teal-500 text-white"></small>
@@ -58,10 +58,12 @@
     </li>
     <li class="py-2 mx-5 hover:font-bold cursor-pointer"><a href="{% url 'store:signout' %}"><i
                 class="fa-solid fa-user-minus"></i>&nbsp;Log out</a></li>
+    </ul>
     {% else %}
-    <li class="py-2 mx-5 hover:font-bold cursor-pointer"><a href="{% url 'store:signin' %}"><i
+    <li class="my-5 list-none">
+    <li class="list-none my-2 mx-5 hover:font-bold cursor-pointer"><a href="{% url 'store:signin' %}"><i
                 class="fa-solid fa-arrow-right-to-bracket"></i>&nbsp;Sign In</a></li>
-    <li class="py-2 mx-5 hover:font-bold cursor-pointer"><a href="{% url 'store:signup' %}"><i
+    <li class="list-none py-2 mx-5 hover:font-bold cursor-pointer"><a href="{% url 'store:signup' %}"><i
                 class="fa-solid fa-user-plus"></i>&nbsp;Sign Up</a></li>
     </ul>
     {% endif %}
