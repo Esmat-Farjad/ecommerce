@@ -29,5 +29,8 @@ urlpatterns = [
     path('buyItem/', views.buyItem, name='buyItem'),
     path('buyRoute/<dataItem>', views.buyRoute, name='buyRoute'),
     path('saleItem/', views.saleItem, name='saleItem'),
+    path('forgotPassword/', views.forgotPassword, name='forgotPassword'),
+    path('verifyOtp/', views.verifyOtp, name='verifyOtp'),
+   
     
 ]

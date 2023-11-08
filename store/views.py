@@ -2,6 +2,7 @@ from datetime import datetime
 import json
 import math
 import os
+import random
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import redirect, render
 from django.contrib import messages
@@ -440,3 +441,28 @@ def saleItem(request):
         
         data = {'pid':pid,'qty':quantity}
         return JsonResponse(data, safe=False)
+    
+
+def forgotPassword(request):
+    if request.method == 'POST':
+        email = request.POST['email']
+        userDetails = CustomUser.objects.filter(email=email).values()
+        # place the email code here
+        
+        num = random.randrange(0,1000000)
+        data = {"status":200, 'otp':num, 'userDetail':list(userDetails)}
+        return JsonResponse(data, safe=False)
+    context = {}
+    return render(request, 'forgot_password.html', context)
+        
+def verifyOtp(request):
+    if request.method == 'POST':
+        userOtp = request.POST['userOtp']
+        sysOtp = request.POST['sysOtp']
+        userId = request.POST['userId']
+        if int(userOtp) == int(sysOtp):
+            context={'userID':userId}
+            return render(request, 'reset_password.html', context)
+        else:
+            messages.error(request, "The OTP is Invalid ! Please Try again...")
+            return render(request, 'forgot_password', context)

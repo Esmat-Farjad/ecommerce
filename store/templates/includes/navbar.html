@@ -76,6 +76,7 @@
             });
         });
         const MenuHandler = document.querySelector("#dropdownHandler");
+        if(MenuHandler) {
         MenuHandler.addEventListener("click", function(){
             var dropdownMenuObj = document.getElementById("dropdownMenu");
             if(dropdownMenuObj.classList.contains("hidden")) {
@@ -84,5 +85,6 @@
                 dropdownMenuObj.classList.add("hidden");
             }
         });
+    }
     </script>
 </div>

@@ -10,17 +10,19 @@
             {% csrf_token %}
             <p class="text-center">to continue to your store</p>
             <label class="" for="username">Username</label>
-            <input type="text" name="username" id="username" class="mb-4 border p-2 border-teal-500 w-full" placeholder="Username" required>
+            <input type="text" name="username" id="username" 
+            class="mb-4 border p-2 border-teal-500 w-full focus:outline-none focus:border-sky-600" placeholder="Username" required>
             <label class="" for="password">password</label>
-            <input type="password" name="password" id="password" class="border p-2 border-teal-500 w-full" placeholder="Password" required>
-            <p class="text-sky-400 font-semibold hover:text-sky-600"><a href="">Forgot password ?</a></p>
+            <input type="password" name="password" id="password" 
+            class="border p-2 border-teal-500 w-full focus:outline-none focus:border-sky-600" placeholder="Password" required>
+            <p class="text-blue-400 hover:text-blue-600"><a href="{% url 'store:forgotPassword' %}">Forgot password ?</a></p>
             <p class="my-5">To continue, the system will not share your details information with other stakeholders.
             Before Using this app you can review the E-commerce's 
-            <a class="text-sky-500 font-semibold" href="">privacy policy</a> and 
-            <a class="text-sky-500 font-semibold" href="">terms of service.</a>
+            <a class="text-blue-500 font-semibold" href="">privacy policy</a> and 
+            <a class="text-blue-500 font-semibold" href="">terms of service.</a>
             </p>
             <div class="">
-                <p class="text-sky-400 font-semibold hover:text-sky-600 inline-block mr-10"><a href="{% url 'store:signup' %}">Create account</a></p>
+                <p class="text-blue-400 hover:text-blue-600 inline-block mr-10"><a href="{% url 'store:signup' %}">Create account</a></p>
                 <button class="bg-teal-500 text-white px-4 py-2 hover:font-bold hover:bg-teal-700 shadow mt-3 mb-5 ml-10">Log in</button>
             </div>
         </form>
