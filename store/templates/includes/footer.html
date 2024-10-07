@@ -1,13 +1,5 @@
 {% load static %}
 <div class="footer">
-    <div class="heading">
-        <p class="text">Copyright &copy; <span id="year"></span> 
-            <script>
-             document.getElementById("year").innerHTML = (new Date().getFullYear());
-            </script>
-            Oranig-Shop. All right reserved.
-        </p>
-    </div>
     <div class="footer-container">
         <div class="social-link">
             <ul class="unorder-list">
@@ -25,8 +17,16 @@
                 </li>
             </ul>
         </div>
-        <div>
+        <div class="image-holder">
             <img src="{% static 'image/logo.png' %}" class="logo-image-footer" alt="">
+            <div class="heading">
+                <p class="text">Copyright &copy; <span id="year"></span> 
+                    <script>
+                     document.getElementById("year").innerHTML = (new Date().getFullYear());
+                    </script>
+                    Oranig-Shop. All right reserved.
+                </p>
+            </div>
         </div>
         <div class="menu-list">
             <ul class="unorder-list">
