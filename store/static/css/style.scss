@@ -1,0 +1,92 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
+@import './variable';
+*{
+    font-family: "Nunito", sans-serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+    
+}
+body{
+  margin: 0px;
+  padding: 0px;
+  width: auto;
+  height: 100%;
+}
+a{
+  text-decoration: none;
+  color: inherit;
+}
+.logo-image{
+  width: 100px;
+  height: auto;
+  object-fit: cover;
+  padding: 0px;
+  margin: 0px;
+}
+.navbar{
+  // navbar style in general
+  padding: 0px;
+  margin: 0px;
+  .navbar-content .menu-item .menu-content .nav-link:hover{
+    color: gray;
+    transition: color 0.3s ease;
+  }
+  // mobile
+  @include respond-to(mobile-tablet){
+    .navbar-content{
+      position: relative;
+    }
+    .menu-content{
+      list-style-type: none;
+      margin: 0px;
+      padding: 1rem;
+    }
+    .menu-content .nav-link{
+      padding: 0.5rem;
+    }
+
+    .menu-item{
+      position: absolute;
+      top: 100%;
+      left: 2%;
+      right: 2%;
+      z-index: 100;
+      border: 1px solid gray;
+      border-radius: 5px;
+      background-color: $base-color;
+   } 
+  }
+  // navbar for tablet
+  @include respond-to(tablet){
+    background-color: orange;
+   
+  }
+  @include respond-to(desktop){
+   background-color: yellow;
+  }
+  @include respond-to(desktop-large) {
+    margin: 0rem 10rem;
+    .navbar-content{
+      display: flex;
+      flex-direction: row;
+      justify-content: start;
+      align-items: center;
+      margin: 0px;
+      padding: 0px;
+    }
+    .menu-content{
+      display: inline-block;
+      list-style-type: none;
+      margin: 0px;
+      padding: 0px;
+    }
+    .menu-content .nav-link{
+      display: inline-block;
+      padding: 0rem 1rem;
+    }
+    
+     
+  }
+}
+

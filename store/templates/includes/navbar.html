@@ -1,90 +1,31 @@
 {% load static %}
-<div class="nav border shadow">
-    <div class="grid grid-cols-2">
-        <div class="">
+<div class="navbar">
+    <div class="navbar-content">
+        <div class="logo-holder">
             <a href="{% url 'home' %}">
-                <img src="{% static 'image/logo.png' %}" class=" mx-3 w-24 h-16" alt="">
-                <small class="mx-3">SHOPPING MART</small>
+                <img src="{% static 'image/logo.png' %}" class="logo-image" alt="">
             </a>
         </div>
-        <div class="lg:block sm:hidden py-3 text-end me-5 relative">
-            {% if user.is_authenticated %}
-                <a class="mx-5 inline-block hover:font-bold cursor-pointer relative px-4 mt-1" href="{% url 'store:cart_item' %}">
-                    <div class="t-0 absolute right-0">
-                        <p class="flex h-2 w-2 items-center justify-center rounded-full bg-red-500 p-2 text-xs text-white" id="item_count"></p>
-                    </div>
-                    <i class="fa-solid text-xl fa-basket-shopping bg-gray-200 hover:text-white hover:bg-teal-500 hover:shadow-lg transition ease-in-out duration-500 rounded-full p-2"></i>
-                </a>
-                <a href="{% url 'store:purchase' %}" class="mx-5 inline-block hover:font-bold cursor-pointer"><i class="fa-solid fa-cart-plus"></i>&nbsp;Purchase</a>
-                <a class="mx-5 inline-block hover:font-bold cursor-pointer" href="{% url 'store:sales' %}"><i class="fa-solid fa-cart-shopping"></i>&nbsp;Sales</a>
-                <a class="mx-5 inline-block hover:font-bold cursor-pointer" href="{% url 'store:product' %}"><i class="fa-solid fa-box-open"></i>&nbsp;Products</a>
-                <span class="hover:font-bold cursor-pointer" id="dropdownHandler">Manager&nbsp;<i class="fa-solid fa-caret-down"></i></span>
-                
-                <a class="mx-5 inline-block hover:font-bold cursor-pointer" href="{% url 'store:signout' %}"><i class="fa-solid fa-user-minus"></i>&nbsp;Logout</a>
-                
-            {% else %}
-                <a class="inline-block mx-5 hover:font-bold cursor-pointer mt-5" href="{% url 'store:signin' %}">Sign In&nbsp;<i class="fa-solid fa-arrow-right-to-bracket"></i></a>
-                <a class="inline-block mx-5 hover:font-bold cursor-pointer mt-5" href="{% url 'store:signup' %}">Sign Up&nbsp;<i class="fa-solid fa-user-plus"></i></a>
-            {% endif %}
-            <div id="dropdownMenu" class="hidden absolute text-start w-52 h-40 rounded border pt-3 shadow-2xl z-50 top-24 right-16 bg-white transition ease-in-out duration-500">
-                <a class="p-3 mx-1  block hover:font-bold hover:bg-gray-100 cursor-pointer" href="{% url 'store:stock' %}">
-                    <i class="fa-solid fa-layer-group"></i>&nbsp;Manage Stock</a>
-                <a class="mx-1 hover:bg-gray-100 p-3  block hover:font-bold cursor-pointer" href="{% url 'store:sale_info' %}">
-                    <i class="fa-brands fa-shopify"></i>&nbsp;Manage Sales</a>
-            </div>
-        </div>
-        <div class="sm:block text-end cursor-pointer md:block pt-6 lg:hidden">
-            <i class="fa-solid fa-ellipsis-vertical px-3 text-2xl" id="btn_click"></i>
+        <div class="menu-item">
+            <ul class="menu-content">
+                <li class="nav-link"><a href="{% url 'store:purchase' %}" ><i class="fa-solid fa-cart-plus"></i>&nbsp;Purchase</a></li>
+                <li class="nav-link"><a href="{% url 'store:sales' %}"><i class="fa-solid fa-cart-shopping"></i>&nbsp;Sales</a></li>
+                <li class="nav-link"><a href="{% url 'store:product' %}"><i class="fa-solid fa-box-open"></i>&nbsp;Products</a></li>
+                <li class="nav-link"><span id="dropdownHandler">Manager&nbsp;<i class="fa-solid fa-caret-down"></i></span></li>
+                <li class="nav-link"><a href="{% url 'store:signout' %}"><i class="fa-solid fa-user-minus"></i>&nbsp;Logout</a></li>
+                <li class="nav-link"><a href="{% url 'store:signin' %}">Sign In&nbsp;<i class="fa-solid fa-arrow-right-to-bracket"></i></a></li>
+                <li class="nav-link"><a href="{% url 'store:signup' %}">Sign Up&nbsp;<i class="fa-solid fa-user-plus"></i></a></li>
+                <li class="nav-link"></li>
+                    <a href="{% url 'store:cart_item' %}"></a>
+                        <span id="item_count"></span>
+                        <span class="material-symbols-outlined">
+                            local_mall
+                        </span>
+                    </a>
+                </li>
+            </ul>
+            
         </div>
     </div>
 </div>
-
-<div class="hidden shadow-md" id="toggleMenu">
-    {% if user.is_authenticated %}
-    <ul class=" my-5 list-none">
-    <li class="my-2 mx-5 hover:font-bold cursor-pointer "><a href="{% url 'store:cart_item' %}">
-        <i class="fa-solid fa-bag-shopping"></i>&nbsp;My Cart&nbsp;
-        <small id="item_count_mobile" class="rounded mx-3 px-2 py-px bg-teal-500 text-white"></small>
-    </a></li>
-    <li class="py-2 mx-4 hover:font-bold cursor-pointer"><a href="{% url 'store:purchase' %}">&nbsp;<i class="fa-solid fa-cart-plus"></i>&nbsp;Purchase</a></li>
-    <li class="py-2 mx-5 hover:font-bold cursor-pointer"><a href="{% url 'store:sales' %}"><i
-                class="fa-solid fa-cart-shopping"></i>&nbsp;Sales</a></li>
-    <li class="py-2 mx-5 hover:font-bold cursor-pointer"><a href="{% url 'store:product' %}"><i
-                class="fa-solid fa-box-open"></i>&nbsp;Products</a></li>
-    <li class="py-2 mx-5 hover:font-bold cursor-pointer"><a href="{% url 'store:stock' %}">
-            <i class="fa-solid fa-layer-group"></i>&nbsp;Manage Stock</a></li>
-    <li class="py-2 mx-5 hover:font-bold cursor-pointer"><a href="{% url 'store:sale_info' %}">
-        <i class="fa-brands fa-shopify"></i>&nbsp;Manage Sales</a>
-    </li>
-    <li class="py-2 mx-5 hover:font-bold cursor-pointer"><a href="{% url 'store:signout' %}"><i
-                class="fa-solid fa-user-minus"></i>&nbsp;Log out</a></li>
-    </ul>
-    {% else %}
-    <li class="my-5 list-none">
-    <li class="list-none my-2 mx-5 hover:font-bold cursor-pointer"><a href="{% url 'store:signin' %}"><i
-                class="fa-solid fa-arrow-right-to-bracket"></i>&nbsp;Sign In</a></li>
-    <li class="list-none py-2 mx-5 hover:font-bold cursor-pointer"><a href="{% url 'store:signup' %}"><i
-                class="fa-solid fa-user-plus"></i>&nbsp;Sign Up</a></li>
-    </ul>
-    {% endif %}
-    <script>
-        $(document).ready(function() {
-            $("#btn_click").click(function(){
-                $("#toggleMenu").animate({
-                    height: 'toggle'
-                }, 1000);
-            });
-        });
-        const MenuHandler = document.querySelector("#dropdownHandler");
-        if(MenuHandler) {
-        MenuHandler.addEventListener("click", function(){
-            var dropdownMenuObj = document.getElementById("dropdownMenu");
-            if(dropdownMenuObj.classList.contains("hidden")) {
-                dropdownMenuObj.classList.remove("hidden");
-            } else {
-                dropdownMenuObj.classList.add("hidden");
-            }
-        });
-    }
-    </script>
-</div>
+<!-- store:sales_info  store:stock-->

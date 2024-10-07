@@ -1,70 +1,92 @@
-@import url('https://fonts.googleapis.com/css2?family=AR+One+Sans&family=Montserrat:wght@100&family=Nunito+Sans:ital,opsz,wght@0,6..12,200;0,6..12,300;0,6..12,400;0,6..12,500;0,6..12,600;0,6..12,700;0,6..12,800;0,6..12,900;0,6..12,1000;1,6..12,200;1,6..12,300;1,6..12,400;1,6..12,500;1,6..12,600;1,6..12,700;1,6..12,800;1,6..12,900;1,6..12,1000&family=Open+Sans:wght@300&family=Roboto:wght@300;400&display=swap');
-
-
-
+@import url("https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap");
 * {
-    font-family: 'Nunito Sans', sans-serif;
-    font-family: 'AR One Sans', sans-serif;
-    font-family: 'Montserrat', sans-serif;
-    font-family: 'Open Sans', sans-serif;
-    font-family: 'Roboto', sans-serif;
+  font-family: "Nunito", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
 }
 
-#border-design {
+body {
+  margin: 0px;
+  padding: 0px;
+  width: auto;
+  height: 100%;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.logo-image {
+  width: 100px;
+  height: auto;
+  -o-object-fit: cover;
+     object-fit: cover;
+  padding: 0px;
+  margin: 0px;
+}
+
+.navbar {
+  padding: 0px;
+  margin: 0px;
+}
+.navbar .navbar-content .menu-item .menu-content .nav-link:hover {
+  color: gray;
+  transition: color 0.3s ease;
+}
+@media (max-width: 1024px) {
+  .navbar .navbar-content {
     position: relative;
-    cursor: pointer;
-    margin-bottom: 2rem;
-}
-
-#border-design::after {
-    content: "";
+  }
+  .navbar .menu-content {
+    list-style-type: none;
+    margin: 0px;
+    padding: 1rem;
+  }
+  .navbar .menu-content .nav-link {
+    padding: 0.5rem;
+  }
+  .navbar .menu-item {
     position: absolute;
-    left: 0;
-    bottom: 0;
-    height: 3px;
-    width: 0%;
-    background-color: black;
-    transition: all ease 1s;
+    top: 100%;
+    left: 2%;
+    right: 2%;
+    z-index: 100;
+    border: 1px solid gray;
+    border-radius: 5px;
+    background-color: white;
+  }
 }
-
-#border-design:hover::after {
-    width: 100%;
-    background-image: linear-gradient(to right, red, yellow);
+@media (min-width: 768px) and (max-width: 1024px) {
+  .navbar {
+    background-color: orange;
+  }
 }
-#modal-dialog{
-    display: none;
+@media (min-width: 1024px) and (max-width: 1440px) {
+  .navbar {
+    background-color: yellow;
+  }
 }
-.menu-design{
-    position: relative;
-}
-.image-upload>input {
-    display: none;
-}
-
-.image-upload img {
-   
-    cursor: pointer;
-}
-.animate{
-    width: 0%;
-    cursor: pointer;
-}
-.text-small{
-    font-size: 10px;  
-}
-.tooltip-text {
-    display: none;
-}
-.tooltip:hover .tooltip-text{
-    display: block;
-}
-.enableBlur>* {
-    filter: blur(3px);
-   
-    
-}
-
-.disableBlur {
-    filter: blur(0);
-    
-}
+@media (min-width: 1024px) {
+  .navbar {
+    margin: 0rem 10rem;
+  }
+  .navbar .navbar-content {
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    align-items: center;
+    margin: 0px;
+    padding: 0px;
+  }
+  .navbar .menu-content {
+    display: inline-block;
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px;
+  }
+  .navbar .menu-content .nav-link {
+    display: inline-block;
+    padding: 0rem 1rem;
+  }
+}/*# sourceMappingURL=style.css.map */
