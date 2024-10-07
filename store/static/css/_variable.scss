@@ -4,6 +4,9 @@ $breakpoint-tablet: 768px;    // Tablets
 $breakpoint-desktop: 1024px;  // Desktops
 $breakpoint-large: 1440px;    // Large screens
 $base-color:white;
+$light-gray: #E9EAEC;
+$gradient-pink: #ff4081; // Vibrant Pink
+$gradient-orange: #ffab40; // Deep Orange
 // Mixin for media queries
 @mixin respond-to($breakpoint) {
     @if $breakpoint == mobile{
@@ -20,3 +23,14 @@ $base-color:white;
         @media (min-width: $breakpoint-desktop) { @content; }
     }
   }
+
+
+
+// Mixin for gradient text
+@mixin gradient-text($color1, $color2) {
+    background: linear-gradient(45deg, $color1, $color2);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-fill-color: transparent;
+}

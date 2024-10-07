@@ -3,35 +3,47 @@
 {% block content %}
 {% load humanize %}
 
-<div class="main-page">
-    <div class="homepage">
-        <div class="header-text">
-            <h1 class="title">E-Commerce</h1>
-            <p class="text">start to grow up you business and evaluate your daily work</p>
-        </div>
-        <div class="summary-details flex-row">
-            {% if user.is_authenticated %}
-            <div class="box-container">
-                <p>Today's sale value</p>
-                <p id="d_num"></p>
-            </div>
-            <div class="box-container">
-                <p>Today's Profit</p>
-                <p id="d_month"></p>
-            </div>
-            <div class="box-container">
-                <p>Today's product Sold</p>
-                <p id="d_year"></p>
-            </div>
+
+<div class="homepage">
+    <div class="header-text">
+        <h1 class="title">E-Commerce</h1>
+        <p class="text">start to grow up you business and evaluate your daily work</p>
+    </div>
+    <div class="summary-details">
+        {% if user.is_authenticated %}
+        <div class="box-container">
+            <p class="title">Today's sale value</p>
+            {% if total_sale %}
+            <p class="text">{{total_sale}}</p>
             {% else %}
-            <p class=" mb-10">let's get start your business right here</p>
-            <a href="{% url 'store:signin' %}">
-                <i class="fa-solid fa-arrow-right-to-bracket"></i>&nbsp;Sign In</a>
-            <a href="{% url 'store:signup' %}">
-                <i class="fa-solid fa-plus"></i>&nbsp;Get Start</a>
-            <br>
+            <p class="text">$ 0 </p>
             {% endif %}
         </div>
+        <div class="box-container">
+            <p class="title">Today's Profit</p>
+            {% if total_profit %}
+            <p class="text">{{total_profit}}</p>
+            {% else %}
+            <p class="text">$ 0 </p>
+            {% endif %}
+        </div>
+        <div class="box-container">
+            <p class="title">Today's product Sold</p>
+            {% if quantity %}
+            <p class="text">{{quantity}}</p>
+            {% else %}
+            <p class="text"> 0 </p>
+            {% endif %}
+        </div>
+        {% else %}
+        <p class=" mb-10">let's get start your business right here</p>
+        <a href="{% url 'store:signin' %}">
+            <i class="fa-solid fa-arrow-right-to-bracket"></i>&nbsp;Sign In</a>
+        <a href="{% url 'store:signup' %}">
+            <i class="fa-solid fa-plus"></i>&nbsp;Get Start</a>
+        <br>
+        {% endif %}
     </div>
 </div>
+
 {% endblock content %}
