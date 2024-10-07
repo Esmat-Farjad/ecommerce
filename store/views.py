@@ -26,7 +26,7 @@ def home(request):
         date_created__year = year,date_created__month=month, 
         date_created__day=day
         ).aggregate(Sum('total_price'), Sum('total_profit'), Sum('quantity'))
-    context = {'today':today}
+    context = {'today':today,'user':request.user}
     return render(request, 'home.html', context)
 
 def base(request):

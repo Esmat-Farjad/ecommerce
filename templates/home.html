@@ -9,39 +9,38 @@
         <h1 class="title">E-Commerce</h1>
         <p class="text">start to grow up you business and evaluate your daily work</p>
     </div>
+    
     <div class="summary-details">
-        {% if user.is_authenticated %}
+        {% if request.user.is_authenticated %}
         <div class="box-container">
             <p class="title">Today's sale value</p>
-            {% if total_sale %}
-            <p class="text">{{total_sale}}</p>
+            {% if today.total_price__sum %} 
+            <p class="text">$ {{today.total_price__sum}}</p>
             {% else %}
             <p class="text">$ 0 </p>
             {% endif %}
         </div>
         <div class="box-container">
             <p class="title">Today's Profit</p>
-            {% if total_profit %}
-            <p class="text">{{total_profit}}</p>
+            {% if today.total_profit__sum %}
+            <p class="text">$ {{today.total_profit__sum}}</p>
             {% else %}
             <p class="text">$ 0 </p>
             {% endif %}
         </div>
         <div class="box-container">
             <p class="title">Today's product Sold</p>
-            {% if quantity %}
-            <p class="text">{{quantity}}</p>
+            {% if today.quantity__sum %}
+            <p class="text">$ {{today.quantity__sum}}</p>
             {% else %}
             <p class="text"> 0 </p>
             {% endif %}
         </div>
         {% else %}
-        <p class=" mb-10">let's get start your business right here</p>
-        <a href="{% url 'store:signin' %}">
-            <i class="fa-solid fa-arrow-right-to-bracket"></i>&nbsp;Sign In</a>
-        <a href="{% url 'store:signup' %}">
-            <i class="fa-solid fa-plus"></i>&nbsp;Get Start</a>
-        <br>
+        <div class="btn-holder">
+            <a class="btn btn-auth" href="{% url 'store:signin' %}">Sign In</a>
+            <a class="btn btn-auth" href="{% url 'store:signup' %}">Get Start</a>
+        </div>
         {% endif %}
     </div>
 </div>
