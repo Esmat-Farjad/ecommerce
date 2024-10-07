@@ -22,9 +22,11 @@ def home(request):
     year = today.year
     month = today.month
     day = today.day
-    today = Sale.objects.filter(date_created__year = year,date_created__month=month, date_created__day=day).aggregate(Sum('total_price'), Sum('total_profit'), Sum('quantity'))
+    today = Sale.objects.filter(
+        date_created__year = year,date_created__month=month, 
+        date_created__day=day
+        ).aggregate(Sum('total_price'), Sum('total_profit'), Sum('quantity'))
     context = {'today':today}
-    print(today)
     return render(request, 'home.html', context)
 
 def base(request):
