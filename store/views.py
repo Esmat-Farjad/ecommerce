@@ -33,14 +33,16 @@ def base(request):
     return render(request, 'main/base.html')
 
 def signup(request):
+    form = UserCreationForm()
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
         if form.is_valid():
             form.save()
-            messages.success(request, 'your account has been created successfully !')
+            messages.success(request, 'Your account has been created successfully !')
+            return redirect("store:signin")
         else:
-            messages.error(request, 'Oops...Something went wrong. Try again')
-    form = UserCreationForm()
+            messages.error(request, 'Something went wrong. Please fixe the below errors')
+
     context = {'form':form}
     return render(request, 'signup.html', context)
 def signin(request):

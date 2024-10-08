@@ -8,18 +8,14 @@ class UserCreationForm(UserCreationForm):
     class Meta:
         model = CustomUser
         fields = (
-            'first_name','last_name','email','username','password1','password2','store'
+            'username','first_name','last_name','email','password1','password2'
         )
+        # store removed from the list
     def __init__(self, *args, **kwargs):
         super(UserCreationForm, self).__init__(*args, **kwargs)
-        self.fields['username'].widget.attrs.update({'autofocus':False})
-        self.fields['first_name'].widget.attrs['class'] ='border py-2 border-teal-500 w-full'
-        self.fields['last_name'].widget.attrs['class'] ='border py-2 border-teal-500 w-full'
-        self.fields['email'].widget.attrs['class'] ='border py-2 border-teal-500 w-full'
-        self.fields['username'].widget.attrs['class'] ='border py-2 border-teal-500 w-full'
-        self.fields['password1'].widget.attrs['class'] ='border py-2 border-teal-500 w-full'
-        self.fields['password2'].widget.attrs['class'] ='border py-2 border-teal-500 w-full'
-        self.fields['store'].widget.attrs['class'] ='border py-2 border-teal-500 w-full'
+        for visible in self.visible_fields():
+            visible.field.widget.attrs['class']="form-input"
+            visible.field.widget.attrs['placeholder']=visible.field.label
             
 
 class StoreCreationForm(forms.ModelForm):

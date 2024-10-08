@@ -328,3 +328,46 @@ strong{
   border-radius: 2px;
   width: 100%;
 }
+.signup-page{
+  width: 100%;
+  height: $body-height;
+}
+.signup-page .form-holder{
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+.signup-page .form-holder >*{
+  flex-grow: 1;
+  flex-shrink: 1;
+  flex-basis: 20rem;
+}
+.form-holder .register-form{
+  box-sizing: border-box;
+  margin: 0rem 1rem;
+  max-width: 23rem;
+
+}
+.register-form .heading{
+  text-align: center;
+}
+.register-form .heading .title{
+  margin-bottom: 0px;
+}
+.register-form .heading .text{
+  margin-top: 0px;
+}
+.errorlist{
+  list-style-type: none;
+  margin: 0px;
+  padding: 0px;
+}
+.errorlist li{
+  color: rgb(161, 5, 5);
+  font-size: 12px;
+}
+.signup-button{
+  margin-top: 1rem;
+}

@@ -1,21 +1,26 @@
 {% extends 'main/base.html' %}
 {% load static %}
 {% block content %}
-<div class="signup">
-    <div class="grid lg:grid-cols-3 sm:grid-cols-1 p-10 m-5">
-        <div class="side-cols"></div>
-        <div class="content-cols">
-            <h1 class="text-3xl text-center">Sign Up</h1>
-            <p class="text-center mt-2">If you don't have an account please register yourself</p>
-            <form action="" method="POST" class="my-5">
-                {% csrf_token %}
-                {{form.as_div}}
-                <button class="bg-teal-500 text-white px-5 py-2 hover:font-bold hover:bg-teal-700 shadow mt-8">Save</button>
-            </form>
-        </div>
-        <div class="end-cols"></div>
-        
-        
+<div class="signup-page">
+    <div class="form-holder">
+        <form action="" method="POST" class="register-form">
+            <div class="heading">
+                <h1 class="title">Sign Up</h1>
+                <p class="text">If you don't have an account please register yourself</p>
+            </div>
+            {% csrf_token %}
+            {% for field in form %}
+            <label class="form-label">{{field.label_tag}}</label>
+            {{field}}
+            {{field.errors}}
+            {% endfor %}
+            <p class="consent-text">By registering, you agree to our <a href="#" class="active-link">Terms of Use</a> and .
+                <a href="#" class="active-link">Privacy Policy</a>
+            </p>
+            <div class="signup-button">
+                <button type="submit" class="btn">Save</button>
+            </div>
+        </form>
     </div>
 </div>
 {% endblock content %}
