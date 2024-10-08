@@ -1,4 +1,54 @@
 @import url("https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap");
+.detail-container {
+  margin: 1rem;
+  overflow-x: scroll;
+}
+
+.table {
+  overflow-x: auto; /* Enables horizontal scrolling */
+}
+
+table {
+  width: 100%; /* Full width */
+  border-collapse: collapse; /* Remove space between borders */
+}
+
+th, td {
+  padding: 5px; /* Space around content */
+  text-align: left; /* Align text to the left */
+  border: 1px solid #ddd; /* Light border */
+}
+
+th {
+  background-color: #f4f4f4; /* Light grey background */
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+  table {
+    display: block; /* Make the table block for scrolling */
+    overflow-x: auto; /* Enable horizontal scrolling */
+    white-space: nowrap; /* Prevent text wrapping */
+  }
+  thead {
+    display: none; /* Hide the header */
+  }
+  tr {
+    display: block; /* Make each row block */
+    margin-bottom: 10px; /* Space between rows */
+  }
+  td {
+    display: flex; /* Use flexbox for layout */
+    justify-content: space-between; /* Space out label and value */
+    border: none; /* Remove border for better spacing */
+    padding: 10px 15px; /* Adjust padding */
+  }
+  td:before {
+    content: attr(data-label); /* Display label before value */
+    font-weight: bold; /* Bold the label */
+    flex-basis: 50%; /* Control label width */
+  }
+}
 * {
   font-family: "Nunito", sans-serif;
   font-optical-sizing: auto;
