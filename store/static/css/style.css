@@ -42,6 +42,7 @@ a {
 .navbar {
   padding: 0px;
   margin: 0px;
+  box-shadow: 0 0 8px #E9EAEC;
 }
 .navbar .navbar-content .menu-item .menu-content .nav-link:hover {
   color: gray;
@@ -187,23 +188,35 @@ a {
 }
 
 .btn {
-  border: 1px solid #ffab40;
+  background-image: linear-gradient(45deg, #ff4081, #ffab40);
   padding: 8px;
-  width: 10rem;
-  text-align: center;
+  border: none;
+  width: 100%;
   border-radius: 5px;
   background-color: transparent;
   transition: background-image 0.5s ease;
 }
 
-.btn-auth:hover {
+.btn-auth {
   background-image: linear-gradient(45deg, #ff4081, #ffab40);
+  padding: 8px;
+  border: none;
+  width: 10rem;
+  text-align: center;
+  border-radius: 5px;
+  background-color: transparent;
+  transition: all 0.5s ease;
+}
+
+.btn-auth:hover, .btn:hover {
   color: white;
+  font-weight: bold;
 }
 
 .footer {
   width: 100%;
   height: 100%;
+  border-top: 1px solid #E9EAEC;
 }
 
 .footer .heading .text {
@@ -236,4 +249,82 @@ a {
   color: orange;
   border-radius: 50%;
   padding: 2px;
+}
+
+.login-page {
+  width: 100%;
+  height: 70vh;
+}
+
+.login-page .form-holder {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-page .form-holder > * {
+  flex-basis: 20rem;
+}
+
+.login-form .heading {
+  text-align: center;
+  margin: 5rem 0rem 4rem 0rem;
+}
+
+.login-form .heading .title {
+  font-weight: bold;
+  margin-bottom: 0px;
+}
+
+.login-form .heading .text {
+  margin-top: 0px;
+}
+
+.login-form {
+  width: 22rem;
+  margin-bottom: 8rem;
+}
+
+.form-label {
+  display: block;
+  margin-top: 8px;
+}
+
+.form-input {
+  width: 100%;
+  height: 40px;
+  padding: 0px 8px;
+  border: 1px solid lightgray;
+  outline: none;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.form-input:focus {
+  border: 2px solid #0d6efd;
+}
+
+.login-form .forgot-password {
+  font-size: 13px;
+  text-align: end;
+}
+
+.active-link {
+  color: #0d6efd;
+}
+
+.active-link:hover {
+  color: gray;
+  transition: color 0.3s ease-in-out;
+}
+
+.login-form .consent-text {
+  font-size: 13px;
+  text-transform: capitalize;
+}
+
+.button-holder {
+  text-align: center;
 }/*# sourceMappingURL=style.css.map */

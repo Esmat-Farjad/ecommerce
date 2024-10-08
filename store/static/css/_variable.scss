@@ -7,6 +7,10 @@ $base-color:white;
 $light-gray: #E9EAEC;
 $gradient-pink: #ff4081; // Vibrant Pink
 $gradient-orange: #ffab40; // Deep Orange
+$body-height:70vh;
+$primary:#0d6efd;
+$marron-color: rgb(73, 9, 9);
+
 // Mixin for media queries
 @mixin respond-to($breakpoint) {
     @if $breakpoint == mobile{
