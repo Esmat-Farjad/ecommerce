@@ -9,45 +9,19 @@
 
 </head>
 <body>
-        <!-- SYSTEM MESSAGES START -->
-        {% if messages %}
-        {% for message in messages %}
-        {% if message.tags == "success" %}
-        <div id="show" class="absolute text-center m-4 right-1/4 left-1/4 top-20 py-2 px-4 z-40 shadow border border-green-600 bg-green-100 text-green rounded-full">
-            <p class="inline-block"><span class="font-bold">Message: </span>{{message}}</p>
-            <p class="float-right cursor-pointer px-3 text-red-500 inline-block" role="close" onclick="closing()"><i class="fa-solid fa-xmark"></i></p>
-                    <script>
-                        setTimeout(() => {
-                            document.getElementById("show").style.display = 'none';
-                        }, 3000);
-
-                        function closing() {
-                            document.getElementById("show").style.display = 'none';
-                        }
-                    </script>
-        </div>
-        {% elif message.tags == 'error' %}
-        <div id="show" class="absolute text-center m-4 right-1/4 left-1/4 top-20 py-2 px-4 z-40 shadow border border-red-600 bg-red-100 text-red rounded-full">
-            <p class="inline-block"><span class="font-bold">Error: </span>{{message}}</p>
-            <p class="float-right cursor-pointer px-3 text-red-500 inline-block" role="close" onclick="closing()"><i class="fa-solid fa-xmark"></i></p>
-            <script>
-                setTimeout(() => {
-                    document.getElementById("show").style.display = 'none';
-                }, 3000);
-
-                function closing() {
-                    document.getElementById("show").style.display = 'none';
-                }
-            </script>
-        </div>
-                
-
-        {% endif %}
-        {% endfor %}
-        {% endif %}
-        
-        <!-- SYSTEM MESSAGES END -->
     {% include 'includes/navbar.html' %}
+    <!-- SYSTEM MESSAGES START -->
+    {% if messages %}
+    {% for message in messages %}
+    <div class="system-message">
+        <div class="{{message.tags}}">
+            <strong>{{message.tags}}: </strong>
+            <span>{{message}}</span>
+        </div>
+    </div>
+    {% endfor %}
+    {% endif %}
+    <!-- SYSTEM MESSAGES END -->
 
     {% block content %}
     {% endblock content %}

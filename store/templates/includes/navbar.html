@@ -8,16 +8,11 @@
         </div>
         <div class="menu-item">
             <ul class="menu-content">
+                {% if user.is_authenticated %}
                 <li class="nav-link"><a href="{% url 'store:purchase' %}" ><i class="fa-solid fa-cart-plus"></i>&nbsp;Purchase</a></li>
                 <li class="nav-link"><a href="{% url 'store:sales' %}"><i class="fa-solid fa-cart-shopping"></i>&nbsp;Sales</a></li>
                 <li class="nav-link"><a href="{% url 'store:product' %}"><i class="fa-solid fa-box-open"></i>&nbsp;Products</a></li>
                 <li class="nav-link"><span id="dropdownHandler">Manager&nbsp;<i class="fa-solid fa-caret-down"></i></span></li>
-                {% if user.is_authenticated %}
-                <li class="nav-link"><a href="{% url 'store:signout' %}"><i class="fa-solid fa-user-minus"></i>&nbsp;Logout</a></li>
-                {% else %}
-                <li class="nav-link"><a href="{% url 'store:signin' %}">Sign In&nbsp;<i class="fa-solid fa-arrow-right-to-bracket"></i></a></li>
-                <li class="nav-link"><a href="{% url 'store:signup' %}">Sign Up&nbsp;<i class="fa-solid fa-user-plus"></i></a></li>
-                {% endif %}
                 <li class="nav-link"></li>
                     <a href="{% url 'store:cart_item' %}">
                         <span id="item_count"></span>
@@ -26,6 +21,12 @@
                         </span>
                     </a>
                 </li>
+                <li class="nav-link"><a href="{% url 'store:signout' %}"><i class="fa-solid fa-user-minus"></i>&nbsp;Logout</a></li>
+                {% else %}
+                <li class="nav-link"><a href="{% url 'store:signin' %}">Sign In&nbsp;<i class="fa-solid fa-arrow-right-to-bracket"></i></a></li>
+                <li class="nav-link"><a href="{% url 'store:signup' %}">Sign Up&nbsp;<i class="fa-solid fa-user-plus"></i></a></li>
+                {% endif %}
+                
             </ul>
             
         </div>

@@ -72,16 +72,6 @@ a {
     display: none;
   }
 }
-@media (min-width: 768px) and (max-width: 1024px) {
-  .navbar {
-    background-color: orange;
-  }
-}
-@media (min-width: 1024px) and (max-width: 1440px) {
-  .navbar {
-    background-color: yellow;
-  }
-}
 @media (min-width: 1024px) {
   .navbar {
     margin: 0rem 10rem;
@@ -107,6 +97,17 @@ a {
 }
 
 @media (max-width: 1024px) {
+  .homepage .header-text, .homepage .summary-details {
+    background-color: rgba(255, 255, 255, 0.5);
+  }
+  .homepage .header-text .text {
+    background: linear-gradient(45deg, #8A2BE2, red);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-fill-color: transparent;
+    font-weight: 600;
+  }
   .homepage .header-text .title {
     font-size: 8vw;
   }
@@ -144,7 +145,9 @@ a {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: #E9EAEC;
+  background-image: url("../image/background.svg");
+  background-repeat: no-repeat;
+  margin-top: 4px;
 }
 
 .summary-details {
@@ -327,4 +330,35 @@ a {
 
 .button-holder {
   text-align: center;
+}
+
+.system-message {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  width: 100%;
+  font-size: 14px;
+}
+
+strong {
+  text-transform: capitalize;
+}
+
+.system-message .error {
+  background-color: rgb(255, 236, 236);
+  color: rgb(150, 30, 30);
+  padding: 0.8rem 1rem;
+  border: 1px solid rgb(252, 147, 147);
+  border-radius: 2px;
+  width: 100%;
+}
+
+.system-message .success {
+  background-color: rgb(236, 255, 236);
+  color: rgb(18, 82, 18);
+  padding: 0.8rem 1rem;
+  border: 1px solid rgb(179, 252, 179);
+  border-radius: 2px;
+  width: 100%;
 }/*# sourceMappingURL=style.css.map */

@@ -10,6 +10,8 @@ $gradient-orange: #ffab40; // Deep Orange
 $body-height:70vh;
 $primary:#0d6efd;
 $marron-color: rgb(73, 9, 9);
+$danger: rgb(255, 236, 236);
+$success: rgb(236, 255, 236);
 
 // Mixin for media queries
 @mixin respond-to($breakpoint) {

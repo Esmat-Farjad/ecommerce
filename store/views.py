@@ -50,7 +50,11 @@ def signin(request):
         user = authenticate(request, username = username, password = password)
         if user is not None:
             login(request, user)
-            return redirect('store:sales')
+            if user.last_login:
+                messages.success(request, f"Welcome Back {user.first_name} {user.last_name}")
+            else:
+                messages.success(request, f"Welcome {user.first_name} {user.last_name}")
+            return redirect("home")
         else:
             messages.error(request, 'The username or password is incorrect !')
 
@@ -78,7 +82,8 @@ def sales(request):
 
 def signout(request):
     logout(request)
-    return render(request, 'signin.html')
+    messages.success(request, "You've been successfully logged out.")
+    return render(request, 'home.html')
 
 def product(request):
     if request.method == 'POST':

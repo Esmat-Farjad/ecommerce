@@ -71,11 +71,9 @@ a{
   }
   // navbar for tablet
   @include respond-to(tablet){
-    background-color: orange;
    
   }
   @include respond-to(desktop){
-   background-color: yellow;
   }
   @include respond-to(desktop-large) {
     margin: 0rem 10rem;
@@ -104,7 +102,13 @@ a{
 // homepage styling
 .homepage{
   @include respond-to(mobile-tablet){
-
+    .header-text,.summary-details{
+      background-color: rgba(255,255,255, 0.5);
+    }
+    .header-text .text{
+      @include gradient-text(#8A2BE2,red);
+      font-weight: 600;
+    }
     .header-text .title{
       font-size: 8vw;
     }
@@ -137,7 +141,9 @@ a{
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: $light-gray;
+  background-image: url("../image/background.svg");
+  background-repeat: no-repeat;
+  margin-top: 4px;
 }
 .summary-details {
   display: flex;
@@ -294,4 +300,31 @@ a{
 }
 .button-holder{
   text-align: center;
+}
+.system-message{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  width: 100%;
+  font-size: 14px;
+}
+strong{
+  text-transform: capitalize;
+}
+.system-message .error{
+  background-color: $danger;
+  color: rgb(150, 30, 30);
+  padding: 0.8rem 1rem;
+  border: 1px solid rgb(252, 147, 147);
+  border-radius: 2px;
+  width: 100%;
+}
+.system-message .success{
+  background-color: $success;
+  color: rgb(18, 82, 18);
+  padding: 0.8rem 1rem;
+  border: 1px solid rgb(179, 252, 179);
+  border-radius: 2px;
+  width: 100%;
 }
