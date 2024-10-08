@@ -135,12 +135,7 @@ a{
   @include gradient-text($gradient-pink,$gradient-orange);
 }
 .homepage{
-  width: 100%;
-  height: $body-height;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  @include flex-col-container();
   background-image: url("../image/background.svg");
   background-repeat: no-repeat;
   margin-top: 4px;
@@ -239,18 +234,19 @@ a{
 }
 // sign in page
 .login-page{
+  @include flex-col-container();
+}
+.login-page > *{
+  flex-grow: 1;
+  flex-shrink: 1;
+  max-width: 25rem;
+  min-width: 15rem;
   width: 100%;
-  height: $body-height;
+  flex-basis: 15rem;
 }
-.login-page .form-holder{
-  display: flex;
-  flex-direction: column;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-}
-.login-page .form-holder >*{
-  flex-basis: 20rem;
+.login-form{
+  margin-left: 1rem;
+  margin-right: 1rem;
 }
 .login-form .heading{
   text-align: center;
@@ -263,10 +259,7 @@ a{
 .login-form .heading .text{
   margin-top: 0px;
 }
-.login-form{
-  width: 22rem;
-  margin-bottom: 8rem;
-}
+
 .form-label{
   display: block;
   margin-top: 8px;
@@ -329,16 +322,9 @@ strong{
   width: 100%;
 }
 .signup-page{
-  width: 100%;
-  height: $body-height;
+  @include flex-col-container();
 }
-.signup-page .form-holder{
-  display: flex;
-  flex-direction: column;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-}
+
 .signup-page .form-holder >*{
   flex-grow: 1;
   flex-shrink: 1;
@@ -370,4 +356,37 @@ strong{
 }
 .signup-button{
   margin-top: 1rem;
+}
+// purchase style
+.purchase-page .heading{
+  text-align: center;
+  .title{
+    margin-bottom: 0px;
+  }
+  .text{
+    margin-top: 0px;
+  }
+}
+.purchase-page{
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  margin: 1rem;
+}
+.form-fields{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  flex-direction: row;
+  justify-content: center;
+}
+.form-fields > *{
+  flex-grow: 1;
+  flex-shrink: 1;
+  flex-basis: 18rem;
+}
+.purchase-button{
+  margin: 2rem auto;
+  width: 20%;
+  text-align: center;
 }

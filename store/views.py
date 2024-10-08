@@ -1,19 +1,19 @@
 from datetime import datetime
-import json
+
 import math
-import os
+
 import random
-from django.http import HttpResponse, JsonResponse
+from django.http import JsonResponse
 from django.shortcuts import redirect, render
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
-from .models import Cart, Category, CustomUser, Sale, Store, Product, cartItem
-from .forms import UserCreationForm,StoreCreationForm
+from .models import Cart, Category, CustomUser, Sale, Product, cartItem
+from .forms import PurchaseProductForm, UserCreationForm
 from django.db.models import Q
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from django.core.serializers import serialize
+
 from django.db.models import Sum
-from django.utils import timezone
+from django.contrib.auth.decorators import login_required
 
 
 # Create your views here.
@@ -62,7 +62,7 @@ def signin(request):
 
     context= {}
     return render(request, 'signin.html', context)
-
+@login_required
 def sales(request):
     product = Product.objects.select_related('category')
     # setting up paginator
@@ -108,27 +108,11 @@ def product(request):
 
 
 def purchase(request):
-    color = ''
+    purchase_form = PurchaseProductForm()
     if request.method == 'POST':
-        name = request.POST['name']
-        description = request.POST['description']
-        category = request.POST['category']
-        price = request.POST['price']
-        bulk_price = request.POST['bprice']
-        mfd = request.POST['mfd']
-        expd = request.POST['expd']
-        packet = request.POST['packet_content']
-        num_packet = request.POST['num_packet']
-        
-        item_pics=request.FILES['item_pics']
-        quantity = int(packet) * int(num_packet) 
-        new_rate = int(bulk_price)/int(packet)
-        rate =int(new_rate)
-        profit = math.floor(int(price) - int(rate))
-        stock = quantity
-    
-        new_record = Product(name=name, description=description,category_id=category,price=price,bulk_price=bulk_price,quantity=quantity,rate=rate,mfd=mfd,expd=expd,profit=profit,stock=stock, packet=packet, image=item_pics)
-        new_record.save()
+        purchase_form = PurchaseProductForm(request.POST, request.Files)
+        if purchase_form.is_valid():
+            purchase_form.save(commit=False)
         messages.success(request, "Product added successfully !")
          
         
@@ -147,7 +131,7 @@ def purchase(request):
     for x in range(1, 100,1):
         number.append(x)
     cat = Category.objects.all()
-    context = {'category':cat,'page_obj':page_obj,'num':number, 'color':color}
+    context = {'category':cat,'page_obj':page_obj,'num':number,'form':purchase_form}
     return render(request, 'purchase.html', context)
 
 def dispatch(request, item):

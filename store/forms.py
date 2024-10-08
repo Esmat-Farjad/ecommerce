@@ -1,5 +1,9 @@
+from typing import Any, Mapping
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
+from django.core.files.base import File
+from django.db.models.base import Model
+from django.forms.utils import ErrorList
 from .models import CustomUser, Store, Product
 
 
@@ -27,4 +31,12 @@ class StoreCreationForm(forms.ModelForm):
         for visible in self.visible_fields():
             visible.field.widget.attrs['class'] = 'border py-2 border-teal-500 w-full'
             
-    
+class PurchaseProductForm(forms.ModelForm):
+    class Meta:
+        model = Product
+        fields = "__all__"
+    def __init__(self, *args, **kwargs):
+        super(PurchaseProductForm, self).__init__(*args, **kwargs)
+        for visible in self.visible_fields():
+            visible.field.widget.attrs['class']="form-input"
+            visible.field.widget.attrs['placeholder']=visible.field.label

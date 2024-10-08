@@ -139,12 +139,13 @@ a {
 }
 
 .homepage {
-  width: 100%;
-  height: 70vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  flex-wrap: wrap;
+  width: 100%;
+  height: 70vh;
   background-image: url("../image/background.svg");
   background-repeat: no-repeat;
   margin-top: 4px;
@@ -255,20 +256,27 @@ a {
 }
 
 .login-page {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
   width: 100%;
   height: 70vh;
 }
 
-.login-page .form-holder {
-  display: flex;
-  flex-direction: column;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
+.login-page > * {
+  flex-grow: 1;
+  flex-shrink: 1;
+  max-width: 25rem;
+  min-width: 15rem;
+  width: 100%;
+  flex-basis: 15rem;
 }
 
-.login-page .form-holder > * {
-  flex-basis: 20rem;
+.login-form {
+  margin-left: 1rem;
+  margin-right: 1rem;
 }
 
 .login-form .heading {
@@ -283,11 +291,6 @@ a {
 
 .login-form .heading .text {
   margin-top: 0px;
-}
-
-.login-form {
-  width: 22rem;
-  margin-bottom: 8rem;
 }
 
 .form-label {
@@ -364,16 +367,13 @@ strong {
 }
 
 .signup-page {
-  width: 100%;
-  height: 70vh;
-}
-
-.signup-page .form-holder {
   display: flex;
   flex-direction: column;
-  flex-wrap: wrap;
   justify-content: center;
   align-items: center;
+  flex-wrap: wrap;
+  width: 100%;
+  height: 70vh;
 }
 
 .signup-page .form-holder > * {
@@ -413,4 +413,41 @@ strong {
 
 .signup-button {
   margin-top: 1rem;
+}
+
+.purchase-page .heading {
+  text-align: center;
+}
+.purchase-page .heading .title {
+  margin-bottom: 0px;
+}
+.purchase-page .heading .text {
+  margin-top: 0px;
+}
+
+.purchase-page {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  margin: 1rem;
+}
+
+.form-fields {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.form-fields > * {
+  flex-grow: 1;
+  flex-shrink: 1;
+  flex-basis: 18rem;
+}
+
+.purchase-button {
+  margin: 2rem auto;
+  width: 20%;
+  text-align: center;
 }/*# sourceMappingURL=style.css.map */
