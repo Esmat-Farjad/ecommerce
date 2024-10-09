@@ -492,4 +492,33 @@ strong {
 
 #rate, #profit-per-item, #profit-per-packet {
   color: #0d6efd;
+}
+
+.paginator {
+  margin: 2rem 0rem;
+  font-weight: 600;
+  color: rgb(73, 9, 9);
+}
+
+.active-nav {
+  padding: 3px 5px;
+  background-color: #E9EAEC;
+  border-radius: 50%;
+  transition: color 0.3s;
+}
+
+.active-nav:hover {
+  color: #0d6efd;
+}
+
+.active-page {
+  color: #0d6efd;
+}
+
+.not-active-nav {
+  color: gray;
+}
+
+hr {
+  border: 1px solid #E9EAEC;
 }/*# sourceMappingURL=style.css.map */

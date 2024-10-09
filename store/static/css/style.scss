@@ -405,3 +405,26 @@ strong{
 #rate,#profit-per-item,#profit-per-packet{
   color: $primary;
 }
+.paginator{
+  margin: 2rem 0rem;
+  font-weight: 600;
+  color: $marron-color;
+}
+.active-nav{
+  padding: 3px 5px;
+  background-color: $light-gray;
+  border-radius: 50%;
+  transition: color 0.3s;
+}
+.active-nav:hover{
+  color: $primary;
+}
+.active-page{
+  color: $primary;
+}
+.not-active-nav{
+  color: gray;
+}
+hr{
+  border: 1px solid $light-gray;
+}
