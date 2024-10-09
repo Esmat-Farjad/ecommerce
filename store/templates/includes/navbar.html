@@ -6,10 +6,13 @@
                 <img src="{% static 'image/logo.png' %}" class="logo-image" alt="">
             </a>
         </div>
+        <div class="mobile-menu">
+            <i class="menu-icon fa-solid fa-bars"></i>
+        </div>
         <div class="menu-item">
             <ul class="menu-content">
                 {% if user.is_authenticated %}
-                <li class="nav-link"></li>
+                <li class="nav-link">
                     <a href="{% url 'store:cart_item' %}">
                         <span id="item_count"></span>
                         <i class="fa-solid fa-bag-shopping"></i>
@@ -45,6 +48,18 @@
 <script>
     document.querySelector(".sub-menu-handler").addEventListener("click",()=>{
         document.querySelector(".sub-menu").classList.toggle("not-active");
+    });
+    document.querySelector(".mobile-menu").addEventListener("click",(e)=>{
+        const currentIcon = document.querySelector(".menu-icon");
+
+        if(currentIcon.classList.contains("fa-bars")){
+            currentIcon.classList.remove("fa-bars");
+            currentIcon.classList.add("fa-xmark");
+        } else if(currentIcon.classList.contains("fa-xmark")){
+            currentIcon.classList.remove("fa-xmark");
+            currentIcon.classList.add("fa-bars");
+        }
+        document.querySelector(".menu-item").classList.toggle("not-active");
     });
 </script>
 <!-- store:sales_info  store:stock-->

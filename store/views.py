@@ -66,7 +66,7 @@ def signin(request):
 def sales(request):
     product = Product.objects.select_related('category')
     # setting up paginator
-    p = Paginator(product, 5)
+    p = Paginator(product, 14)
     #creating paginator
     page_number = request.GET.get('page')
     #getting the desire page number from the url

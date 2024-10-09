@@ -50,3 +50,12 @@ $success: rgb(236, 255, 236);
   width: 100%;
   height: $body-height;
 }
+@mixin btn-small{
+  width: 50px;
+  height: 20px;
+  font-size: small;
+  border: none;
+  border-radius: 2px;
+  background-image:linear-gradient(45deg, $gradient-pink,$gradient-orange);
+  transition: all 0.3s;
+}
