@@ -1,20 +1,25 @@
 @import url("https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap");
 .detail-container {
-  margin: 1rem;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
   overflow-x: scroll;
 }
 
 .table {
   overflow-x: auto; /* Enables horizontal scrolling */
+  font-size: 12px;
 }
 
 table {
-  width: 100%; /* Full width */
+  width: 90%; /* Full width */
   border-collapse: collapse; /* Remove space between borders */
 }
 
 th, td {
-  padding: 5px; /* Space around content */
+  padding: 3px; /* Space around content */
   text-align: left; /* Align text to the left */
   border: 1px solid #ddd; /* Light border */
 }
@@ -23,32 +28,6 @@ th {
   background-color: #f4f4f4; /* Light grey background */
 }
 
-/* Responsive adjustments */
-@media (max-width: 600px) {
-  table {
-    display: block; /* Make the table block for scrolling */
-    overflow-x: auto; /* Enable horizontal scrolling */
-    white-space: nowrap; /* Prevent text wrapping */
-  }
-  thead {
-    display: none; /* Hide the header */
-  }
-  tr {
-    display: block; /* Make each row block */
-    margin-bottom: 10px; /* Space between rows */
-  }
-  td {
-    display: flex; /* Use flexbox for layout */
-    justify-content: space-between; /* Space out label and value */
-    border: none; /* Remove border for better spacing */
-    padding: 10px 15px; /* Adjust padding */
-  }
-  td:before {
-    content: attr(data-label); /* Display label before value */
-    font-weight: bold; /* Bold the label */
-    flex-basis: 50%; /* Control label width */
-  }
-}
 * {
   font-family: "Nunito", sans-serif;
   font-optical-sizing: auto;
@@ -353,13 +332,14 @@ a {
   height: 40px;
   padding: 0px 8px;
   border: 1px solid lightgray;
-  outline: none;
   border-radius: 4px;
   box-sizing: border-box;
 }
 
 .form-input:focus {
-  border: 2px solid #0d6efd;
+  border-width: 2px;
+  border-color: #0d6efd;
+  outline: none;
 }
 
 .login-form .forgot-password {
@@ -438,15 +418,15 @@ strong {
   max-width: 23rem;
 }
 
-.register-form .heading {
+.heading {
   text-align: center;
 }
 
-.register-form .heading .title {
+.heading .title {
   margin-bottom: 0px;
 }
 
-.register-form .heading .text {
+.heading .text {
   margin-top: 0px;
 }
 
@@ -463,16 +443,6 @@ strong {
 
 .signup-button {
   margin-top: 1rem;
-}
-
-.purchase-page .heading {
-  text-align: center;
-}
-.purchase-page .heading .title {
-  margin-bottom: 0px;
-}
-.purchase-page .heading .text {
-  margin-top: 0px;
 }
 
 .purchase-page {
@@ -493,11 +463,33 @@ strong {
 .form-fields > * {
   flex-grow: 1;
   flex-shrink: 1;
-  flex-basis: 18rem;
 }
 
 .purchase-button {
   margin: 2rem auto;
   width: 20%;
   text-align: center;
+}
+
+.calculation-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  gap: 5rem;
+  justify-content: center;
+  align-items: center;
+  background-color: black;
+  color: white;
+}
+
+.calculation-container > * {
+  flex-shrink: 1;
+  flex-grow: 1;
+  flex-basis: 8rem;
+  max-width: 22rem;
+  width: 100%;
+}
+
+#rate, #profit-per-item, #profit-per-packet {
+  color: #0d6efd;
 }/*# sourceMappingURL=style.css.map */

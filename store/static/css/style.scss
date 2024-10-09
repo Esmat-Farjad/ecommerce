@@ -270,12 +270,13 @@ a{
   height: 40px;
   padding: 0px 8px;
   border: 1px solid lightgray;
-  outline: none;
   border-radius: 4px;
   box-sizing: border-box;
 }
 .form-input:focus{
-  border: 2px solid $primary;
+  border-width: 2px;
+  border-color: $primary;
+  outline: none;
 }
 .login-form .forgot-password{
   font-size: 13px;
@@ -337,13 +338,13 @@ strong{
   max-width: 23rem;
 
 }
-.register-form .heading{
+.heading{
   text-align: center;
 }
-.register-form .heading .title{
+.heading .title{
   margin-bottom: 0px;
 }
-.register-form .heading .text{
+.heading .text{
   margin-top: 0px;
 }
 .errorlist{
@@ -359,21 +360,14 @@ strong{
   margin-top: 1rem;
 }
 // purchase style
-.purchase-page .heading{
-  text-align: center;
-  .title{
-    margin-bottom: 0px;
-  }
-  .text{
-    margin-top: 0px;
-  }
-}
+
 .purchase-page{
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
   margin: 1rem;
 }
+
 .form-fields{
   display: flex;
   flex-wrap: wrap;
@@ -384,10 +378,30 @@ strong{
 .form-fields > *{
   flex-grow: 1;
   flex-shrink: 1;
-  flex-basis: 18rem;
 }
 .purchase-button{
   margin: 2rem auto;
   width: 20%;
   text-align: center;
+}
+.calculation-container{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  gap: 5rem;
+  justify-content: center;
+  align-items: center;
+  background-color: black;
+  color: white;
+}
+.calculation-container>*{
+  flex-shrink: 1;
+  flex-grow: 1;
+  flex-basis: 8rem;
+  max-width: 22rem;
+  width: 100%;
+}
+
+#rate,#profit-per-item,#profit-per-packet{
+  color: $primary;
 }
