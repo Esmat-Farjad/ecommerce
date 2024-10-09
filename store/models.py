@@ -24,18 +24,19 @@ class Category(models.Model):
 class Product(models.Model):
     # Relationship 
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    user = models.ForeignKey(CustomUser, null=True, on_delete=models.SET_NULL)
     # Relationship
     name = models.CharField(max_length=100)
     description = models.CharField(max_length=200)
     price = models.IntegerField(default=0)
     bulk_price = models.IntegerField(default=0)
     quantity = models.IntegerField(default=0)
-    rate = models.FloatField(default=0)
+    rate = models.FloatField(null=True, default=0)
     mfd = models.DateField(null=True, blank=True)
     expd = models.DateField(null=True, blank=True)
-    profit = models.IntegerField(default=0)
-    stock = models.IntegerField(default=0)
-    packet = models.IntegerField(default=0)
+    profit = models.IntegerField(null=True,default=0)
+    stock = models.IntegerField(null=True,default=0)
+    packet = models.IntegerField(default=1)
     image = models.ImageField(default='default.jpg', upload_to='item_images')
    
     

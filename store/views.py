@@ -110,11 +110,26 @@ def product(request):
 def purchase(request):
     purchase_form = PurchaseProductForm()
     if request.method == 'POST':
-        purchase_form = PurchaseProductForm(request.POST, request.Files)
+        purchase_form = PurchaseProductForm(request.POST, request.FILES)
+        
         if purchase_form.is_valid():
-            purchase_form.save(commit=False)
-        messages.success(request, "Product added successfully !")
-         
+            price = purchase_form.cleaned_data.get('price')
+            quantity = purchase_form.cleaned_data.get('quantity')
+            total_price = purchase_form.cleaned_data.get('bulk_price')
+            rate  = round((total_price / quantity),3)
+            profit = round((price - rate),3)
+            stock = quantity
+            print(f"RATE: {rate} || PROFIT: {profit} || STOCK: {stock}")
+            product = purchase_form.save(commit=False)
+            product.rate = rate
+            product.profit = profit
+            product.stock = stock
+            product.user = request.user
+            product.save()
+            messages.success(request, "Product added successfully !")
+        else:
+            messages.error(request, f"Something went wrong. Please fix the below errors.{purchase_form.errors}")
+
         
     product = Product.objects.all().order_by('-id')
     #Paginator start
@@ -131,7 +146,12 @@ def purchase(request):
     for x in range(1, 100,1):
         number.append(x)
     cat = Category.objects.all()
-    context = {'category':cat,'page_obj':page_obj,'num':number,'form':purchase_form}
+    context = {
+        'category':cat,
+        'page_obj':page_obj,
+        'num':number,
+        'form':purchase_form
+        }
     return render(request, 'purchase.html', context)
 
 def dispatch(request, item):
