@@ -81,10 +81,10 @@ a{
     .navbar-content{
       display: flex;
       flex-direction: row;
-      justify-content: start;
+      justify-content: space-between;
       align-items: center;
       margin: 0px;
-      padding: 0px;
+      padding: 0rem 1rem;
     }
     .menu-content{
       display: inline-block;
@@ -96,9 +96,37 @@ a{
       display: inline-block;
       padding: 0rem 1rem;
     }
+    .sub-menu-handler{
+      position: relative;
+      display: inline;
+      cursor: pointer;
+    }
+    .sub-menu{
+      box-shadow: 0 0 8px $light-gray;
+      background-color: $base-color;
+      z-index: 100;
+      position: absolute;
+      top: 180%;
+      right: -20%;
+      left: -20%;
+    }
+    .sub-menu .item{
+      display: block;
+      padding: 0.5rem;
+      transition: background-color 0.3s;
+    }
+    .sub-menu .item:hover{
+      background-color: $light-gray;
+    }
     
      
   }
+}
+.not-active{
+  display: none;
+}
+.active{
+  display: block;
 }
 // homepage styling
 .homepage{

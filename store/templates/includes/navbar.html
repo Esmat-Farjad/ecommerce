@@ -9,27 +9,42 @@
         <div class="menu-item">
             <ul class="menu-content">
                 {% if user.is_authenticated %}
-                <li class="nav-link"><a href="{% url 'store:purchase' %}" ><i class="fa-solid fa-cart-plus"></i>&nbsp;Purchase</a></li>
-                <li class="nav-link"><a href="{% url 'store:sales' %}"><i class="fa-solid fa-cart-shopping"></i>&nbsp;Sales</a></li>
-                <li class="nav-link"><a href="{% url 'store:product' %}"><i class="fa-solid fa-box-open"></i>&nbsp;Products</a></li>
-                <li class="nav-link"><span id="dropdownHandler">Manager&nbsp;<i class="fa-solid fa-caret-down"></i></span></li>
                 <li class="nav-link"></li>
                     <a href="{% url 'store:cart_item' %}">
                         <span id="item_count"></span>
-                        <span class="material-symbols-outlined">
-                            local_mall
-                        </span>
+                        <i class="fa-solid fa-bag-shopping"></i>
                     </a>
                 </li>
-                <li class="nav-link"><a href="{% url 'store:signout' %}"><i class="fa-solid fa-user-minus"></i>&nbsp;Logout</a></li>
+                <li class="nav-link"><a href="{% url 'store:purchase' %}" ><i class="fa-solid fa-cart-plus"></i>&nbsp;Purchase</a></li>
+                <li class="nav-link"><a href="{% url 'store:sales' %}"><i class="fa-solid fa-cart-shopping"></i>&nbsp;Sales</a></li>
+                <li class="nav-link"><a href="{% url 'store:product' %}"><i class="fa-solid fa-box-open"></i>&nbsp;Products</a></li>
+                
+                <li class="sub-menu-handler">
+                    <span class="">{{user}}</span>
+                    <div class="sub-menu not-active">
+                        <a href="{% url 'store:stock' %}" class="item">Stock</a>
+                        <a href="#" class="item">finance</a>
+                        <a href="{% url 'store:sale_info' %}" class="item">Sales info </a>
+                        <a href="#" class="item">profile</a>
+                        <a class="item" href="{% url 'store:signout' %}">logout</a>
+                    </div>
+                </li>
                 {% else %}
                 <li class="nav-link"><a href="{% url 'store:signin' %}">Sign In&nbsp;<i class="fa-solid fa-arrow-right-to-bracket"></i></a></li>
                 <li class="nav-link"><a href="{% url 'store:signup' %}">Sign Up&nbsp;<i class="fa-solid fa-user-plus"></i></a></li>
                 {% endif %}
                 
             </ul>
+            <span style="text-align: end;">
+                
+            </span>
             
         </div>
     </div>
 </div>
+<script>
+    document.querySelector(".sub-menu-handler").addEventListener("click",()=>{
+        document.querySelector(".sub-menu").classList.toggle("not-active");
+    });
+</script>
 <!-- store:sales_info  store:stock-->

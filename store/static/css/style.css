@@ -108,10 +108,10 @@ a {
   .navbar .navbar-content {
     display: flex;
     flex-direction: row;
-    justify-content: start;
+    justify-content: space-between;
     align-items: center;
     margin: 0px;
-    padding: 0px;
+    padding: 0rem 1rem;
   }
   .navbar .menu-content {
     display: inline-block;
@@ -123,6 +123,36 @@ a {
     display: inline-block;
     padding: 0rem 1rem;
   }
+  .navbar .sub-menu-handler {
+    position: relative;
+    display: inline;
+    cursor: pointer;
+  }
+  .navbar .sub-menu {
+    box-shadow: 0 0 8px #E9EAEC;
+    background-color: white;
+    z-index: 100;
+    position: absolute;
+    top: 180%;
+    right: -20%;
+    left: -20%;
+  }
+  .navbar .sub-menu .item {
+    display: block;
+    padding: 0.5rem;
+    transition: background-color 0.3s;
+  }
+  .navbar .sub-menu .item:hover {
+    background-color: #E9EAEC;
+  }
+}
+
+.not-active {
+  display: none;
+}
+
+.active {
+  display: block;
 }
 
 @media (max-width: 1024px) {
