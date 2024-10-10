@@ -8,7 +8,7 @@ from django.shortcuts import redirect, render
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from .models import Cart, Category, CustomUser, Sale, Product, cartItem
-from .forms import PurchaseProductForm, UserCreationForm
+from .forms import ProductSearchForm, PurchaseProductForm, UserCreationForm
 from django.db.models import Q
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
@@ -65,6 +65,13 @@ def signin(request):
 @login_required
 def sales(request):
     product = Product.objects.select_related('category')
+    search_form = ProductSearchForm()
+    if 'query' in request.GET:
+        search_form = ProductSearchForm(request.GET)
+        if search_form.is_valid():
+            query = search_form.cleaned_data['query']
+            product = Product.objects.filter(name__icontains=query)
+
     # setting up paginator
     p = Paginator(product, 14)
     #creating paginator
@@ -79,7 +86,7 @@ def sales(request):
     except EmptyPage:
         #if the page i empty then return the last page
         page_obj = p.page(p.num_pages)
-    context = {'page_obj':page_obj}
+    context = {'page_obj':page_obj,'search_form':search_form}
     return render(request, 'sales.html',context)
 
 def signout(request):

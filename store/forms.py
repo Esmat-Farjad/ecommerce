@@ -52,3 +52,12 @@ class PurchaseProductForm(forms.ModelForm):
         for visible in self.visible_fields():
             visible.field.widget.attrs['class']="form-input"
             visible.field.widget.attrs['placeholder']=visible.field.label
+
+class ProductSearchForm(forms.Form):
+    query = forms.CharField(
+        label="Search", 
+        max_length=100,
+        required=False,
+        widget=forms.TextInput(attrs={'class':'search-input','placeholder':'enter product name...'})
+        )
+    

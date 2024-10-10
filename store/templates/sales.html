@@ -7,6 +7,12 @@
         <h1 class="title">Sales Portal</h1>
         <p class="text">search the product to find it</p>
     </div>
+    <div class="search-form-holder">
+        <form action="" class="search-form">
+            {{search_form.query}}
+            <button type="submit" class="search-btn">Search</button>
+        </form>
+    </div>
     <div class="product-holder">
         {% for item in page_obj.object_list %}
         <div class="card">
@@ -26,7 +32,8 @@
             </div>
         </div>
         {% endfor %}
-        <!-- paginator navigation button start -->
+    </div>
+    <!-- paginator navigation button start -->
     <div class="paginator">
         {% if page_obj.has_previous %}
         <a href="?page={{page_obj.previous_page_number}}">
@@ -48,8 +55,6 @@
         {% endif %}
     </div>
     <!-- paginator navigation button end -->
-    </div>
-    
 </div>
     
 {% endblock content %}
