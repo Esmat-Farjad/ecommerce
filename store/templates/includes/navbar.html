@@ -13,9 +13,9 @@
             <ul class="menu-content">
                 {% if user.is_authenticated %}
                 <li class="nav-link">
-                    <a href="{% url 'store:cart_item' %}">
-                        <span id="item_count"></span>
+                    <a href="{% url 'store:cart_detail' %}" class="cart-badge-holder">
                         <i class="fa-solid fa-bag-shopping"></i>
+                        <span class="cart-badge" id="num_item"></span>
                     </a>
                 </li>
                 <li class="nav-link"><a href="{% url 'store:purchase' %}" ><i class="fa-solid fa-cart-plus"></i>&nbsp;Purchase</a></li>

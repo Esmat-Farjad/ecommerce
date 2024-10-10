@@ -1,0 +1,38 @@
+{% extends 'main/base.html' %}
+{% load static %}
+{% load humanize %}
+{% block content %}
+<div class="cart-detail">
+    <div class="heading">
+        <h1 class="title">Cart Items</h1>
+        <p class="text">your cart contains the product</p>
+    </div>
+    <div class="detail-container">
+        <table class="table">
+            <thead>
+                <th>#</th>
+                <th>Item Name</th>
+                <th>Item Description</th>
+                <th>Item Price</th>
+                <th>Item Quantity</th>
+                <th>Total</th>
+            </thead>
+            <tbody>
+                {% for item in cart_item %}
+                <tr>
+                    <td>{{forloop.counter}}</td>
+                    <td>{{item.product.name}}</td>
+                    <td>{{item.product.description}}</td>
+                    <td>{{item.product.price}}</td>
+                    <td>{{item.quantity.quantity}}</td>
+                    <td>{{item.total}}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="button-holder">
+        <button class="btn">Proceed to Purchase</button>
+    </div>
+</div>
+{% endblock content %}

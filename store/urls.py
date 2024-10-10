@@ -17,20 +17,22 @@ urlpatterns = [
     path('stockRoute/<flag>', views.stockRoute, name='stockRoute'),
     path('update_stock/', views.update_stock, name='update_stock'),
     path('sale_search/', views.sale_search, name='sale_search'),
-    path('addToCart/', views.addToCart, name='addToCart'),
-    path('cart_item/', views.cart_item, name='cart_item'),
-    path('update_quantity/', views.update_quantity, name='update_quantity'),
-    path('purchaseItem/', views.purchaseItem, name='purchaseItem'),
-    path('RemoveCartIem/<pid>', views.RemoveCartIem, name='RemoveCartIem'),
-    path('purchaseSearch/', views.purchaseSearch, name='purchaseSearch'),
     path('sale_info/', views.sale_info, name='sale_info'),
-    path('getItemInfo/',views.getItemInfo, name='getItemInfo'),
     path('summeryByDate/', views.summeryByDate, name='summeryByDate'),
     path('buyItem/', views.buyItem, name='buyItem'),
     path('buyRoute/<dataItem>', views.buyRoute, name='buyRoute'),
     path('saleItem/', views.saleItem, name='saleItem'),
     path('forgotPassword/', views.forgotPassword, name='forgotPassword'),
     path('verifyOtp/', views.verifyOtp, name='verifyOtp'),
-   
+    path(
+        'sale/add/<int:pid>',
+        views.add_to_card,
+        name="add_to_cart"
+    ),
+    path(
+        'cart-detail/',
+        views.cart_detail,
+        name='cart_detail'
+    ),
     
 ]

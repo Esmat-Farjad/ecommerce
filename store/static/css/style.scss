@@ -614,3 +614,22 @@ hr{
   }
 }
 
+.card-link{
+  color: rgb(34, 42, 53);
+}
+.card-link:hover{
+  color: gray;
+}
+.cart-badge-holder{
+  position: relative;
+}
+.cart-badge{
+  position: absolute;
+  top: -50%;
+  right: -50%;
+  padding: 2px 4px;
+  background-color: red;
+  border-radius: 50%;
+  font-size: 8px;
+  color: white;
+}

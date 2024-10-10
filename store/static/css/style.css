@@ -723,4 +723,27 @@ hr {
     border-bottom-right-radius: 50px;
     background-image: linear-gradient(45deg, #ffab40, #ff4081);
   }
+}
+
+.card-link {
+  color: rgb(34, 42, 53);
+}
+
+.card-link:hover {
+  color: gray;
+}
+
+.cart-badge-holder {
+  position: relative;
+}
+
+.cart-badge {
+  position: absolute;
+  top: -50%;
+  right: -50%;
+  padding: 2px 4px;
+  background-color: red;
+  border-radius: 50%;
+  font-size: 8px;
+  color: white;
 }/*# sourceMappingURL=style.css.map */

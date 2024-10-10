@@ -45,27 +45,12 @@ class Product(models.Model):
         return self.name
     
 
-class Cart(models.Model):
-    customer = models.ForeignKey(CustomUser,related_name="user_id", on_delete=models.CASCADE)
-    date_created = models.DateTimeField(auto_now=True)
-    # def __str__(self):
-    #     return self.customer 
-
-class cartItem(models.Model):
-    product = models.ForeignKey(Product,on_delete=models.CASCADE)
-    quantity = models.IntegerField(default=0)
-    date_created = models.DateTimeField(auto_now=True)
-    cart = models.ForeignKey(Cart, on_delete=models.CASCADE)
-    
-    # def __str__(self):
-    #     return self.
     
 class Sale(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     quantity = models.IntegerField()
     total_price = models.IntegerField()
     total_profit = models.IntegerField()
-    cart = models.ForeignKey(Cart, on_delete=models.CASCADE, null=True, blank=True)
     date_created = models.DateTimeField(auto_now=True)
     
     

@@ -16,18 +16,22 @@
     <div class="product-holder">
         {% for item in page_obj.object_list %}
         <div class="card">
-            <div class="image-holder">
-                <img src="{{item.image.url}}" alt="">
-            </div>
-            <div class="info-holder">
-                <div class="title">
-                    <p class="name">{{item.name}}</p>
-                    <p class="price">{{item.price}}</p>
+            <a href="#" class="card-link">
+                <div class="image-holder">
+                    <img src="{{item.image.url}}" alt="">
                 </div>
-                <p class="text">{{item.description}}</p>
-            </div>
+                <div class="info-holder">
+                    <div class="title">
+                        <p class="name">{{item.name}}</p>
+                        <p class="price">{{item.price}}</p>
+                    </div>
+                    <p class="text">{{item.description}}</p>
+                </div>
+            </a>
             <div class="action">
-                <button class="btn-sm">Add</button>
+                <button 
+                class="btn-sm add-item"
+                data-end-point="{% url 'store:add_to_cart' item.id %}">Add</button>
                 <button class="btn-sm">Buy</button>
             </div>
         </div>
@@ -56,5 +60,5 @@
     </div>
     <!-- paginator navigation button end -->
 </div>
-    
+<script src="{% static '/js/script.js' %}"></script>
 {% endblock content %}

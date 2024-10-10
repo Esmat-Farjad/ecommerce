@@ -4,10 +4,10 @@ import math
 
 import random
 from django.http import JsonResponse
-from django.shortcuts import redirect, render
+from django.shortcuts import redirect, render, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
-from .models import Cart, Category, CustomUser, Sale, Product, cartItem
+from .models import Category, CustomUser, Sale, Product
 from .forms import ProductSearchForm, PurchaseProductForm, UserCreationForm
 from django.db.models import Q
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
@@ -64,16 +64,16 @@ def signin(request):
     return render(request, 'signin.html', context)
 @login_required
 def sales(request):
-    product = Product.objects.select_related('category')
+    product_list = Product.objects.all().order_by('-id')
     search_form = ProductSearchForm()
     if 'query' in request.GET:
         search_form = ProductSearchForm(request.GET)
         if search_form.is_valid():
             query = search_form.cleaned_data['query']
-            product = Product.objects.filter(name__icontains=query)
+            product_list = Product.objects.filter(name__icontains=query)
 
     # setting up paginator
-    p = Paginator(product, 14)
+    p = Paginator(product_list, 14)
     #creating paginator
     page_number = request.GET.get('page')
     #getting the desire page number from the url
@@ -85,9 +85,48 @@ def sales(request):
         #if page number is not an integer then assign the first page 
     except EmptyPage:
         #if the page i empty then return the last page
+    
         page_obj = p.page(p.num_pages)
-    context = {'page_obj':page_obj,'search_form':search_form}
+    cart_length = 0
+    if request.session.get('cart',{}):
+        cart = request.session.get('cart',{})
+        cart_length = len(cart)
+    context = {
+        'page_obj':page_obj,
+        'search_form':search_form,
+        'num_item':cart_length
+        }
+    
     return render(request, 'sales.html',context)
+
+
+@login_required
+def add_to_card(request,pid):
+    if request.method == 'POST':
+        product = get_object_or_404(Product, id=pid)
+        cart = request.session.get('cart',{})
+        if str(product.id) in cart:
+            cart[str(product.id)]  += 1
+        else:
+            cart[str(product.id)] = 1
+        request.session['cart'] = cart
+        
+        data = {'cart':cart,'num_item':len(cart)}
+        return JsonResponse(data, safe=False)
+
+def cart_detail(request):
+    cart = request.session.get('cart',{})
+    products = Product.objects.filter(id__in=cart.keys())
+    cart_item = []
+    for product in products:
+        quantity = cart[str(product.id)]
+        total_price =(quantity['quantity'] * product.price)
+        cart_item.append({'product':product,'quantity':quantity,'total':total_price})
+    context = {
+        'cart_item':cart_item
+    }
+    return render(request,'cart_detail.html',context)
+
 
 def signout(request):
     logout(request)
@@ -256,113 +295,6 @@ def sale_search(request):
         context = {'product':product}
         return render(request, 'sales.html', context)
     
-def addToCart(request):
-    if request.method == 'POST':
-        iid = request.POST['itemId']
-        u = request.user.id
-        #TRYING TO GET THE CUSTOMER CART START
-        try:
-            myCartId = Cart.objects.values_list('id', flat=True).get(customer = u)
-            #TRYING TO CHECK WHETHER THE ITEM EXIST IN THE CART OR NOT START
-            try:
-                cartId = cartItem.objects.values_list('id', flat=True).get(product_id=iid)
-                qty = cartItem.objects.values_list('quantity', flat=True).get(product_id=iid)
-                qty += 1
-                cartItem.objects.filter(id=cartId).update(quantity=qty)
-                messages.success(request, "quantity updated")
-            except cartItem.DoesNotExist:
-                new_record = cartItem(product_id=iid, quantity=1, cart_id=myCartId)
-                new_record.save()
-                messages.success(request, "product added to cart")
-            #TRYING TO CHECK WHETHER THE ITEM EXIST IN THE CART OR NOT END
-        except Cart.DoesNotExist:
-            obj = Cart(customer_id = u)
-            obj.save()
-            new_record = cartItem(product_id=iid, quantity=1, cart_id=obj.id)
-            new_record.save()
-            messages.success(request, "Product added to your cart successfully ! ")
-        #TRYING TO GET THE CUSTOMER CART ENDS
-        customer_cart = Cart.objects.values_list('id', flat=True).get(customer_id=u)
-        cart_item = cartItem.objects.filter(cart_id=customer_cart).count()
-        message = "success"
-        status = 200
-        data = {"message":message, "status":status, "cart_item":cart_item}
-        return JsonResponse(data, safe=False)
-    
-def cart_item(request):
-    cart_id = Cart.objects.values_list('id').get(customer_id = request.user.id)
-    products=cartItem.objects.select_related('product').filter(cart_id=cart_id)
-    context = {'products':products}
-    return render(request, 'cart_item.html', context)
-
-def update_quantity(request):
-    if request.method =='POST':
-        qty = request.POST['quantity']
-        cartItemId = request.POST['cartItemId']
-        cartItem.objects.filter(id=cartItemId).update(quantity=qty)
-        
-        data = {'quantity':qty, 'cart_item_id':cartItemId}
-    return JsonResponse(data, safe=False)
-
-def purchaseItem(request):
-    user_id = request.user.id
-    my_cart_id = Cart.objects.values_list('id', flat=True).get(customer_id=user_id)
-    my_cart_item = cartItem.objects.select_related('product').filter(cart_id = my_cart_id)
-    
-    
-    
-    my_list=[]
-    
-    for val in my_cart_item:
-        total_price = int(val.quantity) * int(val.product.price)
-        profit=int(val.product.price) - int(val.product.rate)
-        total_profit = profit * val.quantity
-        stock = int(val.product.stock) - int(val.quantity)
-        new_record=Sale(quantity=val.quantity, total_price=total_price,  total_profit=total_profit, cart_id=my_cart_id, product_id=val.product.id )
-        new_record.save()
-        my_list.append(new_record)
-        Product.objects.filter(id=val.product.id).update(stock=stock)
-        
-    messages.success(request, "stock updated, Sale Table created")
-    store_info = CustomUser.objects.select_related('store').get(id=user_id)
-    print(store_info.store)
-    payment = 0
-    for  i in my_list:
-        payment = payment + i.total_price
-    context = {'sold_products': my_list,'store_info':store_info,'payment':payment}
-    
-    cartItem.objects.filter(cart_id = my_cart_id).delete()
-    
-    messages.success(request, "Your Cart item has been Removed")
-    
-    return render(request, 'sale_item.html', context)
-
-def RemoveCartIem(request, pid):
-    if pid:
-        cartItem.objects.filter(id=pid).delete()
-        cart_id = Cart.objects.values_list('id').get(customer_id = request.user.id)
-    products=cartItem.objects.select_related('product').filter(cart_id=cart_id)
-    context = {'products':products}
-    return render(request, 'cart_item.html', context)
-
-def purchaseSearch(request):
-    goods = ''
-    if request.method == 'POST':
-        item = request.POST['search']
-        product = Product.objects.filter(Q(name__icontains=item) |  Q(description__icontains=item))
-        goods = product
-        
-    p = Paginator(goods, 5)
-    page_number = request.GET.get('page')
-    try:
-        page_obj = p.get_page(page_number)
-    except PageNotAnInteger:
-        page_obj = p.page(1)
-    except EmptyPage:
-        page_obj = p.page(p.num_pages)
-        
-    context = {'page_obj':page_obj}
-    return render(request, 'purchase.html', context)
 
 def sale_info(request):
     if request.method == 'POST':
@@ -394,22 +326,7 @@ def sale_info(request):
     context = {'page_obj':page_obj}
     return render(request, 'includes/sale_info.html', context)
 
-def getItemInfo(request):
-    if request.method == 'POST':
-        pid = request.POST['pid']
-        productId = Sale.objects.values_list('product', flat=True).get(id=pid)
-        productInfo = Product.objects.filter(id=productId).values()
-        
-        cartId = Sale.objects.values_list('cart', flat=True).get(id=pid)
-        customer_id = Cart.objects.values_list('customer', flat=True).get(id=cartId)
-       
-        customer_info = CustomUser.objects.values().get(id=customer_id)
-        print(customer_info)
-        saleProduct = Sale.objects.select_related('product').filter(id = pid).values()
-        data = {'saleProduct':list(saleProduct), 'customerInfo':customer_info, 'productInfo':list(productInfo)}
-    
-        return JsonResponse(data, safe=False)
-    
+
 def summeryByDate(request):
     if request.method == 'POST':
         date_to = request.POST['to']
