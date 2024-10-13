@@ -7,6 +7,7 @@ from django.http import JsonResponse
 from django.shortcuts import redirect, render, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
+from django.urls import reverse
 from .models import Category, CustomUser, Sale, Product
 from .forms import ProductSearchForm, PurchaseProductForm, UserCreationForm
 from django.db.models import Q
@@ -120,13 +121,26 @@ def cart_detail(request):
     cart_item = []
     for product in products:
         quantity = cart[str(product.id)]
-        total_price =(quantity['quantity'] * product.price)
+        total_price =quantity * int(product.price)
         cart_item.append({'product':product,'quantity':quantity,'total':total_price})
     context = {
-        'cart_item':cart_item
+        'cart_item':cart_item,
+        'num_item':len(cart_item)
     }
     return render(request,'cart_detail.html',context)
 
+@login_required
+def remove_cart_item(request, item):
+    cart = request.session.get('cart',{})
+    if item in cart:
+        value = cart.pop(cart[str(item)],None)
+        request.session['cart'] = cart
+        messages.success(request, f"{value} removed successfully !")
+    else:
+        messages.error(request,f"{cart[str(item)]} item not found")
+    
+    
+    return redirect('store:cart_detail')
 
 def signout(request):
     logout(request)

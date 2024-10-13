@@ -3,8 +3,10 @@
     flex-direction: column;
     flex-wrap: wrap;
     justify-content: center;
-    align-items: center;
-    overflow-x: scroll;
+    align-items: first baseline;
+    width: 100%;
+    height: $body-height;
+    border: 1px solid red;
 }
 .table{
     overflow-x: auto; /* Enables horizontal scrolling */
@@ -28,4 +30,18 @@ th, td {
 th {
     background-color: #f4f4f4; /* Light grey background */
 }
-
+.empty-record{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    
+    width: fit-content;
+    .title{
+        color: gray;
+    }
+    .text{
+        padding: 0px;
+        margin: 0px;
+    }
+}
