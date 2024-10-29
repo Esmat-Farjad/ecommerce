@@ -764,4 +764,16 @@ hr {
   border-radius: 50%;
   font-size: 8px;
   color: white;
+}
+
+.cart-detail {
+  width: 100%;
+  height: 70vh;
+}
+
+.cart-detail .empty-record {
+  text-align: center;
+  width: 100%;
+  height: 100%;
+  margin: 0px auto;
 }/*# sourceMappingURL=style.css.map */
