@@ -1,0 +1,10 @@
+{% extends 'main/base.html' %}
+{% load static %}
+{% load humanize %}
+{% block content %}
+<div class="container">
+    {% for p in products %}
+    {{p.name}}
+    {%endfor%}
+</div>
+{% endblock content %}

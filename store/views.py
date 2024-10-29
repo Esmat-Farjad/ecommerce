@@ -119,28 +119,58 @@ def cart_detail(request):
     cart = request.session.get('cart',{})
     products = Product.objects.filter(id__in=cart.keys())
     cart_item = []
+    grant_total = 0
     for product in products:
         quantity = cart[str(product.id)]
         total_price =quantity * int(product.price)
+        grant_total= int(grant_total)+int(total_price)
         cart_item.append({'product':product,'quantity':quantity,'total':total_price})
     context = {
         'cart_item':cart_item,
-        'num_item':len(cart_item)
+        'num_item':len(cart_item),
+        'grant_total':grant_total
     }
     return render(request,'cart_detail.html',context)
 
 @login_required
 def remove_cart_item(request, item):
     cart = request.session.get('cart',{})
-    if item in cart:
-        value = cart.pop(cart[str(item)],None)
-        request.session['cart'] = cart
-        messages.success(request, f"{value} removed successfully !")
-    else:
-        messages.error(request,f"{cart[str(item)]} item not found")
-    
-    
+    del cart[str(item)]
+    request.session['cart']=cart
     return redirect('store:cart_detail')
+@login_required
+def change_quantity(request, pk, action):
+    cart = request.session.get('cart',{})
+    value = cart[str(pk)]
+    if action == 'inc':
+        value = int(value)+1
+        cart[str(pk)] = value
+    elif action == 'dec' and cart[str(pk)] > 1 :
+        value = int(value) - 1
+        cart[str(pk)] = value
+    elif action == 'dec' and cart[str(pk)] == 1:
+        del cart[str(pk)]
+    
+    request.session['cart']=cart
+    return redirect('store:cart_detail')
+@login_required
+def sale_item(request):
+    cart = request.session.get('cart', {})
+    sales = []
+    for product_id, quantity in cart.items():
+        try:
+            product = Product.objects.get(id=product_id)
+            total_price = product.price * quantity
+            total_profit= total_price - (quantity*product.rate)
+            sales.append(Sale(product=product,quantity=quantity, total_price=total_price,total_profit=total_profit))
+        except Product.DoseNotExist:
+            continue
+    Sale.objects.bulk_create(sales)
+    request.session['cart']={}
+    context = {
+        'sold_products':sales
+    }
+    return render(request, 'sale_item.html',context)
 
 def signout(request):
     logout(request)
@@ -375,23 +405,7 @@ def buyRoute(request, dataItem):
     context = {'product':dataItem}
     return render(request, 'buy_item.html', context)   
 
-def saleItem(request):
-    if request.method == 'POST':
-        pid = request.POST['pid']
-        quantity = request.POST['qty']
-        pro = Product.objects.get(id=pid)
-        new_stock = int(pro.stock) - int(quantity)
-        total_price = int(quantity) * int(pro.price)
-        total_profit = int(quantity) * int(pro.profit)
-        new_stock = int(pro.stock) - int(quantity)
-        Product.objects.filter(id=pid).update(stock = new_stock)
-        new_record = Sale(product_id=pid, quantity=quantity,total_price=total_price,total_profit=total_profit)
-        new_record.save()
-        messages.success(request, "Product sold successfully ")
-        
-        
-        data = {'pid':pid,'qty':quantity}
-        return JsonResponse(data, safe=False)
+
     
 
 def forgotPassword(request):

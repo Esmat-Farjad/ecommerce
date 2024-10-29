@@ -1,13 +1,4 @@
-.detail-container{
-    display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: first baseline;
-    width: 100%;
-    height: $body-height;
-    border: 1px solid red;
-}
+
 .table{
     overflow-x: auto; /* Enables horizontal scrolling */
     font-size: 12px;
@@ -15,13 +6,13 @@
 }
 
 table {
-    width: 90%;/* Full width */
+    width: 100%;/* Full width */
     border-collapse: collapse; /* Remove space between borders */
 
 }
 
 th, td {
-    padding: 3px; /* Space around content */
+    padding: 5px; /* Space around content */
     text-align: left; /* Align text to the left */
     border: 1px solid #ddd; /* Light border */
 

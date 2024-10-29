@@ -636,6 +636,16 @@ hr{
 .cart-detail{
   width: 100%;
   height: $body-height;
+  
+}
+.cart-detail .detail-container{
+  width: 80%;
+  height: auto;
+  margin: 1rem auto;
+}
+.cart-detail .detail-container .button-holder{
+  margin: 2rem auto;
+  width: 50%;
 }
 .cart-detail .empty-record{
   text-align: center;
@@ -643,4 +653,19 @@ hr{
   height: 100%;
   margin: 0px auto;
 
+}
+.quantity-handle{
+  text-align: center;
+}
+.btn-num{
+  border: 1px solid $light-gray;
+  border-radius: 2px;
+  margin: 0px 5px;
+  padding: 2px 10px;
+  transition: all 0.3s ease-in-out;
+}
+
+.btn-num:hover{
+  background-color: $light-gray;
+  font-weight: bold;
 }

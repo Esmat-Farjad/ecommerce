@@ -21,7 +21,11 @@ urlpatterns = [
     path('summeryByDate/', views.summeryByDate, name='summeryByDate'),
     path('buyItem/', views.buyItem, name='buyItem'),
     path('buyRoute/<dataItem>', views.buyRoute, name='buyRoute'),
-    path('saleItem/', views.saleItem, name='saleItem'),
+    path(
+        'products/sales/', 
+        views.sale_item, 
+        name='sale_item'
+        ),
     path('forgotPassword/', views.forgotPassword, name='forgotPassword'),
     path('verifyOtp/', views.verifyOtp, name='verifyOtp'),
     path(
@@ -39,5 +43,9 @@ urlpatterns = [
         views.remove_cart_item,
         name='remove_cart_item'
     ),
-    
+    path(
+        'cart/quantity/<int:pk>/<str:action>/',
+        views.change_quantity,
+        name='change_quantity'
+    ),
 ]
