@@ -41,8 +41,7 @@
         const printContent = document.getElementById("print-reciept").outerHTML;
         const win = window.open('','','height=400,width=600');
         win.document.write('<html><head><title>Purchase Reciept</title>');
-            win.document.write(
-                '<style>*{font-family:open-sans;}.heading{text-align:center;}.h1,p{padding:0px;margin:0px;}table { width: 100%; border-collapse: collapse; border:1px solid lightgray;} th, td {padding: 5px; text-align: left; } th { background-color: #f2f2f2;border:1px solid gray; }</style>');
+            win.document.write('<link rel="stylesheet" href="{% static "css/style.css" %}">');
         win.document.write('</head><body>');
         win.document.write(printContent);
         win.document.write('</body></html>');
