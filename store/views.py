@@ -157,20 +157,26 @@ def change_quantity(request, pk, action):
 def sale_item(request):
     cart = request.session.get('cart', {})
     sales = []
+    grant_total = 0
     for product_id, quantity in cart.items():
         try:
             product = Product.objects.get(id=product_id)
             total_price = product.price * quantity
             total_profit= total_price - (quantity*product.rate)
             sales.append(Sale(product=product,quantity=quantity, total_price=total_price,total_profit=total_profit))
+            old_stock = product.stock
+            new_stock = old_stock - quantity
+            grant_total = grant_total + total_price
+            Product.objects.filter(id=product_id).update(stock=new_stock)
         except Product.DoseNotExist:
             continue
     Sale.objects.bulk_create(sales)
     request.session['cart']={}
     context = {
-        'sold_products':sales
+        'sold_products':sales,
+        'grant_total':grant_total
     }
-    return render(request, 'sale_item.html',context)
+    return render(request, 'sale_page.html',context)
 
 def signout(request):
     logout(request)

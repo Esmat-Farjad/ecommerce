@@ -1,0 +1,24 @@
+table {
+  width: 100%;
+  border-collapse: collapse;
+  border: 1px solid #E9EAEC;
+}
+
+th, td {
+  padding: 5px;
+  border: 1px solid #E9EAEC;
+  font-size: 14px;
+}
+
+th {
+  background-color: #E9EAEC;
+}
+
+.table-holder {
+  margin: 2% 5%;
+}
+
+.tablure-page {
+  width: 100%;
+  height: 70vh;
+}/*# sourceMappingURL=table.css.map */
