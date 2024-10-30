@@ -12,7 +12,6 @@ from .models import Category, CustomUser, Sale, Product
 from .forms import ProductSearchForm, PurchaseProductForm, UserCreationForm
 from django.db.models import Q
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-
 from django.db.models import Sum
 from django.contrib.auth.decorators import login_required
 
@@ -184,13 +183,9 @@ def signout(request):
     return render(request, 'home.html')
 
 def product(request):
-    if request.method == 'POST':
-        id = request.POST['getid']
-        Product.objects.filter(id=id).delete()
-        messages.success(request, "Item Deleted Successfully !")
     product = Product.objects.all().order_by('-id')
     #Paginator start
-    p = Paginator(product, 5)
+    p = Paginator(product, 14)
     page_number = request.GET.get('page')
     try:
         page_obj = p.get_page(page_number)
@@ -229,7 +224,7 @@ def purchase(request):
         
     product = Product.objects.all().order_by('-id')
     #Paginator start
-    p = Paginator(product, 5 )
+    p = Paginator(product, 14 )
     page_number = request.GET.get('page')
     try:
         page_obj = p.get_page(page_number)
@@ -265,15 +260,23 @@ def display_details(request, iid):
     print(iid)
     return render(request, 'item_details.html', context)   
 
-def update_product(request, pid):
-    if pid:
-        item = Product.objects.get(id=pid)
-        cat = Category.objects.all()
-        num_packet=[]
-        for i in range(0,100):
-            num_packet.append(i)
-        context = {'item':item, 'cat':cat,'num_packet':num_packet}
+def manage_product(request, action, pid):
+    product = get_object_or_404(Product, pk=pid)
+    if pid and action == 'edit':
+        form = PurchaseProductForm(instance=product)
+        if request.method == 'POST':
+            form = PurchaseProductForm(request.POST, instance=product)
+            if form.is_valid():
+                form.save()
+        context = {
+            'product':product,
+            'form':form
+        }
         return render(request, 'includes/update_product.html', context)
+    elif pid and action == 'delete':
+        Product.objects.filter(id=pid).delete()
+        messages.success(request, "Product deleted successfully.")
+        return redirect("store:product")
 
 def stock(request):
     product = Product.objects.select_related('category')

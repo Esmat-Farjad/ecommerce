@@ -471,7 +471,8 @@ strong {
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
-  margin: 1rem;
+  margin: 1rem auto;
+  height: 70vh;
 }
 
 .form-fields {
@@ -562,7 +563,7 @@ hr {
   justify-content: center;
   align-items: center;
   flex-wrap: wrap;
-  gap: 1rem;
+  gap: 2rem;
   padding: 1rem;
 }
 

@@ -2,131 +2,77 @@
 {% load static %}
 {% block content %}
 
-<div class="relative">
-    <div class="main-content mx-10"> 
-             <div class="grid lg:grid-row-2 m-5">
-                <div class="">
-                    <h1 class="text-center text-4xl m-5">
-                        Product Details
-                    </h1>
-                    <div class="flex justify-center">
-                        <form action="" method="POST" class="my-5">
-                            {% csrf_token %}
-                            <input type="text" class="p-2 rounded border border-teal-400 w-96 focus:outline-none focus:border-sky-500" placeholder="Search items">
-                            <button class="rounded-full border bg-teal-500 hover:bg-teal-700 hover:text-white px-3 py-2"><i
-                                    class="fa-solid fa-magnifying-glass"></i></button>
-                            <!-- <button class="bg-teal-500 text-white px-4 py-2 hover:font-bold hover:bg-teal-700 shadow my-3">Save</button> -->
-                        </form>
-                    </div>
-                </div>
-                <div>
-                <table class="table-auto w-full shadow-md">
-                    <thead class="bg-teal-500 text-white text-start">
-                        <th class="py-2">#</th>
-                        <th class="py-2">Name</th>
-                        <th class="py-2">Description</th>
-                        <th class="py-2">Category</th>
-                        <th class="py-2">Rate</th>
-                        <th class="py-2">price</th>
-                        <th class="py-2">Profit</th>
-                        <th class="py-2">MFD</th>
-                        <th class="py-2">EXPD</th>
-                        <th class="py-2">Stock</th>
-                        
-                        <th class="py-2">Manage</th>
-                    </thead>
-                    <tbody>
-                        
-                        {% for item in page_obj.object_list %}
-                     
-                            <tr class="border hover:bg-gray-100 cursor-pointer hover:font-semiboldtransition duration-500 ease-in-out">
-                        
-                            <td class="p-2 border "><img src="{{item.image.url}}" class="w-16 h-16 rounded-full shadow border border-gray-400" alt=""></td>
-                            <td class="p-2 border ">{{item.name}}</td>
-                            <td class="p-2 border w-80">{{item.description}}</td>
-                            <td class="p-2 border ">{{item.category}}</td>
-                            <td class="p-2 border ">{{item.rate}} $</td>
-                            <td class="p-2 border ">{{item.price}} $</td>
-                            <td class="p-2 border ">{{item.profit}} $</td>
-                            <td class="p-2 border ">{{item.mfd}}</td>
-                            <td class="p-2 border ">{{item.expd}}</td>
-                            <td class="p-2 border ">{{item.stock}}</td>
-                            <td class="p-2">
-                                <a href="{% url 'store:update_product' item.id %}" class="inline-block mr-3 hover:text-teal-600"><i class="fa-solid fa-pen"></i>&nbsp;<small class="hover:font-bold">Edit</small></a>
-                                <a class="inline-block btn-delete hover:text-red-600" data-stateName="{{item.id}}">
-                                    <i class="fa-solid fa-eraser"></i>&nbsp;
-                                    <small class="hover:font-bold">Delete</small>
-                                </a>
-                            </td>
-                            </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-                <!-- Paginator navigation button start -->
-                <div class="flex justify-center my-5 py-3">
-                    {% if page_obj.has_previous %}
-                    <a href="?page={{page_obj.previous_page_number}}" class="relative tooltip">
-                        <i
-                            class="fa-solid fa-chevron-left rounded-full hover:text-white text-white px-2 py-1 bg-teal-500 hover:bg-teal-600 hover:shadow-md"></i>
-                        <small
-                            class="tooltip-text absolute top-0 right-10 rounded bg-teal-500 text-white px-3 shadow-lg">Previous</small>
+<div class="product-page">
+    <div class="heading">
+        <h1 class="title">Products List</h1>
+        <p class="text">The products available with its stock details</p>
+    </div>
+    <div class="table-holder"> 
+        <table>
+            <thead>
+                <th>#</th>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Category</th>
+                <th>Rate</th>
+                <th>price</th>
+                <th>Profit</th>
+                <th>MFD</th>
+                <th>EXPD</th>
+                <th>Stock</th>
+                <th>Manage</th>
+            </thead>
+            <tbody>
+                {% for item in page_obj.object_list %}
+                <tr>
+                <td>
+                    <img src="{{item.image.url}}" width="16" height="16" alt="">
+                </td>
+                <td>{{item.name}}</td>
+                <td>{{item.description}}</td>
+                <td>{{item.category}}</td>
+                <td>{{item.rate}} $</td>
+                <td>{{item.price}} $</td>
+                <td>{{item.profit}} $</td>
+                <td>{{item.mfd}}</td>
+                <td>{{item.expd}}</td>
+                <td>{{item.stock}}</td>
+                <td class="manage-product">
+                    <a href="{% url 'store:manage_product' 'edit' item.id %}">
+                        <i class="fa-solid fa-pen"></i>
                     </a>
-                    {% else %}
-                    <i class="fa-solid fa-chevron-left rounded-full text-black px-2 py-1 bg-gray-300"></i>
-                    {% endif %}
-                    <span class="font-bold mx-10">Page
-                        <span class="bg-slate-300 text-dark rounded-full px-2 py-1">{{page_obj.number}}</span> of
-                        <span class="bg-slate-300 text-dark rounded-full px-2 py-1">{{page_obj.paginator.num_pages}}</span>
-                    </span>
-                    {% if page_obj.has_next %}
-                    <a href="?page={{page_obj.next_page_number}}" class="tooltip relative">
-                        <i
-                            class="fa-solid fa-chevron-right rounded-full hover:text-white text-white px-2 py-1 bg-teal-500 hover:bg-teal-600 shadow-md hover:shadow-lg"></i>
-                        <small class="tooltip-text absolute top-0 left-10 rounded bg-teal-500 text-white px-3 shadow-lg">Next</small>
+                    <a href="{% url 'store:manage_product' 'delete' item.id %}" 
+                    onclick="return confirm('Are you sure you want to delete {{item.name}}?')">
+                        <i class="fa-solid fa-trash"></i>
                     </a>
-                    {% else %}
-                    <i class="fa-solid fa-chevron-right rounded-full text-black px-2 py-1 bg-gray-300"></i>
-                    {% endif %}
-                </div>
-                <!-- paginator navigation button end -->
-            </div>
+                </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
     </div>
+    <!-- paginator navigation button start -->
+    <div class="paginator">
+        {% if page_obj.has_previous %}
+        <a href="?page={{page_obj.previous_page_number}}">
+            <small class="active-nav"><i class="fa-solid fa-angles-left"></i></small>
+        </a>
+        {% else %}
+        <small class="not-active-nav"><i class="fa-solid fa-angles-left"></i></small>
+        {% endif %}
+        <span>Page
+            <span class="active-page">{{page_obj.number}}</span> of
+            <span>{{page_obj.paginator.num_pages}}</span>
+        </span>
+        {% if page_obj.has_next %}
+        <a href="?page={{page_obj.next_page_number}}" class="tooltip relative">
+            <small class="active-nav"><i class="fa-solid fa-angles-right"></i></small>
+        </a>
+        {% else %}
+        <small class="not-active-nav"><i class="fa-solid fa-angles-right"></i></small>
+        {% endif %}
+    </div>
+    <!-- paginator navigation button end -->
 </div>
-<!-- modal dialog for delete starts-->
-<div class="absolute lg:inset-x-1/3 sm:inset-x-32 sm:top-1/4 border shadow-lg rounded border-gray-400 bg-white lg:top-1/4 p-5 z-10" id="modal-dialog">
-    <div class="font-bold text-center">
-        <i class="fa-solid text-2xl fa-question rounded-full bg-green-100 py-2 px-4 text-green-700"></i>
-        <h1 class="text-2xl text-red-500 font-semibold ">Delete Conformation</h1>
-    </div>
-    <form action="{% url 'store:product' %}" method="POST">
-        {% csrf_token %}
-        <input type="number" name="getid" id="getid" class="" hidden>
-        <p class="text-xl text-center font-semibold">&nbsp;Are you sure you want to delete the Item ?</p>
-    <div class="text-center">
-        <button type="submit" class=" bg-teal-500 text-white px-4 py-2 hover:font-bold hover:bg-teal-700 shadow mt-3 mb-5 mr-1 rounded">Yes&nbsp;<i class="fa-regular fa-thumbs-up"></i></button>
-        <button type="button" class="btn-cancel bg-red-500 text-white px-4 py-2 hover:font-bold hover:bg-red-700 shadow mt-3 mb-5 mr-1 rounded">No&nbsp;<i class="fa-regular fa-thumbs-down"></i></button>
-    </div>
-    
-</div>
-<!-- modal dialog for delete ends -->
-<script>
-$(document).ready(function() {
-    $('.btn-delete[data-stateName]').click(function() {
-        $("#modal-dialog").animate({
-            height:'toggle'
-        });
-        var id = $(this).attr("data-stateName");
-        document.getElementById("getid").value = id;
-        
-    });
-});
-$(document).ready(function() {
-        $(".btn-cancel").click(function () {
-        $("#modal-dialog").animate({
-            height: 'toggle'
-        });
-    });
-});
 
-</script>
 {% endblock content %}

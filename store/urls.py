@@ -8,11 +8,19 @@ urlpatterns = [
     path('signup/', views.signup, name='signup'),
     path('sales/', views.sales, name='sales'),
     path('signout/', views.signout, name='signout'),
-    path('product/', views.product, name='product'),
+    path(
+        'product/list', 
+        views.product, 
+        name='product'
+        ),
     path('purchase/', views.purchase, name='purchase'),
     path('dispatch/<item>', views.dispatch, name='dispatch'),
     path('display_details/<iid>', views.display_details, name='display_details'),
-    path('update_product/<pid>', views.update_product, name='update_product'),
+    path(
+        'product/<str:action>/<int:pid>', 
+        views.manage_product, 
+        name='manage_product'
+        ),
     path('stock/', views.stock, name='stock'),
     path('stockRoute/<flag>', views.stockRoute, name='stockRoute'),
     path('update_stock/', views.update_stock, name='update_stock'),

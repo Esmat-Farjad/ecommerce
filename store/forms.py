@@ -60,4 +60,6 @@ class ProductSearchForm(forms.Form):
         required=False,
         widget=forms.TextInput(attrs={'class':'search-input','placeholder':'enter product name...'})
         )
-    
+
+
+

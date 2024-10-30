@@ -1,108 +1,101 @@
 {% extends 'main/base.html' %}
 {% load static %}
 {% block content %}
-<div class="content">
-    <div class="text-center text-4xl my-10">
-        <h1>UPDATE PRODUCT</h1>
+<div class="purchase-page">
+    <div class="heading">
+        <h1 class="title">Update Product</h1>
+        <p class="text">update the details belongs to the product</p>
     </div>
-   
-    <form action="">
-        {% csrf_token %}
-    <div class="grid lg:grid-cols-3 sm:grid-cols-1">
-        <div class="border-r ">
-            <div class="p-10">
-                <img src="{{item.image.url}}" class="w-full h-full" alt="">
-                <label class="block mt-2" for="image">Choose the product image</label>
-                <input type="file" name="image" id="image" 
-                class="border rounded w-60 me-10 file:bg-red-500 file:text-white file:rounded-full file:shadow-lg file:hover:bg-red-700 file:hover:font-semibold file:p-2 file:border-none">
-                <button class="bg-teal-500 text-white py-2 px-5 rounded shadow hover:bg-teal-700 hover:font-semibold">Update</button>
+    <div class="purchase-holder">
+        <div class="calculation-container">
+            <div>
+                <strong>Rate: $ <span id="rate"></span></strong>
+            </div>
+            <div>
+                <strong>Profit Per Item: $ <span id="profit-per-item"></span></strong>
+            </div>
+            <div>
+                <strong>Profit Per Packet/Package: $ <span id="profit-per-packet"></span></strong>
             </div>
         </div>
-        <div class="middle">
-            <div class="p-10">
-                <p class="text-center text-2xl font-bold">Item details</p>
-                
-                    <label for="name">Product Name</label>
-                    <input type="text" name="name" id="name" value="{{item.name}}" class=" mb-4 border-b focus:outline-none focus:border-sky-500 p-2 rounded w-full font-semibold">
-                    <label class="" for="description">Product Description</label>
-                    <input type="text" name="description" id="description" value="{{item.description}}"
-                        class="mb-4 border-b mb-4 focus:outline-none focus:border-sky-500 p-2 rounded w-full font-semibold">
-                    <label class="mt-2" for="category">Product category</label>
-                    <select name="category" id="category" class=" border border-sky-500 rounded focus:outline-none focus:border-sky-500 p-2 block w-full font-semibold">
-                        <option selected value="{{item.category}}">{{item.category}}</option>
-                        {% for val in cat %}
-                            <option value="{{val.id}}">{{val.name}}</option>
-                        {% endfor %}
-                    </select>
-                    <label class="" for="rate">Product rate</label>
-                    <input type="number" name="rate" id="rate" value="{{item.rate}}"
-                        class="border-b mb-4 focus:outline-none focus:border-sky-500 p-2 rounded w-full font-semibold">
-                    <label class="" for="price">Product price</label>
-                    <input type="number" name="price" id="price" value="{{item.price}}" pattern="^\$\d{1,3}(,\d{3})*(\.\d+)?$" data-type="currency"
-                        class="border-b mb-4 focus:outline-none focus:border-sky-500 p-2 rounded w-full font-semibold">
-                    <label class="" for="profit">Product profit</label>
-                    <input type="number" name="profit" id="profit" value="{{item.profit}}"
-                        class="border-b mb-4 focus:outline-none focus:border-sky-500 p-2 rounded w-full font-semibold">
-                    <label class="block" for="num_packet">How many packets</label>
-                    <select name="num_packet" id="num_packet" class=" border-sky-500 border mb-4 focus:outline-none focus:border-sky-500 p-2 rounded w-full font-semibold">
-                        {% for num in num_packet %}
-                            <option value="{{num}}">{{num}}</option>
-                        {% endfor %}
-                    </select>
-                    <label class="" for="packet_content">Packet contains</label>
-                    <input type="number" name="packet_content" id="packet_content" value="{{item.packet}}"
-                        class="border-b mb-4 focus:outline-none focus:border-sky-500 p-2 rounded w-full font-semibold">
-                    <label class="" for="quantity">Product Quantity</label>
-                    <input type="number" name="quantity" id="quantity"
-                        class="border-b mb-4 focus:outline-none focus:border-sky-500 p-2 rounded w-full font-semibold">
-                    
-                    <label class="" for="bulk_price">Product Bulk Price</label>
-                    <input type="number" name="bulk_price" id="bulk_price" value="{{item.bulk_price}}"
-                        class="border-b mb-4 focus:outline-none focus:border-sky-500 p-2 rounded w-full font-semibold">
-                    {% if item.mfd != none %}
-                        <label class="" for="mfd">Product MFD</label>
-                        <input type="date" name="mfd" id="mfd" value="{{item.mfd|date:'Y-m-d'}}"
-                            class="border-b mb-4 focus:outline-none focus:border-sky-500 p-2 rounded w-full font-semibold">
-                        <label class="" for="expd">Product EXPD</label>
-                        <input type="date" name="expd" id="expd" date="{{item.expd|date:'Y-m-d'}}"
-                            class="border-b mb-4 focus:outline-none focus:border-sky-500 p-2 rounded w-full font-semibold">
-                    {% endif %}
-                    
-                    
-                    <label class="" for="stock">Product stock</label>
-                    <input type="number" name="stock" id="stock" value="{{item.stock}}" disabled
-                        class="border-b mb-4 focus:outline-none focus:border-sky-500 p-2 rounded w-full font-semibold">
+        <form action="{% url 'store:purchase' %}" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form-fields">
+                <div class="product-info">
+                    <label class="form-label">{{form.name.label_tag}}</label>
+                    {{form.name}}
+                    {{form.name.errors}}
+                    <label class="form-label">{{form.description.label_tag}}</label>
+                    {{form.description}}
+                    {{form.description.errors}}
+                    <label class="form-label">{{form.category.label_tag}}</label>
+                    {{form.category}}
+                    {{form.category.errors}}
+                </div>
+                <div class="product-price">
+                    <label class="form-label">{{form.quantity.label_tag}}</label>
+                    {{form.quantity}}
+                    {{form.quantity.errors}}
+                    <label class="form-label">{{form.packet.label_tag}}</label>
+                    {{form.packet}}
+                    {{form.packet.errors}}
+                    {{form.image}}
+                    {{form.image.errors}}
+                </div>
+                <div class="option-info">
+                    <label class="form-label">{{form.price.label_tag}}</label>
+                    {{form.price}}
+                    {{form.price.errors}}
+                    <label class="form-label">{{form.bulk_price.label_tag}}</label>
+                    {{form.bulk_price}}
+                    {{form.bulk_price.errors}}
+                </div>
+                <div class="extra-info">
+                    <label class="form-label">{{form.mfd.label_tag}}</label>
+                    {{form.mfd}}
+                    {{form.mfd.errors}}
+                    <label class="form-label">{{form.expd.label_tag}}</label>
+                    {{form.expd}}
+                    {{form.expd.errors}}
+                </div>
             </div>
-        </div>
-        <div class="side"></div>
+            <div class="purchase-button">
+                <button type="submit" class="btn">Update Product</button>
+            </div>
+        </form>
     </div>
-    </form>
 </div>
+
 <script>
-    el = document.getElementById("quantity");
-    var s = document.getElementById("stock").value;
-    el.addEventListener("input", function(e) {
-        
-        var q = e.target.value;
-        p = Number(s) + Number(q);
-        document.getElementById("stock").value = p;
+    const numberData = document.querySelectorAll("input[type=number]");
+    let quantity = 0;
+    let packet = 0;
+    let price = 0;
+    let bulk_price = 0;
+    numberData.forEach(element => {
+        element.addEventListener("input", ()=>{
+            if(element.id == "id_quantity"){
+            quantity = element.value;
+           } else if(element.id == "id_packet"){
+            packet = element.value;
+           } else if (element.id == "id_price"){
+            price = element.value;
+           } else if (element.id == "id_bulk_price"){
+            bulk_price = element.value;
+           }
+           fetchData(price,quantity,bulk_price,packet);
+        });
     });
-
-    ele = document.getElementById("bulk_price");
-    var b = document.getElementById("bulk_price").value;
-    ele.addEventListener("input", function(e) {
-
-    });
-
-    elem = document.getElementById("num_packet");
-    elem.addEventListener("change", function(e) {
-        var n = e.target.value;
-        var c = document.getElementById("packet_content").value;
-        document.getElementById("quantity").value = n*c;
-        var s = document.getElementById("stock").value;
-        var num = n*c;
-        var new_stock = Number(s)+Number(num);
-        document.getElementById("stock").value = new_stock;
-    });
+    function fetchData(price,quantity,bulk_price,packet){
+        if(quantity != null && price != null && packet != null && bulk_price != null ){
+        document.getElementById("rate").innerHTML = roundOff((bulk_price / quantity),3);
+        document.getElementById("profit-per-item").innerHTML = roundOff((price - (bulk_price/quantity)),3);
+        document.getElementById('profit-per-packet').innerHTML = roundOff(((price*quantity) - bulk_price),3);
+    }
+    }
+    function roundOff(num,decimal){
+        const f =Math.pow(10,decimal);
+        return Math.round(num*f)/f;
+    }
 </script>
 {% endblock content %}

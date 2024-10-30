@@ -414,7 +414,8 @@ strong{
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
-  margin: 1rem;
+  margin: 1rem auto;
+  height: $body-height;
 }
 
 .form-fields{
@@ -494,9 +495,10 @@ hr{
   justify-content: center;
   align-items: center;
   flex-wrap: wrap;
-  gap: 1rem;
+  gap: 2rem;
   padding: 1rem;
 }
+
 .card{
   margin: 0xp;
   padding: 0px;
