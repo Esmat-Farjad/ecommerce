@@ -508,6 +508,7 @@ hr{
   background-color: $base-color;
   border-radius: 5px;
   border: 1px solid $light-gray;
+  position: relative;
 }
 
 .card .image-holder{
@@ -632,6 +633,30 @@ hr{
   border-radius: 50%;
   font-size: 8px;
   color: white;
+}
+.stock-badge{
+  position: absolute;
+  top: 2%;
+  left: 2%;
+  z-index: 200;
+  background-color: $base-color;
+  color: gray;
+  padding: 3px 8px;
+  font-size: 11px;
+  font-weight: bold;
+  border-radius: 2px;
+  box-shadow: 0 0 10px gray;
+  text-transform: uppercase;
+  .success{
+    color: green;
+    padding: 0px;
+    margin: 0px;
+  }
+  .danger{
+    color: red;
+    padding: 0px;
+    margin: 0px;
+  }
 }
 .cart-detail{
   width: 100%;

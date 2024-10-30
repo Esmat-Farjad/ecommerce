@@ -34,6 +34,13 @@
                 data-end-point="{% url 'store:add_to_cart' item.id %}">Add</button>
                 <button class="btn-sm">Buy</button>
             </div>
+            <div class="stock-badge">
+                {% if item.stock > 0 %}
+                <p class="success">In Stock: {{item.stock}}</p>
+                {% else %}
+                <p class="danger">Out of Stock: {{item.stock}}</p>
+                {% endif %}
+            </div>
         </div>
         {% endfor %}
     </div>
