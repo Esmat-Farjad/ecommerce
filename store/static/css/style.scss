@@ -184,6 +184,22 @@ a{
   font-weight: bold;
   @include gradient-text($gradient-pink,$gradient-orange);
 }
+.flex-container-row{
+  display: flex;
+  flex-direction: row;
+  gap: 5px;
+  flex-wrap: wrap;
+  margin: 2vw;
+}
+.flex-container-row > *{
+  flex-shrink: 1;
+  flex-grow: 1;
+  flex-basis: 20rem;
+}
+.main-page{
+  width: 100%;
+  height: $body-height;
+}
 .homepage{
   @include flex-col-container();
   background-image: url("../image/background.svg");
@@ -670,12 +686,12 @@ hr{
   height: $body-height;
   
 }
-.cart-detail .detail-container{
+.detail-container{
   width: 80%;
   height: auto;
   margin: 1rem auto;
 }
-.cart-detail .detail-container .button-holder{
+.detail-container .button-holder{
   margin: 2rem auto;
   width: 50%;
 }
@@ -685,7 +701,16 @@ hr{
   height: 100%;
   margin: 5rem auto;
   color: lightgrey;
-
+}
+.manage-product a .fa-solid{
+  margin: 0rem 0.3rem;
+  font-size: 12px;
+}
+.manage-product a .fa-pen{
+  color:$primary;
+}
+.manage-product a .fa-trash{
+  color: rgb(170, 14, 14);
 }
 .quantity-handle{
   text-align: center;
