@@ -9,13 +9,24 @@
     <div class="purchase-holder">
         <div class="calculation-container">
             <div>
-                <strong>Rate: $ <span id="rate"></span></strong>
+                <strong>New Rate: $ <span id="rate"></span></strong>
             </div>
             <div>
-                <strong>Profit Per Item: $ <span id="profit-per-item"></span></strong>
+                <strong>New Profit Per Item: $ <span id="profit-per-item"></span></strong>
             </div>
             <div>
-                <strong>Profit Per Packet/Package: $ <span id="profit-per-packet"></span></strong>
+                <strong>New Profit Per Packet/Package: $ <span id="profit-per-packet"></span></strong>
+            </div>
+        </div>
+        <div class="calculation-container">
+            <div>
+                <strong>Previous Rate: $ {{form.instance.rate}}</strong>
+            </div>
+            <div>
+                <strong>Previous Profit Per Item: $ {{form.instance.profit}}</strong>
+            </div>
+            <div>
+                <strong>Available in Stock: {{form.instance.stock}}</strong>
             </div>
         </div>
         <form action="{% url 'store:purchase' %}" method="POST" enctype="multipart/form-data">
@@ -49,6 +60,13 @@
                     <label class="form-label">{{form.bulk_price.label_tag}}</label>
                     {{form.bulk_price}}
                     {{form.bulk_price.errors}}
+                    <label class="form-label">Available in {{form.stock.label_tag}}</label>
+                    {{form.stock}}
+                    <small>
+                        <i class="fa-regular fa-lightbulb" style="color: orange;"></i>
+                        Enter the number or product to be added in stock.
+                    </small>
+                    {{form.stock.errors}}
                 </div>
                 <div class="extra-info">
                     <label class="form-label">{{form.mfd.label_tag}}</label>

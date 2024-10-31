@@ -7,7 +7,9 @@
         <h1 class="title">Products List</h1>
         <p class="text">The products available with its stock details</p>
     </div>
+    {% if page_obj.object_list %}
     <div class="table-holder"> 
+        
         <table>
             <thead>
                 <th>#</th>
@@ -50,6 +52,7 @@
                 {% endfor %}
             </tbody>
         </table>
+        
     </div>
     <!-- paginator navigation button start -->
     <div class="paginator">
@@ -73,6 +76,12 @@
         {% endif %}
     </div>
     <!-- paginator navigation button end -->
+    {% else %}
+    <div class="empty-record">
+        <h1 class="title">No Product Found</h1>
+        <a href="{% url 'store:purchase' %}" class="active-link">Let's Purchase some</a>
+    </div>
+    {% endif %}
 </div>
 
 {% endblock content %}

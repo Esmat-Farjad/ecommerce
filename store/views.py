@@ -9,7 +9,7 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.urls import reverse
 from .models import Category, CustomUser, Sale, Product
-from .forms import ProductSearchForm, PurchaseProductForm, UserCreationForm
+from .forms import ProductSearchForm, PurchaseProductForm, UpdateProductForm, UserCreationForm
 from django.db.models import Q
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Sum
@@ -205,11 +205,12 @@ def purchase(request):
         
         if purchase_form.is_valid():
             price = purchase_form.cleaned_data.get('price')
-            quantity = purchase_form.cleaned_data.get('quantity')
+            packet_contain = purchase_form.cleaned_data.get('packet_contain')
+            num_packet = purchase_form.cleaned_data.get('num_packet')
             total_price = purchase_form.cleaned_data.get('bulk_price')
-            rate  = round((total_price / quantity),3)
+            rate  = round((total_price / packet_contain),3)
             profit = round((price - rate),3)
-            stock = quantity
+            stock = packet_contain * num_packet
             print(f"RATE: {rate} || PROFIT: {profit} || STOCK: {stock}")
             product = purchase_form.save(commit=False)
             product.rate = rate
@@ -263,9 +264,9 @@ def display_details(request, iid):
 def manage_product(request, action, pid):
     product = get_object_or_404(Product, pk=pid)
     if pid and action == 'edit':
-        form = PurchaseProductForm(instance=product)
+        form = UpdateProductForm(instance=product)
         if request.method == 'POST':
-            form = PurchaseProductForm(request.POST, instance=product)
+            form = UpdateProductForm(request.POST, instance=product)
             if form.is_valid():
                 form.save()
         context = {

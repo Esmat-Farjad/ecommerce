@@ -22,6 +22,7 @@ class Category(models.Model):
     def __str__(self):
         return self.name
 class Product(models.Model):
+    NUMBER_CHOICES = [(i, str(i)) for i in range(1,201)]
     # Relationship 
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     user = models.ForeignKey(CustomUser, null=True, on_delete=models.SET_NULL)
@@ -30,14 +31,14 @@ class Product(models.Model):
     description = models.CharField(max_length=200)
     price = models.IntegerField(default=0)
     bulk_price = models.IntegerField(default=0)
-    quantity = models.IntegerField(default=0)
+    packet_contain = models.PositiveBigIntegerField(choices=NUMBER_CHOICES)
     rate = models.FloatField(null=True, default=0)
     mfd = models.DateField(null=True, blank=True)
     expd = models.DateField(null=True, blank=True)
     profit = models.IntegerField(null=True,default=0)
     stock = models.IntegerField(null=True,default=0)
-    packet = models.IntegerField(default=1)
-    image = models.ImageField(default='default.jpg', upload_to='item_images')
+    num_packet = models.IntegerField(default=1)
+    image = models.ImageField(default='default.svg', upload_to='item_images')
    
     
     

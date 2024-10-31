@@ -471,7 +471,7 @@ strong {
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
-  margin: 1rem auto;
+  margin: 2vw;
   height: 70vh;
 }
 
@@ -555,6 +555,12 @@ hr {
   display: flex;
   flex-direction: column;
   width: 100%;
+  height: 70vh;
+}
+
+.product-page {
+  width: 100%;
+  height: 70vh;
 }
 
 .sale-page .product-holder {
@@ -763,11 +769,12 @@ hr {
   width: 50%;
 }
 
-.cart-detail .empty-record {
+.empty-record {
   text-align: center;
   width: 100%;
   height: 100%;
-  margin: 0px auto;
+  margin: 5rem auto;
+  color: lightgrey;
 }
 
 .quantity-handle {

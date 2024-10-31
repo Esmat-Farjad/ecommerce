@@ -62,4 +62,24 @@ class ProductSearchForm(forms.Form):
         )
 
 
+class UpdateProductForm(forms.ModelForm):
+    class Meta:
+        model = Product
+        fields = "__all__"
+        widgets = {
+            'mfd':forms.widgets.DateInput(
+                attrs={
+                    "type": "date",
+                }),
+            'expd':forms.widgets.DateInput(
+                attrs={
+                    "type": "date",
+                })
+        }
+        
+    def __init__(self, *args, **kwargs):
+        super(UpdateProductForm, self).__init__(*args, **kwargs)
 
+        for visible in self.visible_fields():
+            visible.field.widget.attrs['class']="form-input"
+            visible.field.widget.attrs['placeholder']=visible.field.label

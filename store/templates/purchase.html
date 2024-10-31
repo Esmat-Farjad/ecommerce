@@ -8,17 +8,6 @@
         <p class="text">Purchase the product to complete the stock</p>
     </div>
     <div class="purchase-holder">
-        <div class="calculation-container">
-            <div>
-                <strong>Rate: $ <span id="rate"></span></strong>
-            </div>
-            <div>
-                <strong>Profit Per Item: $ <span id="profit-per-item"></span></strong>
-            </div>
-            <div>
-                <strong>Profit Per Packet/Package: $ <span id="profit-per-packet"></span></strong>
-            </div>
-        </div>
         <form action="{% url 'store:purchase' %}" method="POST" enctype="multipart/form-data">
             {% csrf_token %}
             <div class="form-fields">
@@ -34,12 +23,12 @@
                     {{form.category.errors}}
                 </div>
                 <div class="product-price">
-                    <label class="form-label">{{form.quantity.label_tag}}</label>
-                    {{form.quantity}}
-                    {{form.quantity.errors}}
-                    <label class="form-label">{{form.packet.label_tag}}</label>
-                    {{form.packet}}
-                    {{form.packet.errors}}
+                    <label class="form-label">{{form.packet_contain.label_tag}}</label>
+                    {{form.packet_contain}}
+                    {{form.packet_contain.errors}}
+                    <label class="form-label">{{form.num_packet.label_tag}}</label>
+                    {{form.num_packet}}
+                    {{form.num_packet.errors}}
                     <label class="form-label">{{form.image.label_tag}}</label>
                     {{form.image}}
                     {{form.image.errors}}
@@ -135,36 +124,5 @@
     </div>
     <!-- paginator navigation button end -->
 </div>
-<script>
-    const numberData = document.querySelectorAll("input[type=number]");
-    let quantity = 0;
-    let packet = 0;
-    let price = 0;
-    let bulk_price = 0;
-    numberData.forEach(element => {
-        element.addEventListener("input", ()=>{
-            if(element.id == "id_quantity"){
-            quantity = element.value;
-           } else if(element.id == "id_packet"){
-            packet = element.value;
-           } else if (element.id == "id_price"){
-            price = element.value;
-           } else if (element.id == "id_bulk_price"){
-            bulk_price = element.value;
-           }
-           fetchData(price,quantity,bulk_price,packet);
-        });
-    });
-    function fetchData(price,quantity,bulk_price,packet){
-        if(quantity != null && price != null && packet != null && bulk_price != null ){
-        document.getElementById("rate").innerHTML = roundOff((bulk_price / quantity),3);
-        document.getElementById("profit-per-item").innerHTML = roundOff((price - (bulk_price/quantity)),3);
-        document.getElementById('profit-per-packet').innerHTML = roundOff(((price*quantity) - bulk_price),3);
-    }
-    }
-    function roundOff(num,decimal){
-        const f =Math.pow(10,decimal);
-        return Math.round(num*f)/f;
-    }
-</script>
+
 {% endblock content %}

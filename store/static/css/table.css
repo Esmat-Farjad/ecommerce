@@ -1,18 +1,17 @@
 table {
   width: 100%;
   border-collapse: collapse;
-  border: 1px solid #e9eaec;
+  border: 1px solid #E9EAEC;
 }
 
-th,
-td {
+th, td {
   padding: 5px;
-  border: 1px solid #e9eaec;
+  border: 1px solid #E9EAEC;
   font-size: 14px;
 }
 
 th {
-  background-color: #e9eaec;
+  background-color: #E9EAEC;
 }
 
 .table-holder {
@@ -22,17 +21,4 @@ th {
 .tablure-page {
   width: 100%;
   height: 70vh;
-} /*# sourceMappingURL=table.css.map */
-.manage-product {
-  text-align: center;
-  font-size: 11px;
-  .fa-solid {
-    margin: 0px 5px;
-  }
-  .fa-trash {
-    color: red;
-  }
-  .fa-pen {
-    color: #0d6efd;
-  }
-}
+}/*# sourceMappingURL=table.css.map */
