@@ -8,6 +8,7 @@ th, td {
   padding: 5px;
   border: 1px solid #E9EAEC;
   font-size: 14px;
+  min-width: 10rem;
 }
 
 th {
