@@ -21,7 +21,11 @@ urlpatterns = [
         views.manage_product, 
         name='manage_product'
         ),
-    path('stock/', views.stock, name='stock'),
+    path(
+        'stock/', 
+        views.stock, 
+        name='stock'
+        ),
     path('stockRoute/<flag>', views.stockRoute, name='stockRoute'),
     path('update_stock/', views.update_stock, name='update_stock'),
     path('sale_search/', views.sale_search, name='sale_search'),

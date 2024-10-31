@@ -1,58 +1,71 @@
 {% extends 'main/base.html' %}
 {% load static %}
 {% block content %}
-<div class="m-5 p-5">
-
-    <div class="grid grid-cols-4 gap-2">
-        <div class="side border sticky">
-            <h1 class="text-2xl text-center my-10">Side Menu</h1>
-            <div class="" id="menu-div">
-                {% if flag == 1 %}
-                    <a class="px-3 py-3 w-full block bg-teal-500 text-white  transition ease-in-out duration-500 border-b my-1 "
-                        href=""><i class="fa-regular fa-file-lines"></i>&nbsp;Stock Summery active</a>
-                {% else %}
-                <a class="px-3 py-3 w-full block hover:bg-teal-500 hover:text-white hover: transition ease-in-out duration-500 border-b my-1  "
-                    href="{% url 'store:stockRoute' 1 %}"><i class="fa-regular fa-file-lines"></i>&nbsp;Stock Summery</a>
-                {% endif %}
-            </div>
-            <div class="" id="menu-div">
-                {% if flag == 2 %}
-                    <a class="px-3 py-3 w-full block bg-teal-500 text-white  transition ease-in-out duration-500 border-b my-1 "
-                        href=""><i class="fa-solid fa-plus"></i>&nbsp;Add to Stock active</a>
-                {% else %}
-                    <a class="px-3 py-3 w-full block hover:bg-teal-500 hover:text-white hover: transition ease-in-out duration-500 border-b my-1  "
-                        href="{% url 'store:stockRoute' 2 %}"><i class="fa-solid fa-plus"></i>&nbsp;Add to Stock</a>
-                {% endif %}
-            </div>
-            <div class="" id="menu-div">
-                {% if flag == 3 %}
-                    <a class="px-3 py-3 w-full block bg-teal-500 text-white  transition ease-in-out duration-500 border-b my-1 "
-                        href="{% url 'store:stockRoute' 3 %}"><i class="fa-solid fa-recycle"></i>&nbsp;Update Stock active</a>
-                {% else %}
-                        <a class="px-3 py-3 w-full block hover:bg-teal-500 hover:text-white hover:font-semibold transition ease-in-out duration-500 border-b my-1  "
-                            href="{% url 'store:stockRoute' 3 %}"> <i class="fa-solid fa-recycle"></i>&nbsp; Update Stock </a>
-                {% endif %}
-            </div>
-            <div class="" id="menu-div">
-                {% if flag == 4 %}
-                    <a class="px-3 py-3 w-full block bg-teal-500 text-white  transition ease-in-out duration-500 border-b my-1 "
-                        href=""><i class="fa-solid fa-chart-simple"></i>&nbsp;sale Information active</a>
-                {% else %}
-                    <a class="px-3 py-3 w-full block hover:bg-teal-500 hover:text-white hover: transition ease-in-out duration-500 border-b my-1  "
-                        href="{% url 'store:stockRoute' 4 %}"><i class="fa-solid fa-chart-simple"></i>&nbsp;Stock Information</a>
-                {% endif %}
-            </div>
+<div class="main-page">
+    <div class="heading">
+        <h1 class="title">Stock Management</h1>
+        <p class="text">Manage stock and observe the products</p>
     </div>
-    <div class="overflow-x-auto col-span-3">
-        {% if flag == 1 %}
-            {% include 'stock_summery.html' %}
-        {% elif flag == 2 %}
-            {% include 'includes/add_stock.html' %}
-        {% elif flag == 3 %}
-            {% include 'includes/update_stock.html' %}
-        {% elif flag == 4 %}
-            {% include 'includes/sale_info.html' %}
-        {% endif %}
+    <div class="detail-container">
+        <table class="table">
+            <thead>
+                <th>#</th>
+                <th>Product Name</th>
+                <th>Product Description</th>
+                <th>Product Category</th>
+                <th>Product Packet</th>
+                <th>Product Rate</th>
+                <th>Product Price</th>
+                <th>Product profit</th>
+                <th>Product stock</th>
+                <th>Manufacturing Date</th>
+                <th>Expiration Date</th>
+            </thead>
+            <tbody>
+                
+                {% for item in page_obj.object_list %}
+                <tr>
+                    {% if item.image %}
+                        <td><img src="{{item.image.url}}" alt="image" width="24px" height="24px"></td>
+                    {% elif not item.image %}
+                        <td><img src="media/item_images/default.png" width="24px" height="24px"></td>
+                    {% endif %}
+                    <td>{{item.name}}</td>
+                    <td>{{item.description}}</td>
+                    <td>{{item.category}}</td>
+                    <td>{{item.packet}}</td>
+                    <td>{{item.rate}}</td>
+                    <td>{{item.price}}</td>
+                    <td>{{item.profit}}</td>
+                    <td>{{item.stock}}</td>
+                    <td>{{item.mfd}}</td>
+                    <td>{{item.expd}}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <!-- paginator navigation button start -->
+        <div class="paginator">
+            {% if page_obj.has_previous %}
+            <a href="?page={{page_obj.previous_page_number}}">
+                <small class="active-nav"><i class="fa-solid fa-angles-left"></i></small>
+            </a>
+            {% else %}
+            <small class="not-active-nav"><i class="fa-solid fa-angles-left"></i></small>
+            {% endif %}
+            <span>Page
+                <span class="active-page">{{page_obj.number}}</span> of
+                <span>{{page_obj.paginator.num_pages}}</span>
+            </span>
+            {% if page_obj.has_next %}
+            <a href="?page={{page_obj.next_page_number}}" class="tooltip relative">
+                <small class="active-nav"><i class="fa-solid fa-angles-right"></i></small>
+            </a>
+            {% else %}
+            <small class="not-active-nav"><i class="fa-solid fa-angles-right"></i></small>
+            {% endif %}
+        </div>
+        <!-- paginator navigation button end -->
     </div>
 </div>
 {% endblock content %}
