@@ -12,7 +12,6 @@ body{
   margin: 0px;
   padding: 0px;
   width: auto;
-  height: 100%;
 }
 a{
   text-decoration: none;
@@ -26,7 +25,7 @@ a{
   margin: 0px;
 }
 .logo-image-footer{
-  width: 200px;
+  width: 100px;
   height: auto;
   object-fit: cover;
   padding: 0px;
@@ -184,11 +183,11 @@ a{
   font-weight: bold;
   @include gradient-text($gradient-pink,$gradient-orange);
 }
-.flex-container-row{
+.grid-container{
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(20rem, 100%), 1fr));
   gap: 1rem;
-  margin: 4vw;
+  margin: 1vw 4vw;
 }
 .main-page{
   width: 100%;
@@ -265,26 +264,21 @@ a{
   width: 100%;
   height: 100%;
   border-top: 1px solid $light-gray;
+  font-size: 12px;
+  background-color: $light-gray;
+  border: 1px solid $light-gray;
 }
 .footer .heading .text{
   text-align: center;
   color: $marron-color;
 }
-.footer .footer-container{
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  margin: 2rem 2rem 0rem 2rem;
-}
-
 .unorder-list{
   list-style-type: none;
   margin: 0px;
   padding: 0px;
 }
 .unorder-list .option{
-  padding: 0.5rem;
+  padding: 5px;
 }
 .icon-design{
   font-size: 20px;

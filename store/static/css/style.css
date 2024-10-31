@@ -10,7 +10,6 @@ body {
   margin: 0px;
   padding: 0px;
   width: auto;
-  height: 100%;
 }
 
 a {
@@ -28,7 +27,7 @@ a {
 }
 
 .logo-image-footer {
-  width: 200px;
+  width: 100px;
   height: auto;
   -o-object-fit: cover;
      object-fit: cover;
@@ -189,17 +188,17 @@ a {
   text-fill-color: transparent;
 }
 
-.flex-container-row {
+.grid-container {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(20rem, 100%), 1fr));
   gap: 1rem;
-  margin: 4vw;
+  margin: 1vw 4vw;
 }
 
 .main-page {
   width: 100%;
   height: 100%;
-  min-height: 70vh;
+  min-height: 80vh;
   overflow-y: scroll;
 }
 
@@ -210,7 +209,7 @@ a {
   align-items: center;
   flex-wrap: wrap;
   width: 100%;
-  height: 70vh;
+  height: 80vh;
   background-image: url("../image/background.svg");
   background-repeat: no-repeat;
   margin-top: 4px;
@@ -286,19 +285,14 @@ a {
   width: 100%;
   height: 100%;
   border-top: 1px solid #E9EAEC;
+  font-size: 12px;
+  background-color: #E9EAEC;
+  border: 1px solid #E9EAEC;
 }
 
 .footer .heading .text {
   text-align: center;
   color: rgb(73, 9, 9);
-}
-
-.footer .footer-container {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  margin: 2rem 2rem 0rem 2rem;
 }
 
 .unorder-list {
@@ -308,7 +302,7 @@ a {
 }
 
 .unorder-list .option {
-  padding: 0.5rem;
+  padding: 5px;
 }
 
 .icon-design {
@@ -327,7 +321,7 @@ a {
   align-items: center;
   flex-wrap: wrap;
   width: 100%;
-  height: 70vh;
+  height: 80vh;
 }
 
 .login-page > * {
@@ -439,7 +433,7 @@ strong {
   align-items: center;
   flex-wrap: wrap;
   width: 100%;
-  height: 70vh;
+  height: 80vh;
 }
 
 .signup-page .form-holder > * {
@@ -718,7 +712,7 @@ hr {
 
 .cart-detail {
   width: 100%;
-  height: 70vh;
+  height: 80vh;
 }
 
 .detail-container {
