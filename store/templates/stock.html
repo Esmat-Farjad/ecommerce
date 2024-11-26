@@ -6,7 +6,31 @@
         <h1 class="title">Stock Management</h1>
         <p class="text">Manage stock and observe the products</p>
     </div>
+    
     <div class="detail-container">
+        <div class="statistics-container">
+            <div class="product-statistics">
+                <div class="products">
+                    <h4 class="title">Active Products</h4>
+                    <p class="text">894,375</p>
+                </div>
+                <div class="products">
+                    <h4 class="title">Winning Products</h4>
+                    <p class="text">8 Seater</p>
+                </div>
+                <div class="products">
+                    <h4 class="title">Average Performance</h4>
+                    <p class="text">Good</p>
+                </div>
+                <div class="products">
+                    <h4 class="title">Product Sold</h4>
+                    <p class="text">98,253</p>
+                </div>
+            </div>
+            <div class="product-statistics canvas-holder">
+                <canvas height="50px" id="myChart"></canvas>
+            </div>
+        </div>
         <table class="table">
             <thead>
                 <th>#</th>
@@ -68,4 +92,34 @@
         <!-- paginator navigation button end -->
     </div>
 </div>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+  integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+  crossorigin=""></script>
+  <script>
+    const ctx = document.getElementById('myChart');
+    
+    new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: {{sold_product|safe}},
+        datasets: [{
+          label: 'Products Sales Statistics',
+          data: {{sold_quantity|safe}},
+          borderWidth: 2,
+          tension: 0.4,
+          borderColor:'#a52824',
+        }]
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+  </script>
 {% endblock content %}

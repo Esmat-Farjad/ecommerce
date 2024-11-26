@@ -39,6 +39,21 @@ a {
   text-align: center;
 }
 
+@media (max-width: 1024px) {
+  .statistics-container {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 5px;
+  }
+}
+@media (min-width: 1024px) {
+  .statistics-container {
+    display: grid;
+    grid-template-columns: 20vw 58.5vw;
+    gap: 1rem;
+  }
+}
+
 .navbar {
   padding: 0px;
   margin: 0px;
@@ -763,4 +778,17 @@ hr {
 .btn-num:hover {
   background-color: #E9EAEC;
   font-weight: bold;
+}
+
+.product-statistics {
+  border: 1px solid #E9EAEC;
+  border-radius: 5px;
+  box-shadow: 0 0 8px #E9EAEC;
+  padding: 1rem;
+  margin-bottom: 10px;
+}
+
+.product-statistics .products .title, .text {
+  margin: 0px;
+  padding: 0px;
 }/*# sourceMappingURL=style.css.map */
