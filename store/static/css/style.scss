@@ -8,6 +8,36 @@
     font-style: normal;
     
 }
+.breadcrumbs-nav-panel{
+ font-size: 14px;
+}
+.breadcrumbs-nav-panel .holder{
+  display: flex;
+  flex-direction: row;
+}
+.breadcrumbs{
+  list-style-type: none;
+  display: inline-block;
+
+  padding: 0px;
+}
+.breadcrumbs ,li{
+  display: inline-block;
+}
+.breadcrumbs .current{
+  color: $primary;
+}
+.breadcrumbs li::after {
+  content: "\f054"; /* FontAwesome chevron-right icon */
+  font-family: "Font Awesome 5 Free"; /* Specify the FontAwesome font family */
+  font-weight: 900; /* Make sure the icon is displayed in solid style */
+  color: gray;
+  margin: 0px 5px;
+  font-size: 14px;
+}
+.breadcrumbs li:last-child::after {
+  content: ""; /* Remove the chevron after the last breadcrumb */
+}
 body{
   margin: 0px;
   padding: 0px;
@@ -202,6 +232,26 @@ a{
   grid-template-columns: repeat(auto-fit, minmax(min(20rem, 100%), 1fr));
   gap: 1rem;
   margin: 1vw 4vw;
+}
+.main-page-container{
+  margin: 0rem 10rem;
+}
+@media (max-width: 1200px) {
+  .main-page-container {
+      margin: 0rem 8rem; /* Adjust the margin for medium screens */
+  }
+}
+
+@media (max-width: 768px) {
+  .main-page-container {
+      margin: 0rem 5rem; /* Adjust the margin for small screens */
+  }
+}
+
+@media (max-width: 480px) {
+  .main-page-container {
+      margin: 0rem 2rem; /* Further adjustment for extra small screens */
+  }
 }
 .main-page{
   width: 100%;

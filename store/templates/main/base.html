@@ -23,6 +23,18 @@
     {% endfor %}
     {% endif %}
     <!-- SYSTEM MESSAGES END -->
+    {% if user.is_authenticated %}
+    <div class="main-page-container">
+        <div class="breadcrumbs-nav-panel">
+            <div class="holder">
+                <ul class="breadcrumbs">
+                    <li><a href="/">Home</a></li>
+                    {% block breadcrumb_li %}{% endblock breadcrumb_li %}
+                </ul>
+            </div>
+        </div>
+    </div>
+    {% endif %}
 
     {% block content %}
     {% endblock content %}

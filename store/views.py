@@ -30,6 +30,9 @@ def home(request):
     return render(request, 'home.html', context)
 
 def base(request):
+    request.breadcrums =[
+        {"name":"home","url":"/"}
+    ]
     return render(request, 'main/base.html')
 
 def signup(request):
@@ -281,9 +284,15 @@ def manage_product(request, action, pid):
 
 def stock(request):
     product = Product.objects.select_related('category')
-    sold_product = Sale.objects.values_list('product')
+    total_product = product.count()
+    print(total_product)
+    total_items_count = 0
+    for p in product:
+        total_items_count += int(p.stock)
+    print(total_product)
+    sold_product =   Sale.objects.values_list('product')
     sold_quantity = Sale.objects.values_list('quantity',flat=True)
-    sold_product=Product.objects.values_list('name',flat=True).filter(id__in=sold_product)
+    sold_product=Product.objects.values_list('name',flat=True).filter(id__in=sold_product) 
     
     p = Paginator(product, 14)
     page_number = request.GET.get('page')

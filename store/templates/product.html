@@ -1,12 +1,11 @@
 {% extends 'main/base.html' %}
 {% load static %}
+{% block breadcrumb_li %}
+<li class="current">products</li>
+{% endblock %}
 {% block content %}
-
-<div class="main-page">
-    <div class="heading">
-        <h1 class="title">Products List</h1>
-        <p class="text">The products available with its stock details</p>
-    </div>
+<div class="main-page-container">
+    
     {% if page_obj.object_list %}
     <div class="detail-container"> 
         <table>
