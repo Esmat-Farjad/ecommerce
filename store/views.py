@@ -1,6 +1,5 @@
 from datetime import datetime
-
-import math
+import plotly.express as px
 
 import random
 from django.http import JsonResponse
@@ -266,6 +265,7 @@ def display_details(request, iid):
 
 def manage_product(request, action, pid):
     product = get_object_or_404(Product, pk=pid)
+
     if pid and action == 'edit':
         form = UpdateProductForm(instance=product)
         if request.method == 'POST':
@@ -284,12 +284,18 @@ def manage_product(request, action, pid):
 
 def stock(request):
     product = Product.objects.select_related('category')
+    sale = Sale.objects.all()
+    fig = px.line(
+        x=[item.product.name for item in sale],
+        y=[item.quantity for item in sale]
+    )
+    chart = fig.to_html()
     total_product = product.count()
-    print(total_product)
+ 
     total_items_count = 0
     for p in product:
         total_items_count += int(p.stock)
-    print(total_product)
+   
     sold_product =   Sale.objects.values_list('product')
     sold_quantity = Sale.objects.values_list('quantity',flat=True)
     sold_product=Product.objects.values_list('name',flat=True).filter(id__in=sold_product) 
@@ -302,7 +308,7 @@ def stock(request):
         page_obj = p.page(1)
     except EmptyPage:
         page_obj = p.page(p.num_pages)
-    context = {'flag':3, 'page_obj':page_obj,'sold_product':list(sold_product),'sold_quantity':list(sold_quantity)}
+    context = {'flag':3, 'page_obj':page_obj,'chart':chart}
     if request.method == 'POST':
         search = request.POST['search']
         product = Product.objects.filter(Q(name__icontains=search) |  Q(description__icontains=search))

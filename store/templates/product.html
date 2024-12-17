@@ -5,9 +5,19 @@
 {% endblock %}
 {% block content %}
 <div class="main-page-container">
-    
+    <div class="heading-holder">
+        <div class="text-holder">
+            <h2 class="text-title">All the Products</h2>
+            <p class="subtitle">the list below display all the products details</p>
+        </div>
+        <div class="action-button">
+            <a href="#" class="btn"><i class="fa-solid fa-plus"></i> Product</a>
+            <a href="#" class="btn">Stock</a>
+            <a href="#" class="btn">Update</a>
+        </div>
+    </div>
     {% if page_obj.object_list %}
-    <div class="detail-container"> 
+    <div> 
         <table>
             <thead>
                 <th>#</th>

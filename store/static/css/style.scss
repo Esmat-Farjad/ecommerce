@@ -64,6 +64,21 @@ a{
 .image-holder{
   text-align: center;
 }
+.heading-holder{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 3rem 0rem;
+}
+.heading-holder .text-title{
+  padding: 0px;
+  margin: 0px;
+}
+.heading-holder .text-subtitle{
+  padding: 0px;
+  margin: 0px;
+  @include gradient-text($gradient-pink,$gradient-orange);
+}
 .statistics-container{
   @include respond-to(mobile-tablet){
     display: grid;
@@ -299,16 +314,25 @@ a{
   gap: 5px;
   margin: 1rem;
 }
-
-.btn{
-  background-image: linear-gradient(45deg, $gradient-pink,$gradient-orange);
-  padding: 8px;
-  border: none;
-  width: 100%;
-  border-radius: 5px;
-  background-color: transparent;
-  transition: background-image 0.5s ease;
+.btn {
+  padding: 2px 10px;
+  color: white;
+  border-radius: 3px;
+  background-color: $marron-color;
+  font-size: 14px;
+  font-weight: 600;
 }
+
+// .btn{
+//   background-image: linear-gradient(45deg, $gradient-pink,$gradient-orange);
+//   padding: 8px;
+//   border: none;
+//   color: white;
+//   width: 100%;
+//   border-radius: 5px;
+//   background-color: transparent;
+//   transition: background-image 0.5s ease;
+// }
 .btn-auth{
   background-image: linear-gradient(45deg, $gradient-pink,$gradient-orange);
   padding: 8px;
@@ -457,15 +481,7 @@ strong{
   max-width: 23rem;
 
 }
-.heading{
-  text-align: center;
-}
-.heading .title{
-  margin-bottom: 0px;
-}
-.heading .text{
-  margin-top: 0px;
-}
+
 .errorlist{
   list-style-type: none;
   margin: 0px;
@@ -696,12 +712,7 @@ hr{
   height: $body-height;
   
 }
-.detail-container{
-  width: 80%;
-  height: auto;
-  margin: 1rem auto;
-  overflow-x: scroll;
-}
+
 .detail-container .button-holder{
   margin: 2rem auto;
   width: 50%;
