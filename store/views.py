@@ -296,10 +296,6 @@ def stock(request):
     for p in product:
         total_items_count += int(p.stock)
    
-    sold_product =   Sale.objects.values_list('product')
-    sold_quantity = Sale.objects.values_list('quantity',flat=True)
-    sold_product=Product.objects.values_list('name',flat=True).filter(id__in=sold_product) 
-    
     p = Paginator(product, 14)
     page_number = request.GET.get('page')
     try:
@@ -308,12 +304,20 @@ def stock(request):
         page_obj = p.page(1)
     except EmptyPage:
         page_obj = p.page(p.num_pages)
-    context = {'flag':3, 'page_obj':page_obj,'chart':chart}
+
+    context = {
+        'flag':3, 
+        'page_obj':page_obj,
+        'chart':chart
+        }
     if request.method == 'POST':
         search = request.POST['search']
         product = Product.objects.filter(Q(name__icontains=search) |  Q(description__icontains=search))
-        context = {'flag':3, 'product':product}
-        return render(request, 'stock.html', context)
+        context = {
+            'flag':3, 
+            'product':product
+            }
+        
     return render(request, 'stock.html', context)
 
 def stockRoute(request, flag):
