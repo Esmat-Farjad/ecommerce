@@ -1,6 +1,6 @@
 from datetime import datetime
 import plotly.express as px
-
+import plotly.graph_objects as go
 import random
 from django.http import JsonResponse
 from django.shortcuts import redirect, render, get_object_or_404
@@ -289,7 +289,19 @@ def stock(request):
         x=[item.product.name for item in sale],
         y=[item.quantity for item in sale]
     )
+    fig.update_layout(
+    legend=dict(
+        x=0.8,  # Horizontal position
+        y=0.9,  # Vertical position
+        traceorder='normal',
+        font=dict(family='Arial', size=12, color='red'),
+        bgcolor='rgba(255, 255, 255, 0.5)',
+        bordercolor='Black',
+        borderwidth=5
+    )
+)
     chart = fig.to_html()
+
     total_product = product.count()
  
     total_items_count = 0
