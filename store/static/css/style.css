@@ -97,19 +97,12 @@ a {
   text-fill-color: transparent;
 }
 
-@media (max-width: 1024px) {
-  .statistics-container {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 5px;
-  }
-}
-@media (min-width: 1024px) {
-  .statistics-container {
-    display: grid;
-    grid-template-columns: 20vw 58.5vw;
-    gap: 1rem;
-  }
+.statistics-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
 }
 
 .navbar {

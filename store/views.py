@@ -1,6 +1,8 @@
 from datetime import datetime
+import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
+from plotly.offline import plot
 import random
 from django.http import JsonResponse
 from django.shortcuts import redirect, render, get_object_or_404
@@ -284,24 +286,15 @@ def manage_product(request, action, pid):
 
 def stock(request):
     product = Product.objects.select_related('category')
-    sale = Sale.objects.all()
-    fig = px.line(
-        x=[item.product.name for item in sale],
-        y=[item.quantity for item in sale]
-    )
-    fig.update_layout(
-    legend=dict(
-        x=0.8,  # Horizontal position
-        y=0.9,  # Vertical position
-        traceorder='normal',
-        font=dict(family='Arial', size=12, color='red'),
-        bgcolor='rgba(255, 255, 255, 0.5)',
-        bordercolor='Black',
-        borderwidth=5
-    )
-)
-    chart = fig.to_html()
-
+    sale = Sale.objects.all().order_by('-quantity')
+    # plotly gantt_chart
+    
+    product_names = []
+    product_profit = []
+    for item in sale:
+        product_names.append(item.product.name)  # Add product name to the names list
+        product_profit.append(item.total_profit)   
+    
     total_product = product.count()
  
     total_items_count = 0
@@ -317,10 +310,45 @@ def stock(request):
     except EmptyPage:
         page_obj = p.page(p.num_pages)
 
+    fig = px.pie(
+        values=product_profit,
+        names=product_names
+    )
+    fig.update_layout(
+        title_text="Total Profit per Products sold",
+        )
+    
+    fig.update_traces(
+    hovertemplate='<b>Product name: %{label}</b><br>Profit: $%{value}<extra></extra>'
+    )
+    fig2 = px.bar(
+        x=[item.product.name for item in sale],
+        y=[item.quantity for item in sale],
+    )
+    
+
+    fig2.update_layout(
+        title_text="Products per quantity sold",
+        margin=dict(t=50, b=50, l=50, r=50),
+        xaxis_title="Product Names",
+        yaxis_title="Quantity Sold",
+        plot_bgcolor="skyblue",  # Background color for the plot area
+        paper_bgcolor="white",
+
+        xaxis_tickangle=45,  # Rotate x-axis labels by 45 degrees for readability
+        yaxis_tickformat=",.0f",
+        hovermode='closest',
+        
+        width=900,
+        height=450,
+    )
+    
+    fig2.update_traces(marker=dict(color="#a52824"))
     context = {
         'flag':3, 
         'page_obj':page_obj,
-        'chart':chart
+        'chart':fig.to_html(),
+        "lineChart":fig2.to_html()
         }
     if request.method == 'POST':
         search = request.POST['search']

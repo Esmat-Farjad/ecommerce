@@ -80,17 +80,11 @@ a{
   @include gradient-text($gradient-pink,$gradient-orange);
 }
 .statistics-container{
-  @include respond-to(mobile-tablet){
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 5px;
-  }
-  @include respond-to(desktop-large){
-    display: grid;
-    grid-template-columns: 20vw 58.5vw;
-    gap: 1rem;
-  }
-  
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
 }
 .navbar{
   // navbar style in general

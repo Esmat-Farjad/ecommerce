@@ -10,27 +10,13 @@
     <div class="detail-container">
         <div class="statistics-container">
             <div class="product-statistics">
-                <div class="products">
-                    <h4 class="title">Active Products</h4>
-                    <p class="text">894,375</p>
-                </div>
-                <div class="products">
-                    <h4 class="title">Winning Products</h4>
-                    <p class="text">8 Seater</p>
-                </div>
-                <div class="products">
-                    <h4 class="title">Average Performance</h4>
-                    <p class="text">Good</p>
-                </div>
-                <div class="products">
-                    <h4 class="title">Product Sold</h4>
-                    <p class="text">98,253</p>
-                </div>
+                {{ lineChart|safe }}
             </div>
             <div class="product-statistics canvas-holder">
                 <!-- django plotly  -->
                {{chart|safe}}
             </div>
+            /
         </div>
         <table class="table">
             <thead>
