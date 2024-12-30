@@ -47,6 +47,27 @@ a{
   text-decoration: none;
   color: inherit;
 }
+.heading{
+  padding: 0px;
+  margin: 3rem 0rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  .heading-text{
+    .title{
+      font-size: 28px;
+      font-weight: bold;
+      padding: 0px;
+      margin: 0px;
+    }
+    .text{
+      padding: 0px;
+      margin: 0px;
+      font-size: medium;
+    }
+  }
+  
+}
 .logo-image{
   width: 100px;
   height: auto;
@@ -79,13 +100,15 @@ a{
   margin: 0px;
   @include gradient-text($gradient-pink,$gradient-orange);
 }
+
 .statistics-container{
   display: flex;
   flex-direction: row;
   justify-content: center;
-  align-items: center;
   gap: 5px;
+  flex-wrap: wrap;
 }
+
 .navbar{
   // navbar style in general
   padding: 0px;

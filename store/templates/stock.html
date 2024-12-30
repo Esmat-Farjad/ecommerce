@@ -1,83 +1,93 @@
 {% extends 'main/base.html' %}
 {% load static %}
+{% load humanize %}
 {% block content %}
-<div class="main-page">
+<div class="main-page-container">
     <div class="heading">
-        <h1 class="title">Stock Management</h1>
-        <p class="text">Manage stock and observe the products</p>
-    </div>
-    
-    <div class="detail-container">
-        <div class="statistics-container">
-            <div class="product-statistics">
-                {{ lineChart|safe }}
-            </div>
-            <div class="product-statistics canvas-holder">
-                <!-- django plotly  -->
-               {{chart|safe}}
-            </div>
-            /
+        <div class="heading-text">
+            <h1 class="title">Stock Management</h1>
+            <p class="text">Manage stock and observe the products</p>
         </div>
-        <table class="table">
-            <thead>
-                <th>#</th>
-                <th>Product Name</th>
-                <th>Product Description</th>
-                <th>Product Category</th>
-                <th>Product Packet</th>
-                <th>Product Rate</th>
-                <th>Product Price</th>
-                <th>Product profit</th>
-                <th>Product stock</th>
-                <th>Manufacturing Date</th>
-                <th>Expiration Date</th>
-            </thead>
-            <tbody>
+        <div class="heading-action">
+            <p style="padding: 0px;margin: 0px;">
+                <strong>Total Income:&nbsp;
+                    <i class="fa-solid fa-dollar-sign"></i>&nbsp;
+                    <span style="color: green;">{{total_income}}</span>
+                </strong>
+            </p>
+            <p style="padding: 0px;margin: 0px;">
+                <strong>
+                    Total Expense:&nbsp;
+                    <i class="fa-solid fa-dollar-sign"></i>&nbsp;
+                    <span style="color:brown">{{total_expense}}</span>
+                </strong>
+            </p>
+        </div>
+    </div>
+    <div class="statistics-container">
+        <div class="product-statistics">
+            {{ lineChart|safe }}
+        </div>
+        <div class="product-statistics">
+            <!-- django plotly  -->
+            {{chart|safe}}
+        </div>
+    </div>
+    <table class="table">
+        <thead>
+            <th>#</th>
+            <th>Product Name</th>
+            <th>Product Category</th>
+            <th>Product Rate</th>
+            <th>Quantity</th>
+            <th>Product Price</th>
+            <th>Total Price</th>
+            <th>Product profit</th>
+            <th>Total profit</th>
+        </thead>
+        <tbody>
+            {% for item in page_obj.object_list %}
+            <tr>
+                {% if item.product.image %}
+                    <td><img src="{{item.product.image.url}}" alt="image" width="24px" height="24px"></td>
+                {% elif not item.image %}
+                    <td><img src="media/item_images/default.png" width="24px" height="24px"></td>
+                {% endif %}
+                <td>{{item.product.name}}</td>
+                <td>{{item.product.category}}</td>
+                <td><i class="fa-solid fa-dollar-sign"></i>&nbsp;&nbsp;{{item.product.rate|intcomma}}</td>
+                <td>{{item.quantity}}</td>
+                <td><i class="fa-solid fa-dollar-sign"></i>&nbsp;&nbsp;{{item.product.price|intcomma}}</td>
+                <td><i class="fa-solid fa-dollar-sign"></i>&nbsp;&nbsp;{{item.total_price|intcomma}}</td>
+                <td><i class="fa-solid fa-dollar-sign"></i>&nbsp;&nbsp;{{item.product.profit|intcomma}}</td>
+                <td><i class="fa-solid fa-dollar-sign"></i>&nbsp;&nbsp;{{item.total_profit|intcomma}}</td>
                 
-                {% for item in page_obj.object_list %}
-                <tr>
-                    {% if item.image %}
-                        <td><img src="{{item.image.url}}" alt="image" width="24px" height="24px"></td>
-                    {% elif not item.image %}
-                        <td><img src="media/item_images/default.png" width="24px" height="24px"></td>
-                    {% endif %}
-                    <td>{{item.name}}</td>
-                    <td>{{item.description}}</td>
-                    <td>{{item.category}}</td>
-                    <td>{{item.packet}}</td>
-                    <td>{{item.rate}}</td>
-                    <td>{{item.price}}</td>
-                    <td>{{item.profit}}</td>
-                    <td>{{item.stock}}</td>
-                    <td>{{item.mfd}}</td>
-                    <td>{{item.expd}}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-        <!-- paginator navigation button start -->
-        <div class="paginator">
-            {% if page_obj.has_previous %}
-            <a href="?page={{page_obj.previous_page_number}}">
-                <small class="active-nav"><i class="fa-solid fa-angles-left"></i></small>
-            </a>
-            {% else %}
-            <small class="not-active-nav"><i class="fa-solid fa-angles-left"></i></small>
-            {% endif %}
-            <span>Page
-                <span class="active-page">{{page_obj.number}}</span> of
-                <span>{{page_obj.paginator.num_pages}}</span>
-            </span>
-            {% if page_obj.has_next %}
-            <a href="?page={{page_obj.next_page_number}}" class="tooltip relative">
-                <small class="active-nav"><i class="fa-solid fa-angles-right"></i></small>
-            </a>
-            {% else %}
-            <small class="not-active-nav"><i class="fa-solid fa-angles-right"></i></small>
-            {% endif %}
-        </div>
-        <!-- paginator navigation button end -->
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <!-- paginator navigation button start -->
+    <div class="paginator">
+        {% if page_obj.has_previous %}
+        <a href="?page={{page_obj.previous_page_number}}">
+            <small class="active-nav"><i class="fa-solid fa-angles-left"></i></small>
+        </a>
+        {% else %}
+        <small class="not-active-nav"><i class="fa-solid fa-angles-left"></i></small>
+        {% endif %}
+        <span>Page
+            <span class="active-page">{{page_obj.number}}</span> of
+            <span>{{page_obj.paginator.num_pages}}</span>
+        </span>
+        {% if page_obj.has_next %}
+        <a href="?page={{page_obj.next_page_number}}" class="tooltip relative">
+            <small class="active-nav"><i class="fa-solid fa-angles-right"></i></small>
+        </a>
+        {% else %}
+        <small class="not-active-nav"><i class="fa-solid fa-angles-right"></i></small>
+        {% endif %}
     </div>
+    <!-- paginator navigation button end -->
 </div>
 
 {% endblock content %}

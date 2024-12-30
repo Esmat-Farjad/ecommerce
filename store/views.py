@@ -288,20 +288,15 @@ def stock(request):
     product = Product.objects.select_related('category')
     sale = Sale.objects.all().order_by('-quantity')
     # plotly gantt_chart
-    
+    total_income = sum(c.total_profit for c in sale)
+    total_expense = sum(c.product.rate for c in sale)
     product_names = []
     product_profit = []
     for item in sale:
         product_names.append(item.product.name)  # Add product name to the names list
         product_profit.append(item.total_profit)   
-    
-    total_product = product.count()
- 
-    total_items_count = 0
-    for p in product:
-        total_items_count += int(p.stock)
-   
-    p = Paginator(product, 14)
+
+    p = Paginator(sale, 8)
     page_number = request.GET.get('page')
     try:
         page_obj = p.get_page(page_number)
@@ -316,7 +311,8 @@ def stock(request):
     )
     fig.update_layout(
         title_text="Total Profit per Products sold",
-        )
+        width=500
+    )
     
     fig.update_traces(
     hovertemplate='<b>Product name: %{label}</b><br>Profit: $%{value}<extra></extra>'
@@ -325,39 +321,28 @@ def stock(request):
         x=[item.product.name for item in sale],
         y=[item.quantity for item in sale],
     )
-    
-
     fig2.update_layout(
         title_text="Products per quantity sold",
-        margin=dict(t=50, b=50, l=50, r=50),
+        margin=dict(t=40, b=20, l=20, r=20),
         xaxis_title="Product Names",
         yaxis_title="Quantity Sold",
         plot_bgcolor="skyblue",  # Background color for the plot area
         paper_bgcolor="white",
-
         xaxis_tickangle=45,  # Rotate x-axis labels by 45 degrees for readability
         yaxis_tickformat=",.0f",
         hovermode='closest',
+        width=500,
         
-        width=900,
-        height=450,
     )
-    
     fig2.update_traces(marker=dict(color="#a52824"))
     context = {
         'flag':3, 
         'page_obj':page_obj,
         'chart':fig.to_html(),
-        "lineChart":fig2.to_html()
+        "lineChart":fig2.to_html(),
+        "total_income":total_income,
+        "total_expense":total_expense
         }
-    if request.method == 'POST':
-        search = request.POST['search']
-        product = Product.objects.filter(Q(name__icontains=search) |  Q(description__icontains=search))
-        context = {
-            'flag':3, 
-            'product':product
-            }
-        
     return render(request, 'stock.html', context)
 
 def stockRoute(request, flag):

@@ -53,6 +53,25 @@ a {
   color: inherit;
 }
 
+.heading {
+  padding: 0px;
+  margin: 3rem 0rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.heading .heading-text .title {
+  font-size: 28px;
+  font-weight: bold;
+  padding: 0px;
+  margin: 0px;
+}
+.heading .heading-text .text {
+  padding: 0px;
+  margin: 0px;
+  font-size: medium;
+}
+
 .logo-image {
   width: 100px;
   height: auto;
@@ -101,8 +120,8 @@ a {
   display: flex;
   flex-direction: row;
   justify-content: center;
-  align-items: center;
   gap: 5px;
+  flex-wrap: wrap;
 }
 
 .navbar {
