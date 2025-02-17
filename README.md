@@ -22,5 +22,7 @@
 ```.env\Scripts\activate```
 #### install django
 ```pip install django```
+#### install all the packages from requirements.txt file
+```pip install -r requirements.txt```
 #### run the application<br/>
 ```python manage.py runserver```
