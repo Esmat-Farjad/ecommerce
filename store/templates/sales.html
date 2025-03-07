@@ -1,18 +1,33 @@
 {% extends 'main/base.html' %}
 {% load static %}
 {% load humanize %}
+{% block breadcrumb_li %}
+<li class="current">sale</li>
+{% endblock %}
 {% block content %}
 <div class="main-page sale-page">
     <div class="heading">
-        <h1 class="title">Sales Portal</h1>
-        <p class="text">search the product to find it</p>
+        <div class="heading-text main-page-container">
+            <h1 class="title">Sales Portal</h1>
+            <p class="text">search the product to find it</p>
+        </div>
     </div>
     <div class="search-form-holder">
-        <form action="" class="search-form">
-            {{search_form.query}}
-            <button type="submit" class="search-btn">Search</button>
+        <form action="" method="post" class="search-form"> 
+            {% csrf_token %}
+            <input
+            name="search-input"
+            id="search-input"
+            class="search-input"
+            hx-post="{% url 'store:search-products' %}"
+            hx-trigger="input"
+            hx-target="#search-form-container"
+            hx-swap="innerHTML"
+            placeholder="Search the item...">
         </form>
     </div>
+    
+    <div id="search-form-container"></div>
     <div class="product-holder">
         {% for item in page_obj.object_list %}
         <div class="card">
@@ -73,4 +88,5 @@
     <!-- paginator navigation button end -->
 </div>
 <script src="{% static '/js/script.js' %}"></script>
+<script src="{% static 'htmx.min.js' %}"></script>
 {% endblock content %}

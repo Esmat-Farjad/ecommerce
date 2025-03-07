@@ -1,5 +1,6 @@
 from datetime import datetime
 import pandas as pd
+import json
 import plotly.express as px
 import plotly.graph_objects as go
 from plotly.offline import plot
@@ -15,6 +16,7 @@ from django.db.models import Q
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Sum
 from django.contrib.auth.decorators import login_required
+from django.core import serializers
 
 
 # Create your views here.
@@ -490,3 +492,21 @@ def verifyOtp(request):
         else:
             messages.error(request, "The OTP is Invalid ! Please Try again...")
             return render(request, 'forgot_password', context)
+
+
+
+def search_product(request):
+    if request.method == 'POST':
+        data = request.POST.get("search-input")
+        if data:
+        # Access the data
+            product_list = Product.objects.filter(name__startswith=data)
+        else:
+            product_list = Product.objects.none()
+        context = {
+            "items":product_list
+        }
+        return render(request, "_option_form.html", context)
+
+        
+
