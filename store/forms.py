@@ -36,16 +36,6 @@ class PurchaseProductForm(forms.ModelForm):
         model = Product
         fields = "__all__"
         exclude = ['user','profit','stock','rate']
-        widgets = {
-            'mfd':forms.widgets.DateInput(
-                attrs={
-                    "type": "date",
-                }),
-            'expd':forms.widgets.DateInput(
-                attrs={
-                    "type": "date",
-                })
-        }
         
     def __init__(self, *args, **kwargs):
         super(PurchaseProductForm, self).__init__(*args, **kwargs)
@@ -66,16 +56,6 @@ class UpdateProductForm(forms.ModelForm):
     class Meta:
         model = Product
         fields = "__all__"
-        widgets = {
-            'mfd':forms.widgets.DateInput(
-                attrs={
-                    "type": "date",
-                }),
-            'expd':forms.widgets.DateInput(
-                attrs={
-                    "type": "date",
-                })
-        }
         
     def __init__(self, *args, **kwargs):
         super(UpdateProductForm, self).__init__(*args, **kwargs)

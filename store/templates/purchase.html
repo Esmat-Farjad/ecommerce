@@ -15,23 +15,23 @@
                     <label class="form-label">{{form.name.label_tag}}</label>
                     {{form.name}}
                     {{form.name.errors}}
+                    <label class="form-label">{{form.code.label_tag}}</label>
+                    {{form.code}}
+                    {{form.name.errors}}
                     <label class="form-label">{{form.description.label_tag}}</label>
                     {{form.description}}
                     {{form.description.errors}}
+                </div>
+                <div class="product-price">
                     <label class="form-label">{{form.category.label_tag}}</label>
                     {{form.category}}
                     {{form.category.errors}}
-                </div>
-                <div class="product-price">
                     <label class="form-label">{{form.packet_contain.label_tag}}</label>
                     {{form.packet_contain}}
                     {{form.packet_contain.errors}}
                     <label class="form-label">{{form.num_packet.label_tag}}</label>
                     {{form.num_packet}}
                     {{form.num_packet.errors}}
-                    <label class="form-label">{{form.image.label_tag}}</label>
-                    {{form.image}}
-                    {{form.image.errors}}
                 </div>
                 <div class="option-info">
                     <label class="form-label">{{form.price.label_tag}}</label>
@@ -40,14 +40,9 @@
                     <label class="form-label">{{form.bulk_price.label_tag}}</label>
                     {{form.bulk_price}}
                     {{form.bulk_price.errors}}
-                </div>
-                <div class="extra-info">
-                    <label class="form-label">{{form.mfd.label_tag}}</label>
-                    {{form.mfd}}
-                    {{form.mfd.errors}}
-                    <label class="form-label">{{form.expd.label_tag}}</label>
-                    {{form.expd}}
-                    {{form.expd.errors}}
+                    <label class="form-label">{{form.image.label_tag}}</label>
+                    {{form.image}}
+                    {{form.image.errors}}
                 </div>
                 
             </div>
@@ -68,6 +63,7 @@
         <thead>
             <th>#</th>
             <th>Product Name</th>
+            <th>Product Code</th>
             <th>Product Description</th>
             <th>Product Category</th>
             <th>Product Packet</th>
@@ -88,6 +84,7 @@
                     <td><img src="media/item_images/default.png" width="24px" height="24px"></td>
                 {% endif %}
                 <td>{{item.name}}</td>
+                <td>{{item.code}}</td>
                 <td>{{item.description}}</td>
                 <td>{{item.category}}</td>
                 <td>{{item.packet}}</td>
@@ -95,8 +92,6 @@
                 <td>{{item.price}}</td>
                 <td>{{item.profit}}</td>
                 <td>{{item.stock}}</td>
-                <td>{{item.mfd}}</td>
-                <td>{{item.expd}}</td>
             </tr>
             {% endfor %}
         </tbody>

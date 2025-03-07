@@ -22,13 +22,12 @@
             <thead>
                 <th>#</th>
                 <th>Name</th>
+                <th>Code</th>
                 <th>Description</th>
                 <th>Category</th>
                 <th>Rate</th>
                 <th>price</th>
                 <th>Profit</th>
-                <th>MFD</th>
-                <th>EXPD</th>
                 <th>Stock</th>
                 <th>Manage</th>
             </thead>
@@ -39,13 +38,12 @@
                     <img src="{{item.image.url}}" width="16" height="16" alt="">
                 </td>
                 <td>{{item.name}}</td>
+                <td>{{item.code}}</td>
                 <td>{{item.description}}</td>
                 <td>{{item.category}}</td>
                 <td>{{item.rate}} $</td>
                 <td>{{item.price}} $</td>
                 <td>{{item.profit}} $</td>
-                <td>{{item.mfd}}</td>
-                <td>{{item.expd}}</td>
                 <td>{{item.stock}}</td>
                 <td class="manage-product">
                     <a href="{% url 'store:manage_product' 'edit' item.id %}">

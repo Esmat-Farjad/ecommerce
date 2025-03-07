@@ -13,22 +13,24 @@
                     <label class="form-label">{{form.name.label_tag}}</label>
                     {{form.name}}
                     {{form.name.errors}}
+                    <label class="form-label">{{form.code.label_tag}}</label>
+                    {{form.code}}
+                    {{form.name.errors}}
                     <label class="form-label">{{form.description.label_tag}}</label>
                     {{form.description}}
                     {{form.description.errors}}
+                </div>
+                <div class="product-price">
                     <label class="form-label">{{form.category.label_tag}}</label>
                     {{form.category}}
                     {{form.category.errors}}
-                </div>
-                <div class="product-price">
                     <label class="form-label">{{form.packet_contain.label_tag}}</label>
                     {{form.packet_contain}}
                     {{form.packet_contain.errors}}
                     <label class="form-label">{{form.num_packet.label_tag}}</label>
                     {{form.num_packet}}
                     {{form.num_packet.errors}}
-                    {{form.image}}
-                    {{form.image.errors}}
+                   
                 </div>
                 <div class="option-info">
                     <label class="form-label">{{form.price.label_tag}}</label>
@@ -37,6 +39,10 @@
                     <label class="form-label">{{form.bulk_price.label_tag}}</label>
                     {{form.bulk_price}}
                     {{form.bulk_price.errors}}
+                    {{form.image}}
+                    {{form.image.errors}}
+                </div>
+                <div class="extra-info">
                     <label class="form-label">Available in {{form.stock.label_tag}}</label>
                     {{form.stock}}
                     <small>
@@ -44,14 +50,6 @@
                         Enter the number of product to be added in stock.
                     </small>
                     {{form.stock.errors}}
-                </div>
-                <div class="extra-info">
-                    <label class="form-label">{{form.mfd.label_tag}}</label>
-                    {{form.mfd}}
-                    {{form.mfd.errors}}
-                    <label class="form-label">{{form.expd.label_tag}}</label>
-                    {{form.expd}}
-                    {{form.expd.errors}}
                 </div>
             </div>
             <div class="purchase-button">
