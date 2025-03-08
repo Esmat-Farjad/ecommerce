@@ -1,0 +1,42 @@
+
+
+    
+{% for item  in items  %}
+<form action="" method="post" class="search-result-form">
+    <div class="form-element">
+        <img src="{{item.image.url}}" class="form-image" alt="item image">
+        <p class="form-text">{{item.name}}</p>
+        <div class="form-input-holder">
+            <label for="number-of-package">Package qty</label>
+            <input type="number" class="form-input" name="number-of-package" id="number-of-package">
+            <p class="text-sm">The package should be less then 12</p>
+        </div>
+        <div class="form-input-holder">
+            <label for="number-of-item">item qty</label>
+            <input type="number" class="form-input" name="number-of-item" id="number-of-item">
+            <p class="text-sm">The package should be less then {{item.packet_contain}}</p>
+        </div>
+        <div class="form-input-holder">
+            <label for="price">Item Price</label>
+            <input type="number" value="{{item.price}}" class="form-input" id="price" name="price">
+            <p class="text-sm">you can change the price</p>
+
+        </div>
+        <div class="form-input-holder">
+            <label for="package-price">Package Price</label>
+            <input type="number" value="{{item.bulk_price}}" class="form-input" id="package-price" name="package-price">
+            <p class="text-sm">you can change the price</p>
+        </div>
+        <p class="form-text">Total Price</p>
+        <div class="action">
+            {% if item.stock > 0 %}
+            <button 
+            class="btn-sm add-item"
+            data-end-point="{% url 'store:add_to_cart' item.id %}">ADD</button>
+            {% else %}
+            <button class="btn-gray" disabled>Add</button>
+            {%endif %}
+        </div>
+    </div>
+</form>
+{% endfor %}

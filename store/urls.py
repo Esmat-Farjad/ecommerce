@@ -60,4 +60,9 @@ urlpatterns = [
         views.change_quantity,
         name='change_quantity'
     ),
+    path(
+        'product/search',
+        views.search_product,
+        name="search-products",
+    )
 ]

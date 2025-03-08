@@ -1,17 +1,15 @@
-// store csrf token
 function getCSRFToken() {
     const name = 'csrftoken=';
-    const decodedCookie = decodeURIComponent(document.cookie);
-    const cookies = decodedCookie.split(';');
-  
+    const cookies = document.cookie.split(';');
+
     for (let cookie of cookies) {
-      cookie = cookie.trim();
-      if (cookie.indexOf(name) === 0) {
-        return cookie.substring(name.length, cookie.length);
-      }
+        cookie = cookie.trim();
+        if (cookie.startsWith(name)) {
+            return cookie.substring(name.length);
+        }
     }
     return '';
-  }
+}
 
 
 const cartButtons = document.querySelectorAll(".add-item");
@@ -23,7 +21,7 @@ cartButtons.forEach(add => {
             method: 'POST',
             headers: {
                 'content-Type': 'application/json',
-                'X-CSRFToken': csrfToken      
+                'X-CSRFToken': csrfToken     
             }
         }).then(response => response.json().then(data =>{
             console.log(data);
@@ -31,3 +29,4 @@ cartButtons.forEach(add => {
         })).catch(error =>{console.log("Error: "+error);})
     });
 });
+
