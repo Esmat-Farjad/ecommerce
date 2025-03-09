@@ -1,5 +1,4 @@
 from datetime import datetime
-import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
 from plotly.offline import plot
@@ -208,18 +207,19 @@ def purchase(request):
         purchase_form = PurchaseProductForm(request.POST, request.FILES)
         
         if purchase_form.is_valid():
-            price = purchase_form.cleaned_data.get('price')
-            packet_contain = purchase_form.cleaned_data.get('packet_contain')
-            num_packet = purchase_form.cleaned_data.get('num_packet')
-            total_price = purchase_form.cleaned_data.get('bulk_price')
-            rate  = round((total_price / packet_contain),3)
-            profit = round((price - rate),3)
-            stock = packet_contain * num_packet
-            print(f"RATE: {rate} || PROFIT: {profit} || STOCK: {stock}")
+            package_purchase_price = purchase_form.cleaned_data['package_purchase_price']
+            package_contain = purchase_form.cleaned_data.get('package_contain')
+            num_of_packages = purchase_form.cleaned_data.get('num_of_packages')
+            total_package_price = purchase_form.cleaned_data.get('total_package_price')
+            package_sale_price = purchase_form.cleaned_data.get('package_sale_price')
+            total_package_price = int(num_of_packages) * int(package_purchase_price)
+            total_items = int(package_contain) * int(num_of_packages)
+            item_sale_price = round((package_sale_price / package_contain), 3) if package_contain else 0
+            print(f"total_price: {total_package_price} || total_items: {total_items} || item_sale_price: {item_sale_price}")
             product = purchase_form.save(commit=False)
-            product.rate = rate
-            product.profit = profit
-            product.stock = stock
+            product.total_items = total_items
+            product.item_sale_price = item_sale_price
+            product.total_package_price= total_package_price
             product.user = request.user
             product.save()
             messages.success(request, "Product added successfully !")

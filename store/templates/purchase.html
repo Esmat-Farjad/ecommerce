@@ -12,37 +12,49 @@
             {% csrf_token %}
             <div class="grid-container">
                 <div class="product-info">
-                    <label class="form-label">{{form.name.label_tag}}</label>
-                    {{form.name}}
-                    {{form.name.errors}}
                     <label class="form-label">{{form.code.label_tag}}</label>
                     {{form.code}}
                     {{form.name.errors}}
-                    <label class="form-label">{{form.description.label_tag}}</label>
-                    {{form.description}}
-                    {{form.description.errors}}
-                </div>
-                <div class="product-price">
+                    <label class="form-label">{{form.name.label_tag}}</label>
+                    {{form.name}}
+                    {{form.name.errors}}
                     <label class="form-label">{{form.category.label_tag}}</label>
                     {{form.category}}
                     {{form.category.errors}}
-                    <label class="form-label">{{form.packet_contain.label_tag}}</label>
-                    {{form.packet_contain}}
-                    {{form.packet_contain.errors}}
-                    <label class="form-label">{{form.num_packet.label_tag}}</label>
-                    {{form.num_packet}}
+                </div>
+                <div class="product-price">
+                    <label class="form-label">{{form.num_of_packages.label_tag}}</label>
+                    {{form.num_of_packages}}
                     {{form.num_packet.errors}}
+
+                    <label class="form-label">{{form.package_contain.label_tag}}</label>
+                    {{form.package_contain}}
+                    {{form.packet_contain.errors}}
+
+                    <label class="form-label">{{form.package_purchase_price.label_tag}}</label>
+                    {{form.package_purchase_price}}
+                    {{form.price.errors}}
+
+                    <!-- <label class="form-label">{{form.total_package_price.label_tag}}</label>
+                    {{form.total_package_price}}
+                    {{form.bulk_price.errors}} -->
                 </div>
                 <div class="option-info">
-                    <label class="form-label">{{form.price.label_tag}}</label>
-                    {{form.price}}
+                    <label class="form-label">{{form.package_sale_price.label_tag}}</label>
+                    {{form.package_sale_price}}
                     {{form.price.errors}}
-                    <label class="form-label">{{form.bulk_price.label_tag}}</label>
-                    {{form.bulk_price}}
-                    {{form.bulk_price.errors}}
+
+                    <!-- <label class="form-label">{{form.item_sale_price.label_tag}}</label>
+                    {{form.item_sale_price}}
+                    {{form.price.errors}} -->
+                 
                     <label class="form-label">{{form.image.label_tag}}</label>
                     {{form.image}}
                     {{form.image.errors}}
+
+                    <label class="form-label">{{form.description.label_tag}}</label>
+                    {{form.description}}
+                    {{form.description.errors}}
                 </div>
                 
             </div>
@@ -71,8 +83,6 @@
             <th>Product Price</th>
             <th>Product profit</th>
             <th>Product stock</th>
-            <th>Manufacturing Date</th>
-            <th>Expiration Date</th>
         </thead>
         <tbody>
             

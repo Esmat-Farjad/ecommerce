@@ -27,18 +27,19 @@ class Product(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     user = models.ForeignKey(CustomUser, null=True, on_delete=models.SET_NULL)
     # Relationship
-    name = models.CharField(max_length=100)
     code = models.IntegerField(null=True, default=0)
-    description = models.CharField(max_length=200)
-    price = models.IntegerField(default=0)
-    bulk_price = models.IntegerField(default=0)
-    packet_contain = models.PositiveBigIntegerField(choices=NUMBER_CHOICES)
-    rate = models.FloatField(null=True, default=0)
-    profit = models.IntegerField(null=True,default=0)
-    stock = models.IntegerField(null=True,default=0)
-    num_packet = models.IntegerField(default=1)
+    name = models.CharField(max_length=100)
+    package_contain = models.PositiveBigIntegerField(choices=NUMBER_CHOICES)
+    package_purchase_price = models.IntegerField(default=0, null=True)
+    total_package_price = models.IntegerField(default=0, null=True)     
+    num_of_packages = models.IntegerField(default=1)
+    package_sale_price = models.IntegerField(null=True, default=0)
+    item_sale_price = models.IntegerField( null=True ,default=0)
+    total_items = models.IntegerField(null=True,default=0)
     image = models.ImageField(default='default.svg', upload_to='item_images')
-   
+    description = models.CharField(max_length=200)
+    created_at = models.DateTimeField(auto_now_add=True, null=True, blank=True)
+    updated_at = models.DateTimeField(auto_now=True, null=True, blank=True)
     
     
     def __str__(self):

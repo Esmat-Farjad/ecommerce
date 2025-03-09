@@ -35,7 +35,7 @@ class PurchaseProductForm(forms.ModelForm):
     class Meta:
         model = Product
         fields = "__all__"
-        exclude = ['user','profit','stock','rate']
+        exclude = ['user','total_items','total_package_price', 'item_sale_price']
         
     def __init__(self, *args, **kwargs):
         super(PurchaseProductForm, self).__init__(*args, **kwargs)

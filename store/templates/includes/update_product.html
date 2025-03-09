@@ -24,27 +24,39 @@
                     <label class="form-label">{{form.category.label_tag}}</label>
                     {{form.category}}
                     {{form.category.errors}}
-                    <label class="form-label">{{form.packet_contain.label_tag}}</label>
-                    {{form.packet_contain}}
+
+                    <label class="form-label">{{form.package_contain.label_tag}}</label>
+                    {{form.package_contain}}
                     {{form.packet_contain.errors}}
-                    <label class="form-label">{{form.num_packet.label_tag}}</label>
-                    {{form.num_packet}}
+
+                    <label class="form-label">{{form.num_of_packages.label_tag}}</label>
+                    {{form.num_of_packages}}
                     {{form.num_packet.errors}}
                    
                 </div>
                 <div class="option-info">
-                    <label class="form-label">{{form.price.label_tag}}</label>
-                    {{form.price}}
+                    <label class="form-label">{{form.package_purchase_price.label_tag}}</label>
+                    {{form.package_purchase_price}}
                     {{form.price.errors}}
-                    <label class="form-label">{{form.bulk_price.label_tag}}</label>
-                    {{form.bulk_price}}
+                    <label class="form-label">{{form.total_package_price.label_tag}}</label>
+                    {{form.total_package_price}}
                     {{form.bulk_price.errors}}
-                    {{form.image}}
-                    {{form.image.errors}}
+
+                    <label class="form-label">{{form.package_sale_price.label_tag}}</label>
+                    {{form.package_sale_price}}
+                    {{form.price.errors}}
+                 
                 </div>
                 <div class="extra-info">
-                    <label class="form-label">Available in {{form.stock.label_tag}}</label>
-                    {{form.stock}}
+                    <label class="form-label">{{form.item_sale_price.label_tag}}</label>
+                    {{form.item_sale_price}}
+                    {{form.price.errors}}
+                    
+                    {{form.image}}
+                    {{form.image.errors}}
+
+                    <label class="form-label">Available in {{form.total_items.label_tag}}</label>
+                    {{form.total_items}}
                     <small>
                         <i class="fa-regular fa-lightbulb" style="color: orange;"></i>
                         Enter the number of product to be added in stock.

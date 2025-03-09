@@ -23,12 +23,13 @@
                 <th>#</th>
                 <th>Name</th>
                 <th>Code</th>
-                <th>Description</th>
                 <th>Category</th>
-                <th>Rate</th>
-                <th>price</th>
-                <th>Profit</th>
-                <th>Stock</th>
+                <th>Package Contain</th>
+                <th>Purchase Package Price</th>
+                <th>Purchase Total Price</th>
+                <th>Package Sale Price</th>
+                <th>Item Sales Price</th>
+                <th>Total Items</th>
                 <th>Manage</th>
             </thead>
             <tbody>
@@ -39,12 +40,13 @@
                 </td>
                 <td>{{item.name}}</td>
                 <td>{{item.code}}</td>
-                <td>{{item.description}}</td>
                 <td>{{item.category}}</td>
-                <td>{{item.rate}} $</td>
-                <td>{{item.price}} $</td>
-                <td>{{item.profit}} $</td>
-                <td>{{item.stock}}</td>
+                <td>{{item.package_contain}}</td>
+                <td>{{item.package_purchase_price}}</td>
+                <td>{{item.total_package_price}}</td>
+                <td>{{item.package_sale_price}}</td>
+                <td>{{item.item_sale_price}}</td>
+                <td>{{item.total_items}}</td>
                 <td class="manage-product">
                     <a href="{% url 'store:manage_product' 'edit' item.id %}">
                         <i class="fa-solid fa-pen"></i>
