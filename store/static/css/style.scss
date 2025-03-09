@@ -765,9 +765,10 @@ hr{
 }
 .search-result-form{
   border: 1px solid gray;
-  margin: 2%;
   border-radius: 5px;
-  padding: 10px;
+  margin-top: 0.5rem;
+  padding: 0.5rem;
+  
   .form-element{
     display: flex;
     flex-direction: row;
