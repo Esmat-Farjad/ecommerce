@@ -14,13 +14,14 @@
                 {% if user.is_authenticated %}
                 <li class="nav-link">
                     <a href="{% url 'store:cart_detail' %}" class="cart-badge-holder">
-                        <i class="fa-solid fa-bag-shopping"></i>
+                        <img src="{% static "outline/shopping-cart.svg" %}" alt="">
                         <span class="cart-badge" id="num_item">{{num_item}}</span>
                     </a>
                 </li>
-                <li class="nav-link"><a href="{% url 'store:purchase' %}" ><i class="fa-solid fa-cart-plus"></i>&nbsp;Purchase</a></li>
-                <li class="nav-link"><a href="{% url 'store:sales' %}"><i class="fa-solid fa-cart-shopping"></i>&nbsp;Sales</a></li>
-                <li class="nav-link"><a href="{% url 'store:product' %}"><i class="fa-solid fa-box-open"></i>&nbsp;Products</a></li>
+                <li class="nav-link"><a href="{% url 'store:purchase' %}" >
+                    Purchase</a></li>
+                <li class="nav-link"><a href="{% url 'store:sales' %}">Sales</a></li>
+                <li class="nav-link"><a href="{% url 'store:product' %}">Products</a></li>
                 
                 <li class="sub-menu-handler">
                     <span class="">{{user}}</span>
