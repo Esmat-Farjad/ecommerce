@@ -31,21 +31,12 @@ class StoreCreationForm(forms.ModelForm):
         for visible in self.visible_fields():
             visible.field.widget.attrs['class'] = 'border py-2 border-teal-500 w-full'
             
+            
 class PurchaseProductForm(forms.ModelForm):
     class Meta:
         model = Product
         fields = "__all__"
-        exclude = ['user','profit','stock','rate']
-        widgets = {
-            'mfd':forms.widgets.DateInput(
-                attrs={
-                    "type": "date",
-                }),
-            'expd':forms.widgets.DateInput(
-                attrs={
-                    "type": "date",
-                })
-        }
+        exclude = ['user','total_items','total_package_price', 'item_sale_price']
         
     def __init__(self, *args, **kwargs):
         super(PurchaseProductForm, self).__init__(*args, **kwargs)

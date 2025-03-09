@@ -2,52 +2,61 @@
 {% load static %}
 {% block content %}
 
-<div class="main-page">
+<div class="main-page main-page-container">
     <div class="heading">
-        <h1 class="title">Purchase Products</h1>
-        <p class="text">Purchase the product to complete the stock</p>
+        <div class="heading-text">
+            <h1 class="title">Purchase Products</h1>
+            <p class="text">Purchase the product to complete the stock</p>
+        </div>
     </div>
     <div class="">
         <form action="{% url 'store:purchase' %}" method="POST" enctype="multipart/form-data">
             {% csrf_token %}
             <div class="grid-container">
                 <div class="product-info">
+                    <label class="form-label">{{form.code.label_tag}}</label>
+                    {{form.code}}
+                    {{form.name.errors}}
                     <label class="form-label">{{form.name.label_tag}}</label>
                     {{form.name}}
                     {{form.name.errors}}
-                    <label class="form-label">{{form.description.label_tag}}</label>
-                    {{form.description}}
-                    {{form.description.errors}}
                     <label class="form-label">{{form.category.label_tag}}</label>
                     {{form.category}}
                     {{form.category.errors}}
                 </div>
                 <div class="product-price">
-                    <label class="form-label">{{form.packet_contain.label_tag}}</label>
-                    {{form.packet_contain}}
-                    {{form.packet_contain.errors}}
-                    <label class="form-label">{{form.num_packet.label_tag}}</label>
-                    {{form.num_packet}}
+                    <label class="form-label">{{form.num_of_packages.label_tag}}</label>
+                    {{form.num_of_packages}}
                     {{form.num_packet.errors}}
+
+                    <label class="form-label">{{form.package_contain.label_tag}}</label>
+                    {{form.package_contain}}
+                    {{form.packet_contain.errors}}
+
+                    <label class="form-label">{{form.package_purchase_price.label_tag}}</label>
+                    {{form.package_purchase_price}}
+                    {{form.price.errors}}
+
+                    <!-- <label class="form-label">{{form.total_package_price.label_tag}}</label>
+                    {{form.total_package_price}}
+                    {{form.bulk_price.errors}} -->
+                </div>
+                <div class="option-info">
+                    <label class="form-label">{{form.package_sale_price.label_tag}}</label>
+                    {{form.package_sale_price}}
+                    {{form.price.errors}}
+
+                    <!-- <label class="form-label">{{form.item_sale_price.label_tag}}</label>
+                    {{form.item_sale_price}}
+                    {{form.price.errors}} -->
+                 
                     <label class="form-label">{{form.image.label_tag}}</label>
                     {{form.image}}
                     {{form.image.errors}}
-                </div>
-                <div class="option-info">
-                    <label class="form-label">{{form.price.label_tag}}</label>
-                    {{form.price}}
-                    {{form.price.errors}}
-                    <label class="form-label">{{form.bulk_price.label_tag}}</label>
-                    {{form.bulk_price}}
-                    {{form.bulk_price.errors}}
-                </div>
-                <div class="extra-info">
-                    <label class="form-label">{{form.mfd.label_tag}}</label>
-                    {{form.mfd}}
-                    {{form.mfd.errors}}
-                    <label class="form-label">{{form.expd.label_tag}}</label>
-                    {{form.expd}}
-                    {{form.expd.errors}}
+
+                    <label class="form-label">{{form.description.label_tag}}</label>
+                    {{form.description}}
+                    {{form.description.errors}}
                 </div>
                 
             </div>
@@ -56,73 +65,19 @@
             </div>
         </form>
     </div>
-</div>
-<hr>
-<!-- PRODUCT DISPLAYING SECTION START -->
-<div class="detail-container">
-    <div class="heading">
-        <h1 class="title">Purchased Products Details</h1>
-        <p class="text">The complete list of product detials along with its profit and rate</p>
+    <hr>
+    <!-- PRODUCT DISPLAYING SECTION START -->
+    <div class="detail-container">
+        <div class="heading">
+            <div class="heading-text">
+                <h1 class="title">Purchased Products Details</h1>
+                <p class="text">The complete list of product detials along with its profit and rate</p>
+            </div>
+        </div>
+        {% include 'partials/_product_table.html' %}
     </div>
-    <table class="table">
-        <thead>
-            <th>#</th>
-            <th>Product Name</th>
-            <th>Product Description</th>
-            <th>Product Category</th>
-            <th>Product Packet</th>
-            <th>Product Rate</th>
-            <th>Product Price</th>
-            <th>Product profit</th>
-            <th>Product stock</th>
-            <th>Manufacturing Date</th>
-            <th>Expiration Date</th>
-        </thead>
-        <tbody>
-            
-            {% for item in page_obj.object_list %}
-            <tr>
-                {% if item.image %}
-                    <td><img src="{{item.image.url}}" alt="image" width="24px" height="24px"></td>
-                {% elif not item.image %}
-                    <td><img src="media/item_images/default.png" width="24px" height="24px"></td>
-                {% endif %}
-                <td>{{item.name}}</td>
-                <td>{{item.description}}</td>
-                <td>{{item.category}}</td>
-                <td>{{item.packet}}</td>
-                <td>{{item.rate}}</td>
-                <td>{{item.price}}</td>
-                <td>{{item.profit}}</td>
-                <td>{{item.stock}}</td>
-                <td>{{item.mfd}}</td>
-                <td>{{item.expd}}</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-    <!-- paginator navigation button start -->
-    <div class="paginator">
-        {% if page_obj.has_previous %}
-        <a href="?page={{page_obj.previous_page_number}}">
-            <small class="active-nav"><i class="fa-solid fa-angles-left"></i></small>
-        </a>
-        {% else %}
-        <small class="not-active-nav"><i class="fa-solid fa-angles-left"></i></small>
-        {% endif %}
-        <span>Page
-            <span class="active-page">{{page_obj.number}}</span> of
-            <span>{{page_obj.paginator.num_pages}}</span>
-        </span>
-        {% if page_obj.has_next %}
-        <a href="?page={{page_obj.next_page_number}}" class="tooltip relative">
-            <small class="active-nav"><i class="fa-solid fa-angles-right"></i></small>
-        </a>
-        {% else %}
-        <small class="not-active-nav"><i class="fa-solid fa-angles-right"></i></small>
-        {% endif %}
-    </div>
-    <!-- paginator navigation button end -->
 </div>
+
+
 
 {% endblock content %}
