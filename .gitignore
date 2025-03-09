@@ -1,4 +1,55 @@
-.venv
-.vscode
-.env
-.gitattributes
+# Virtual environment
+.venv/
+.env/
+env/
+venv/
+
+# Ignore VSCode settings
+.vscode/
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Django specific
+*.sqlite3
+db.sqlite3
+/media/
+staticfiles/  # Only ignore if using `collectstatic`
+.DS_Store
+
+# Ignore secret settings files
+config/settings/local.py
+config/settings/.env
+
+# Ignore node_modules (if using frontend tools)
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# Ignore IDE/editor files
+.idea/
+*.sublime-workspace
+
+# Ignore compiled Python files
+*.pyc
+*.pyo
+*.pyd
+
+# Ignore coverage and test reports
+.coverage
+htmlcov/
+*.cover
+coverage.xml
+nosetests.xml
+test-results/
+
+# Ignore migrations cache (optional)
+**/migrations/__pycache__/
+
+# Ignore celery and cache files
+celerybeat-schedule
+celerybeat.pid
+*.pid
+*.swp
