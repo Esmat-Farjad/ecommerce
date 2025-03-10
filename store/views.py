@@ -226,6 +226,7 @@ def purchase(request):
             product.user = request.user
             product.save()
             messages.success(request, "Product added successfully !")
+            return redirect("store:product")
         else:
             messages.error(request, f"Something went wrong. Please fix the below errors.{purchase_form.errors}")
 
@@ -253,6 +254,28 @@ def purchase(request):
         }
     return render(request, 'purchase.html', context)
 
+def manage_product(request, action, pid):
+    product = get_object_or_404(Product, pk=pid)
+    if action == 'edit':
+        form = UpdateProductForm(instance=product)
+        if request.method == 'POST':
+            form = UpdateProductForm(request.POST, request.FILES, instance=product)
+            if form.is_valid():
+                product = form.save(commit=False)
+                product.save() 
+                messages.success(request, "Product updated successfully.")
+                return redirect("store:product")
+            else:
+                messages.error(request, f"Form has errors: {form.errors}")
+        context = {
+            'product': product,
+            'form': form
+        }
+        return render(request, 'includes/update_product.html', context)
+    elif pid and action == 'delete':
+        Product.objects.filter(id=pid).delete()
+        messages.success(request, "Product deleted successfully.")
+        return redirect("store:product")
 def dispatch(request, item):
     if item:
         product = Product.objects.get(id=item)
@@ -268,24 +291,6 @@ def display_details(request, iid):
     print(iid)
     return render(request, 'item_details.html', context)   
 
-def manage_product(request, action, pid):
-    product = get_object_or_404(Product, pk=pid)
-
-    if pid and action == 'edit':
-        form = UpdateProductForm(instance=product)
-        if request.method == 'POST':
-            form = UpdateProductForm(request.POST, instance=product)
-            if form.is_valid():
-                form.save()
-        context = {
-            'product':product,
-            'form':form
-        }
-        return render(request, 'includes/update_product.html', context)
-    elif pid and action == 'delete':
-        Product.objects.filter(id=pid).delete()
-        messages.success(request, "Product deleted successfully.")
-        return redirect("store:product")
 
 def stock(request):
     product = Product.objects.select_related('category')
