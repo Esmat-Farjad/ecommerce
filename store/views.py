@@ -20,24 +20,6 @@ from django.core import serializers
 
 
 # Create your views here.
-def home(request):
-    today = datetime.today()
-    year = today.year
-    month = today.month
-    day = today.day
-    today = Sale.objects.filter(
-        date_created__year = year,date_created__month=month, 
-        date_created__day=day
-        ).aggregate(Sum('total_price'), Sum('total_profit'), Sum('quantity'))
-    context = {'today':today,'user':request.user}
-    return render(request, 'home.html', context)
-
-def base(request):
-    request.breadcrums =[
-        {"name":"home","url":"/"}
-    ]
-    return render(request, 'main/base.html')
-
 def signup(request):
     form = UserCreationForm()
     if request.method == 'POST':
@@ -68,6 +50,117 @@ def signin(request):
 
     context= {}
     return render(request, 'signin.html', context)
+
+def signout(request):
+    logout(request)
+    messages.success(request, "You've been successfully logged out.")
+    return render(request, 'home.html')
+
+def home(request):
+    today = datetime.today()
+    year = today.year
+    month = today.month
+    day = today.day
+    today = Sale.objects.filter(
+        date_created__year = year,date_created__month=month, 
+        date_created__day=day
+        ).aggregate(Sum('total_price'), Sum('total_profit'), Sum('quantity'))
+    context = {'today':today,'user':request.user}
+    return render(request, 'home.html', context)
+
+def base(request):
+    request.breadcrums =[
+        {"name":"home","url":"/"}
+    ]
+    return render(request, 'main/base.html')
+
+def purchase(request):
+    purchase_form = PurchaseProductForm()
+    if request.method == 'POST':
+        purchase_form = PurchaseProductForm(request.POST, request.FILES)
+        
+        if purchase_form.is_valid():
+            package_purchase_price = purchase_form.cleaned_data['package_purchase_price']
+            package_contain = purchase_form.cleaned_data.get('package_contain')
+            num_of_packages = purchase_form.cleaned_data.get('num_of_packages')
+            total_package_price = purchase_form.cleaned_data.get('total_package_price')
+            package_sale_price = purchase_form.cleaned_data.get('package_sale_price')
+            total_package_price = int(num_of_packages) * int(package_purchase_price)
+            total_items = int(package_contain) * int(num_of_packages)
+            item_sale_price = round((package_sale_price / package_contain), 3) if package_contain else 0
+            print(f"total_price: {total_package_price} || total_items: {total_items} || item_sale_price: {item_sale_price}")
+            product = purchase_form.save(commit=False)
+            product.total_items = total_items
+            product.item_sale_price = item_sale_price
+            product.total_package_price= total_package_price
+            product.user = request.user
+            product.save()
+            messages.success(request, "Product added successfully !")
+            return redirect("store:product")
+        else:
+            messages.error(request, f"Something went wrong. Please fix the below errors.{purchase_form.errors}")
+        
+    product = Product.objects.all().order_by('-id')
+    #Paginator start
+    p = Paginator(product, 14 )
+    page_number = request.GET.get('page')
+    try:
+        page_obj = p.get_page(page_number)
+    except PageNotAnInteger:
+        page_obj = p.page(1)
+    except EmptyPage:
+        page_obj = p.page(p.num_pages)
+    #Paginator end
+    number = []
+    for x in range(1, 100,1):
+        number.append(x)
+    cat = Category.objects.all()
+    context = {
+        'category':cat,
+        'page_obj':page_obj,
+        'num':number,
+        'form':purchase_form
+        }
+    return render(request, 'purchase.html', context)
+
+def manage_product(request, action, pid):
+    product = get_object_or_404(Product, pk=pid)
+    if action == 'edit':
+        form = UpdateProductForm(instance=product)
+        if request.method == 'POST':
+            form = UpdateProductForm(request.POST, request.FILES, instance=product)
+            if form.is_valid():
+                product = form.save(commit=False)
+                product.save() 
+                messages.success(request, "Product updated successfully.")
+                return redirect("store:product")
+            else:
+                messages.error(request, f"Form has errors: {form.errors}")
+        context = {
+            'product': product,
+            'form': form
+        }
+        return render(request, 'includes/update_product.html', context)
+    elif pid and action == 'delete':
+        Product.objects.filter(id=pid).delete()
+        messages.success(request, "Product deleted successfully.")
+        return redirect("store:product")
+
+def product(request):
+    product = Product.objects.all().order_by('-id')
+    #Paginator start
+    p = Paginator(product, 14)
+    page_number = request.GET.get('page')
+    try:
+        page_obj = p.get_page(page_number)
+    except PageNotAnInteger:
+        page_obj = p.page(1)
+    except EmptyPage:
+        page_obj = p.page(p.num_pages)
+    # paginator end
+    context = {'page_obj':page_obj,'flag':'list'}
+    return render(request, 'product.html', context)
+
 @login_required
 def sales(request):
     product_list = Product.objects.all().order_by('-id')
@@ -183,99 +276,7 @@ def sale_item(request):
     }
     return render(request, 'sale_page.html',context)
 
-def signout(request):
-    logout(request)
-    messages.success(request, "You've been successfully logged out.")
-    return render(request, 'home.html')
 
-def product(request):
-    product = Product.objects.all().order_by('-id')
-    #Paginator start
-    p = Paginator(product, 14)
-    page_number = request.GET.get('page')
-    try:
-        page_obj = p.get_page(page_number)
-    except PageNotAnInteger:
-        page_obj = p.page(1)
-    except EmptyPage:
-        page_obj = p.page(p.num_pages)
-    # paginator end
-    context = {'page_obj':page_obj,'flag':'list'}
-    return render(request, 'product.html', context)
-
-
-def purchase(request):
-    purchase_form = PurchaseProductForm()
-    if request.method == 'POST':
-        purchase_form = PurchaseProductForm(request.POST, request.FILES)
-        
-        if purchase_form.is_valid():
-            package_purchase_price = purchase_form.cleaned_data['package_purchase_price']
-            package_contain = purchase_form.cleaned_data.get('package_contain')
-            num_of_packages = purchase_form.cleaned_data.get('num_of_packages')
-            total_package_price = purchase_form.cleaned_data.get('total_package_price')
-            package_sale_price = purchase_form.cleaned_data.get('package_sale_price')
-            total_package_price = int(num_of_packages) * int(package_purchase_price)
-            total_items = int(package_contain) * int(num_of_packages)
-            item_sale_price = round((package_sale_price / package_contain), 3) if package_contain else 0
-            print(f"total_price: {total_package_price} || total_items: {total_items} || item_sale_price: {item_sale_price}")
-            product = purchase_form.save(commit=False)
-            product.total_items = total_items
-            product.item_sale_price = item_sale_price
-            product.total_package_price= total_package_price
-            product.user = request.user
-            product.save()
-            messages.success(request, "Product added successfully !")
-            return redirect("store:product")
-        else:
-            messages.error(request, f"Something went wrong. Please fix the below errors.{purchase_form.errors}")
-
-        
-    product = Product.objects.all().order_by('-id')
-    #Paginator start
-    p = Paginator(product, 14 )
-    page_number = request.GET.get('page')
-    try:
-        page_obj = p.get_page(page_number)
-    except PageNotAnInteger:
-        page_obj = p.page(1)
-    except EmptyPage:
-        page_obj = p.page(p.num_pages)
-    #Paginator end
-    number = []
-    for x in range(1, 100,1):
-        number.append(x)
-    cat = Category.objects.all()
-    context = {
-        'category':cat,
-        'page_obj':page_obj,
-        'num':number,
-        'form':purchase_form
-        }
-    return render(request, 'purchase.html', context)
-
-def manage_product(request, action, pid):
-    product = get_object_or_404(Product, pk=pid)
-    if action == 'edit':
-        form = UpdateProductForm(instance=product)
-        if request.method == 'POST':
-            form = UpdateProductForm(request.POST, request.FILES, instance=product)
-            if form.is_valid():
-                product = form.save(commit=False)
-                product.save() 
-                messages.success(request, "Product updated successfully.")
-                return redirect("store:product")
-            else:
-                messages.error(request, f"Form has errors: {form.errors}")
-        context = {
-            'product': product,
-            'form': form
-        }
-        return render(request, 'includes/update_product.html', context)
-    elif pid and action == 'delete':
-        Product.objects.filter(id=pid).delete()
-        messages.success(request, "Product deleted successfully.")
-        return redirect("store:product")
 def dispatch(request, item):
     if item:
         product = Product.objects.get(id=item)
@@ -297,7 +298,7 @@ def stock(request):
     sale = Sale.objects.all().order_by('-quantity')
     # plotly gantt_chart
     total_income = sum(c.total_profit for c in sale)
-    total_expense = sum(c.product.rate for c in sale)
+    # total_expense = sum(c.product.rate for c in sale)
     product_names = []
     product_profit = []
     for item in sale:
@@ -349,7 +350,7 @@ def stock(request):
         'chart':fig.to_html(),
         "lineChart":fig2.to_html(),
         "total_income":total_income,
-        "total_expense":total_expense
+        # "total_expense":total_expense
         }
     return render(request, 'stock.html', context)
 

@@ -1,7 +1,7 @@
 {% extends 'main/base.html' %}
 {% load static %}
 {% block content %}
-<div class="main-page main-page-container">
+<div class="main-page-container">
     <div class="heading">
         <h1 class="title">Update Product</h1>
         <p class="text">update the details belongs to the product</p>
@@ -19,12 +19,11 @@
                     <label class="form-label">{{form.description.label_tag}}</label>
                     {{form.description}}
                     {{form.description.errors}}
-                </div>
-                <div class="product-price">
                     <label class="form-label">{{form.category.label_tag}}</label>
                     {{form.category}}
                     {{form.category.errors}}
-
+                </div>
+                <div class="product-price">
                     <label class="form-label">{{form.package_contain.label_tag}}</label>
                     {{form.package_contain}}
                     {{form.packet_contain.errors}}
@@ -32,36 +31,31 @@
                     <label class="form-label">{{form.num_of_packages.label_tag}}</label>
                     {{form.num_of_packages}}
                     {{form.num_packet.errors}}
-                   
-                </div>
-                <div class="option-info">
+
                     <label class="form-label">{{form.package_purchase_price.label_tag}}</label>
                     {{form.package_purchase_price}}
                     {{form.price.errors}}
+
                     <label class="form-label">{{form.total_package_price.label_tag}}</label>
                     {{form.total_package_price}}
                     {{form.bulk_price.errors}}
-
+                   
+                </div>
+                <div class="option-info">
                     <label class="form-label">{{form.package_sale_price.label_tag}}</label>
                     {{form.package_sale_price}}
                     {{form.price.errors}}
-                 
-                </div>
-                <div class="extra-info">
+
                     <label class="form-label">{{form.item_sale_price.label_tag}}</label>
                     {{form.item_sale_price}}
                     {{form.price.errors}}
                     
-                    {{form.image}}
-                    {{form.image.errors}}
-
                     <label class="form-label">Available in {{form.total_items.label_tag}}</label>
                     {{form.total_items}}
-                    <small>
-                        <i class="fa-regular fa-lightbulb" style="color: orange;"></i>
-                        Enter the number of product to be added in stock.
-                    </small>
                     {{form.stock.errors}}
+
+                    {{form.image}}
+                    {{form.image.errors}}                 
                 </div>
             </div>
             <div class="purchase-button">

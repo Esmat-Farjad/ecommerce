@@ -2,7 +2,7 @@
 {% load static %}
 {% block content %}
 
-<div class="main-page main-page-container">
+<div class="main-page-container">
     <div class="heading">
         <div class="heading-text">
             <h1 class="title">Purchase Products</h1>
@@ -37,18 +37,11 @@
                     {{form.package_purchase_price}}
                     {{form.price.errors}}
 
-                    <!-- <label class="form-label">{{form.total_package_price.label_tag}}</label>
-                    {{form.total_package_price}}
-                    {{form.bulk_price.errors}} -->
                 </div>
                 <div class="option-info">
                     <label class="form-label">{{form.package_sale_price.label_tag}}</label>
                     {{form.package_sale_price}}
                     {{form.price.errors}}
-
-                    <!-- <label class="form-label">{{form.item_sale_price.label_tag}}</label>
-                    {{form.item_sale_price}}
-                    {{form.price.errors}} -->
                  
                     <label class="form-label">{{form.image.label_tag}}</label>
                     {{form.image}}
