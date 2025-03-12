@@ -38,7 +38,6 @@
             <th>#</th>
             <th>Product Name</th>
             <th>Product Category</th>
-            <th>Product Rate</th>
             <th>Quantity</th>
             <th>Product Price</th>
             <th>Total Price</th>
@@ -55,7 +54,6 @@
                 {% endif %}
                 <td>{{item.product.name}}</td>
                 <td>{{item.product.category}}</td>
-                <td><i class="fa-solid fa-dollar-sign"></i>&nbsp;&nbsp;{{item.product.rate|intcomma}}</td>
                 <td>{{item.quantity}}</td>
                 <td><i class="fa-solid fa-dollar-sign"></i>&nbsp;&nbsp;{{item.product.price|intcomma}}</td>
                 <td><i class="fa-solid fa-dollar-sign"></i>&nbsp;&nbsp;{{item.total_price|intcomma}}</td>
