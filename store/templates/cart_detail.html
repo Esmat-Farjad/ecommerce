@@ -3,64 +3,66 @@
 {% load humanize %}
 {% block content %}
 <div class="main-page">
-    <div class="heading">
-        <h1 class="title">Cart Items</h1>
-        <p class="text">your cart contains the product</p>
-    </div>
-    {% if cart_item %}
-    <div class="detail-container">
-        <table class="table">
-            <thead>
-                <th>#</th>
-                <th>Item Name</th>
-                <th>Item Description</th>
-                <th>Item Price</th>
-                <th>Item Quantity</th>
-                <th>Total</th>
-                <th>Manage</th>
-            </thead>
-            <tbody>
-                {% for item in cart_item %}
-                <tr>
-                    <td>{{forloop.counter}}</td>
-                    <td>{{item.product.name}}</td>
-                    <td>{{item.product.description}}</td>
-                    <td>{{item.product.price}}</td>
-                    <td class="quantity-handle">
-                        <a href="{% url 'store:change_quantity' item.product.id 'dec' %}" class="btn-num">
-                           <strong>-</strong>
-                        </a>
-                        {{item.quantity}} 
-                        <a href="{% url 'store:change_quantity' item.product.id 'inc' %}" class="btn-num">
-                            <strong>+</strong>
-                        </a>
-                    </td>
-                    <td>{{item.total}}</td>
-                    <td class="quantity-handle">
-                        <a href="{% url 'store:remove_cart_item' item.product.id %}">
-                            <i class="fa-solid fa-trash" style="color: #d9350d;"></i>
-                        </a>
-                    </td>
-                </tr>
-                {% endfor %}
-                <tr class="grant-total">
-                    <td><strong>Grant Total</strong></td>
-                    <td colspan="6" ><strong>{{grant_total}} AFN</strong></td>
-                </tr>
-            </tbody>
-        </table>
-        <div class="button-holder">
-            <button class="btn"><a href="{% url 'store:sale_item' %}">
-                Proceed to Purchase
-            </a></button>
+    <div class="main-page-container">
+        <div class="heading">
+            <h1 class="title">Cart Items</h1>
+            <p class="text">your cart contains the product</p>
         </div>
+        {% if cart_item %}
+        <div class="detail-container">
+            <table class="table">
+                <thead>
+                    <th>#</th>
+                    <th>Item Name</th>
+                    <th>Item Description</th>
+                    <th>Item Sales Price</th>
+                    <th>Item Quantity</th>
+                    <th>Total</th>
+                    <th>Manage</th>
+                </thead>
+                <tbody>
+                    {% for item in cart_item %}
+                    <tr>
+                        <td>{{forloop.counter}}</td>
+                        <td>{{item.product.name}}</td>
+                        <td>{{item.product.description}}</td>
+                        <td>{{item.product.item_sale_price}}</td>
+                        <td class="quantity-handle">
+                            <a href="{% url 'store:change_quantity' item.product.id 'dec' %}" class="btn-num">
+                               <strong>-</strong>
+                            </a>
+                            {{item.quantity}} 
+                            <a href="{% url 'store:change_quantity' item.product.id 'inc' %}" class="btn-num">
+                                <strong>+</strong>
+                            </a>
+                        </td>
+                        <td>{{item.total}}</td>
+                        <td class="quantity-handle">
+                            <a href="{% url 'store:remove_cart_item' item.product.id %}">
+                                <i class="fa-solid fa-trash" style="color: #d9350d;"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                    <tr class="grant-total">
+                        <td><strong>Grant Total</strong></td>
+                        <td colspan="6" ><strong>{{grant_total}} AFN</strong></td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="button-holder">
+                <button class="btn"><a href="{% url 'store:sale_item' %}">
+                    Proceed to Purchase
+                </a></button>
+            </div>
+        </div>
+        {% else %}
+        <div class="empty-record">
+            <h1 class="title">Your Cart is Empty.</h1>
+            <p class="text"><a href="{% url 'store:sales' %}" class="active-link">Let's add some.</a></p>
+        </div>
+        {% endif %}
+        
     </div>
-    {% else %}
-    <div class="empty-record">
-        <h1 class="title">Your Cart is Empty.</h1>
-        <p class="text"><a href="{% url 'store:sales' %}" class="active-link">Let's add some.</a></p>
-    </div>
-    {% endif %}
-    
 </div>
 {% endblock content %}
