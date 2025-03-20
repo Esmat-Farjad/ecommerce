@@ -5,9 +5,9 @@
 <li class="current">sale</li>
 {% endblock %}
 {% block content %}
-<div class="main-page sale-page">
+<div class="main-page-container sale-page">
     <div class="heading">
-        <div class="heading-text main-page-container">
+        <div class="heading-text ">
             <h1 class="title">Sales Portal</h1>
             <p class="text">search the product to find it</p>
         </div>
@@ -44,7 +44,7 @@
                 </div>
             </a>
             <div class="action">
-                {% if item.stock > 0 %}
+                {% if item.total_items > 0 %}
                 <button 
                 class="btn-sm add-item"
                 data-end-point="{% url 'store:add_to_cart' item.id %}">Add</button>
@@ -55,8 +55,8 @@
                 {%endif %}
             </div>
             <div class="stock-badge">
-                {% if item.stock > 0 %}
-                <p class="success">In Stock: {{item.stock}}</p>
+                {% if item.total_items > 0 %}
+                <p class="success">In Stock: {{item.total_items}}</p>
                 {% else %}
                 <p class="danger">Out of Stock: {{item.stock}}</p>
                 {% endif %}
@@ -64,6 +64,7 @@
         </div>
         {% endfor %}
     </div>
+    
     <!-- paginator navigation button start -->
     <div class="paginator">
         {% if page_obj.has_previous %}

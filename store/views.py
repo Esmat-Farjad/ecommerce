@@ -220,7 +220,7 @@ def cart_detail(request):
     grant_total = 0
     for product in products:
         quantity = cart[str(product.id)]
-        total_price =quantity * int(product.price)
+        total_price =quantity * int(product.item_sale_price)
         grant_total= int(grant_total)+int(total_price)
         cart_item.append({'product':product,'quantity':quantity,'total':total_price})
     context = {
@@ -259,10 +259,10 @@ def sale_item(request):
     for product_id, quantity in cart.items():
         try:
             product = Product.objects.get(id=product_id)
-            total_price = product.price * quantity
+            total_price = product.item_sale_price * quantity
             total_profit= total_price - (quantity*product.rate)
             sales.append(Sale(product=product,quantity=quantity, total_price=total_price,total_profit=total_profit))
-            old_stock = product.stock
+            old_stock = product.total_items
             new_stock = old_stock - quantity
             grant_total = grant_total + total_price
             Product.objects.filter(id=product_id).update(stock=new_stock)
@@ -281,7 +281,7 @@ def dispatch(request, item):
     if item:
         product = Product.objects.get(id=item)
         stock_list=[]
-        for x in range(1,product.stock+1):
+        for x in range(1,product.total_items+1):
             stock_list.append(x)
         context = {'product':product,'stock_list':stock_list}
         return render(request, 'dispatch.html', context)
@@ -393,7 +393,7 @@ def update_stock(request):
         item_id = request.POST['item_id']
         new_stock = request.POST['new_stock']
         old = Product.objects.get(id = item_id)
-        total_stock = int(old.stock) + int(new_stock)
+        total_stock = int(old.total_items) + int(new_stock)
         Product.objects.filter(id = item_id).update(stock = total_stock)
         messages.success(request,"The Stock Updated Successfully !")
         product = Product.objects.select_related('category')

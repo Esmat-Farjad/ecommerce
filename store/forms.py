@@ -21,7 +21,6 @@ class UserCreationForm(UserCreationForm):
             visible.field.widget.attrs['class']="form-input"
             visible.field.widget.attrs['placeholder']=visible.field.label
             
-
 class StoreCreationForm(forms.ModelForm):
     class Meta:
         model = Store
@@ -65,11 +64,9 @@ class ProductSearchForm(forms.Form):
             'placeholder':'enter product name...'
             })
         )
-
-
         
     def __init__(self, *args, **kwargs):
-        super(UpdateProductForm, self).__init__(*args, **kwargs)
+        super(ProductSearchForm, self).__init__(*args, **kwargs)
 
         for visible in self.visible_fields():
             visible.field.widget.attrs['class']="form-input"
